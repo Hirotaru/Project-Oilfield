@@ -12,5 +12,10 @@ namespace Oilfield
         {
 
         }
+
+        public World(int width, int height)
+        {
+
+        }
     }
 }
