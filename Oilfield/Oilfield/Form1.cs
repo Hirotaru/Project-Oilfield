@@ -11,9 +11,11 @@ namespace Oilfield
 {
     public partial class MainForm : Form
     {
+        World world;
         public MainForm()
         {
             InitializeComponent();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -27,6 +29,7 @@ namespace Oilfield
             UIConfig.WindowHeight = Height;
             UIConfig.WindowWidth = Width;
 
+            world = new World(150, 150); //---------------------------------------------------------
         }
 
         long lastTime = 0;
@@ -69,7 +72,12 @@ namespace Oilfield
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
+            world.Draw(e.Graphics);
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Update();
         }
     }
 }

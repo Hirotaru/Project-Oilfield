@@ -11,11 +11,11 @@ namespace Oilfield
         public static int WindowWidth;
         public static int WindowHeight;
 
-        public static int step = 24;
+        public static int step = 10;
 
         public static int dx = 0, dy = 24;
 
-        static readonly float ScrollSpeed = 700;
+        static readonly float ScrollSpeed = 500;
 
         public static bool Move(Point MousePoint, int Width, int Height, long dt)
         {

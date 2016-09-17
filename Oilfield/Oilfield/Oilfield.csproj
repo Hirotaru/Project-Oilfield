@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="LevelGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\LevelGen\LevelGen\LevelGen\bin\Release\LevelGen.dll</HintPath>
+      <HintPath>bin\Debug\LevelGen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +54,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IResouce.cs" />
+    <Compile Include="Oilfield.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIConfig.cs" />
