@@ -79,5 +79,10 @@ namespace Oilfield
         {
             Update();
         }
+
+        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
     }
 }
