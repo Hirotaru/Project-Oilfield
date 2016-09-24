@@ -15,7 +15,7 @@ namespace Oilfield
 
         public static int dx = 0, dy = 24;
 
-        static readonly float ScrollSpeed = 500;
+        static readonly float ScrollSpeed = 0.9F;
 
         public static bool Move(Point MousePoint, int Width, int Height, long dt)
         {
@@ -23,25 +23,25 @@ namespace Oilfield
 
             if (MousePoint.X <= 10)
             {
-                dx += (int)(ScrollSpeed / dt);
+                dx += (int)(ScrollSpeed * dt);
                 changed = true;
             }
 
             if (MousePoint.X >= Width - 10)
             {
-                dx -= (int)(ScrollSpeed / dt);
+                dx -= (int)(ScrollSpeed * dt);
                 changed = true;
             }
 
             if (MousePoint.Y <= 10)
             {
-                dy += (int)(ScrollSpeed / dt);
+                dy += (int)(ScrollSpeed * dt);
                 changed = true;
             }
 
             if (MousePoint.Y >= Height - 10)
             {
-                dy -= (int)(ScrollSpeed / dt);
+                dy -= (int)(ScrollSpeed * dt);
                 changed = true;
             }
 

@@ -8,6 +8,13 @@ namespace Oilfield
 {
     class Gasfield : IResouce
     {
+        private bool isOccupied;
+
+        public bool IsOccupied
+        {
+            get { return isOccupied; }
+        }
+
         private Point position;
 
         public Point Position

@@ -6,15 +6,8 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public interface IResouce : IObject
+    public interface IObject
     {
-
-        double Depth { get; }
-
-        double Amount { get; }
-
-        bool IsOccupied { get; }
-
-
+        Point Position { get; }
     }
 }

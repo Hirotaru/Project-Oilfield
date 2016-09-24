@@ -80,30 +80,33 @@ namespace Oilfield
                 for (int y = 0; y < height; y++)
                 {
                     if (step * x + dx <= WindowWidth && step * x + dx >= -step && step * y + dy <= WindowHeight && step * y + dy >= -step)
-
+                    {
+                        
                         switch (map[x, y])
                         {
                             case Util.mapDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), step * x + dx, step * y + dy, step, step);
-
+                                    //g.FillRectangle(new SolidBrush(Color.FromArgb(0, 146, 179)), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
 
-                            case 1:
+                            case Util.groundDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), step * x + dx, step * y + dy, step, step);
-
+                                    
+                                    //g.FillRectangle(new SolidBrush(Color.FromArgb(126, 64, 25)), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
 
-                            case 2:
+                            case Util.shoreDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), step * x + dx, step * y + dy, step, step);
 
                                     break;
                                 }
                         }
+                    }
                 }
             }
 
