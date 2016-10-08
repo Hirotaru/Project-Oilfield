@@ -15,6 +15,8 @@ namespace Oilfield
 
         bool IsOccupied { get; }
 
+        Color ResourceColor { get; }
+
 
     }
 }

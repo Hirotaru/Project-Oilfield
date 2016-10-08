@@ -24,18 +24,24 @@ namespace Oilfield
 
             if (MousePoint.X <= 10)
             {
-                dx += (int)(ScrollSpeed * dt);
+               
+                if (dx < 0)
+                {
+                    dx += (int)(ScrollSpeed * dt);
+                }
                 changed = true;
             }
 
             if (MousePoint.X >= Width - 10)
             {
                 dx -= (int)(ScrollSpeed * dt);
+                
                 changed = true;
             }
 
             if (MousePoint.Y <= 10)
             {
+                if (dy < 124)
                 dy += (int)(ScrollSpeed * dt);
                 changed = true;
             }

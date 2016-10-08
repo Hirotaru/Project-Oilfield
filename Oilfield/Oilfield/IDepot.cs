@@ -13,6 +13,6 @@ namespace Oilfield
 
         double RemainingCapacity { get; }
 
-
+        ResourceType ResType { get; }
     }
 }

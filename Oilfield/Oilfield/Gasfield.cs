@@ -39,5 +39,13 @@ namespace Oilfield
             set { }
         }
 
+        private Color resourceColor;
+
+        public Color ResourceColor
+        {
+            get { return resourceColor; }
+            set { }
+        }
+
     }
 }
