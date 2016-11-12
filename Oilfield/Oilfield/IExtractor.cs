@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Oilfield
 {
-    interface IExtractor : IObject
+    public interface IExtractor : IObject
     {
         int OwnerID { get; }
 

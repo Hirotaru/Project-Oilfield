@@ -29,7 +29,7 @@ namespace Oilfield
             UIConfig.WindowHeight = Height;
             UIConfig.WindowWidth = Width;
 
-            world = new World(150, 150); //---------------------------------------------------------
+            //world = new World(150, 150); //---------------------------------------------------------
         }
 
         long lastTime = 0;
@@ -72,16 +72,33 @@ namespace Oilfield
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
+            if (world != null)
             world.Draw(e.Graphics);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (world != null)
             Update();
         }
 
         private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
         {
+            
+        }
+
+        private void newWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WorldCreationForm wcf = new WorldCreationForm();
+
+            if (wcf.ShowDialog() == DialogResult.OK)
+            {
+                UIConfig.WorldWidth = wcf.WorldWidth;
+                UIConfig.WorldHeight = wcf.WorldHeight;
+
+                world = new World(UIConfig.WorldWidth, UIConfig.WorldHeight);
+            }
+
             
         }
     }

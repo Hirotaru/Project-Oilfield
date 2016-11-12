@@ -11,9 +11,17 @@ namespace Oilfield
 
         double Depth { get; }
 
-        double Amount { get; }
+        double Amount { get; } //Закрыть
 
         bool IsOccupied { get; }
+
+        //Добавить "Красивость"
+
+            //Добавить хим. анализ
+
+        int ChemicalAnalysis { get; }
+
+        int OverallAnalysis { get; }
 
         Color ResourceColor { get; }
 

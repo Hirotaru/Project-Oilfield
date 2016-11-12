@@ -6,8 +6,33 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    class Gasfield : IResouce
+    public class Gasfield : IResouce
     {
+        private int id;
+
+        public int ID
+        {
+            get { return id; }
+            set { }
+        }
+
+        private int chemicalAnalysis;
+
+        public int ChemicalAnalysis
+        {
+            get { return chemicalAnalysis; }
+            private set { chemicalAnalysis = value; }
+        }
+
+        private int overallAnalysis;
+
+        public int OverallAnalysis
+        {
+            get { return overallAnalysis; }
+            private set { overallAnalysis = value; }
+        }
+
+
         private bool isOccupied;
 
         public bool IsOccupied

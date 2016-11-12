@@ -9,10 +9,14 @@ namespace Oilfield
 {
     public static class UIConfig
     {
+        //Изменение цвета из зеленого в красный
         public static int WindowWidth;
         public static int WindowHeight;
 
-        public static int step = 10;
+        public static int WorldWidth;
+        public static int WorldHeight;
+
+        public static int step = 8;
 
         public static int dx = 0, dy = 24;
 
@@ -25,7 +29,7 @@ namespace Oilfield
             if (MousePoint.X <= 10)
             {
                
-                if (dx < 0)
+                //if (dx < 50)
                 {
                     dx += (int)(ScrollSpeed * dt);
                 }
@@ -34,6 +38,7 @@ namespace Oilfield
 
             if (MousePoint.X >= Width - 10)
             {
+                
                 dx -= (int)(ScrollSpeed * dt);
                 
                 changed = true;
@@ -41,7 +46,7 @@ namespace Oilfield
 
             if (MousePoint.Y <= 10)
             {
-                if (dy < 124)
+                //if (dy < 74)
                 dy += (int)(ScrollSpeed * dt);
                 changed = true;
             }

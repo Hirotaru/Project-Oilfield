@@ -6,24 +6,22 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    class Pipe
+    class Pipe : IObject
     {
-        private Point pointA;
+        private int id;
 
-        private Point pointB;
-
-        public Point PointA
+        public int ID
         {
-            get { return pointA; }
+            get { return id; }
+            set { }
         }
 
-        public Point PointB
+        private Point position;
+
+        public Point Position
         {
-            get { return pointB; }
+            get { return position; }
+            set { }
         }
-
-
-
-        private List<Point> pipePath;
     }
 }

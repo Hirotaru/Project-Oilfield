@@ -9,5 +9,7 @@ namespace Oilfield
     public interface IObject
     {
         Point Position { get; }
+
+        int ID { get; }
     }
 }

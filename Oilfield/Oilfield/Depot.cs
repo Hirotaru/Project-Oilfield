@@ -8,6 +8,15 @@ namespace Oilfield
 {
     class Depot : IDepot
     {
+        private int id;
+
+        public int ID
+        {
+            get { return id; }
+            set { }
+        }
+
+
         private ResourceType resType;
 
         public ResourceType ResType

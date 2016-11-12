@@ -9,6 +9,7 @@ namespace Oilfield
     {
         OIL,
         GAS,
-        WATER
+        WATER,
+        ALL
     }
 }
