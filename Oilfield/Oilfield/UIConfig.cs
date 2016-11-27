@@ -10,10 +10,6 @@ namespace Oilfield
     public static class UIConfig
     {
         //Изменение цвета из зеленого в красный
-        public static Color OilColor = Color.FromArgb(12, 12, 12);
-        public static Color GasColor = Color.CadetBlue;
-        public static Color WaterColor = Color.SteelBlue;
-
         public static int WindowWidth;
         public static int WindowHeight;
 
@@ -50,7 +46,6 @@ namespace Oilfield
 
             if (MousePoint.Y <= 10)
             {
-                //if (dy < 74)
                 dy += (int)(ScrollSpeed * dt);
                 changed = true;
             }
