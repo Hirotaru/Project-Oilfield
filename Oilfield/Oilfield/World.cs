@@ -7,6 +7,8 @@ using System.Drawing;
 
 namespace Oilfield
 {
+    using System.Diagnostics;
+    using System.IO;
     using static UIConfig;
     public class World
     {
@@ -62,9 +64,9 @@ namespace Oilfield
 
         private void GenerateResources()
         {
-            for (int k = 0; k < width / 10 + height / 10; k++)
+            for (int k = 0; k < width / 15 + height / 15; k++)
             {
-                Oilfield field = OilfieldGenerator.Generate(FindFreeSpace());
+                IResouce field = OilfieldGenerator.Generate(FindFreeSpace());
 
                 objectManager.Add(field);
 
@@ -74,6 +76,32 @@ namespace Oilfield
                 }
 
                 map[field.Position.X, field.Position.Y] = Util.OilDefaultValue;
+
+                field = GasGenerator.Generate(FindFreeSpace());
+
+                objectManager.Add(field);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.GasDefaultValue;
+                }
+
+                map[field.Position.X, field.Position.Y] = Util.GasDefaultValue;
+            }
+
+            //Debug
+
+            File.Delete("log.txt");
+
+            var res = objectManager.GetResources(ResourceType.OIL);
+
+            for (int i = 0; i < res.Count; i++)
+            {
+                Oilfield f = res[i] as Oilfield;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    Util.Log("CA: " + f.ChemicalAnalysis + " OA: " + f.OverallAnalysis + " Amount:" + f.Amount, w);
+                }
             }
         }
 
@@ -92,6 +120,38 @@ namespace Oilfield
             GenerateResources();
         }
 
+        public int[,] AStarMap
+        {
+            get
+            {
+                int[,] res = new int[width, height];
+
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        switch (map[x, y])
+                        {
+                            case LevelGen.Util.groundDefaultValue:
+                                {
+                                    res[x, y] = 1;
+                                    break;
+                                }
+                            default:
+                                {
+                                    res[x, y] = int.MaxValue;
+                                    break;
+                                }
+                        }
+                    }
+                }
+
+                return res;
+            }
+        }
+
+        
+
         Random rand = new Random(DateTime.Now.Millisecond);
 
         private Point FindFreeSpace()
@@ -103,7 +163,7 @@ namespace Oilfield
             do
             {
                 ok = true;
-                p = new Point(rand.Next(1, width - 1), rand.Next(1, height - 1));
+                p = new Point(rand.Next(2, width - 2), rand.Next(2, height - 2));
 
                 if (map[p.X, p.Y] != LevelGen.Util.groundDefaultValue)
                 {
@@ -111,9 +171,9 @@ namespace Oilfield
                     continue;
                 }
 
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 25; i++)
                 {
-                    if (map[p.X + Util.offsets[i, 0], p.Y + Util.offsets[i, 1]] != LevelGen.Util.groundDefaultValue)
+                    if (map[p.X + Util.advOffsets[i, 0], p.Y + Util.advOffsets[i, 1]] != LevelGen.Util.groundDefaultValue)
                     {
                         ok = false;
                     }
@@ -124,6 +184,8 @@ namespace Oilfield
 
             return p;
         }
+
+
 
         public void Draw(Graphics g)
         {
@@ -139,15 +201,12 @@ namespace Oilfield
                             case LevelGen.Util.waterDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), step * x + dx, step * y + dy, step, step);
-                                    //g.FillRectangle(new SolidBrush(Color.FromArgb(0, 146, 179)), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
 
                             case LevelGen.Util.groundDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), step * x + dx, step * y + dy, step, step);
-                                    
-                                    //g.FillRectangle(new SolidBrush(Color.FromArgb(126, 64, 25)), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
 
@@ -157,25 +216,50 @@ namespace Oilfield
 
                                     break;
                                 }
+                            case Util.OilDefaultValue:
+                                {
+                                    g.FillRectangle(new SolidBrush(UIConfig.OilColor), step * x + dx, step * y + dy, step, step);
+                                    break;
+                                }
+                            case Util.GasDefaultValue:
+                                {
+                                    g.FillRectangle(new SolidBrush(UIConfig.GasColor), step * x + dx, step * y + dy, step, step);
+                                    break;
+                                }
                         }
                     }
                 }
             }
 
+            /*var res = objectManager.GetResources(ResourceType.OIL);
 
-
-            for (int i = 0; i < objectManager.Count; i++)
+            for (int i = 0; i < res.Count; i++)
             {
+                int x = res[i].Position.X;
+                int y = res[i].Position.Y;
 
-                var a = objectManager.GetResources(ResourceType.OIL);
-                int x = objectManager.GetResources(ResourceType.OIL)[i].Position.X;
-                int y = objectManager.GetResources(ResourceType.OIL)[i].Position.Y;
-
-
-                g.FillRectangle(new SolidBrush(Color.Black), step * x + dx, step * y + dy, step, step);
-
-
+                for (int k = 0; k < 9; k++)
+                {
+                    g.FillRectangle(new SolidBrush(Color.Black), step * (x + Util.offsets[k, 0]) + dx, step * (y + Util.offsets[k, 1]) + dy, step, step);
+                }
             }
+
+            //--------------------------------------------------------------------------------------------------------------------
+
+            res = objectManager.GetResources(ResourceType.GAS);
+
+            for (int i = 0; i < res.Count; i++)
+            {
+                int x = res[i].Position.X;
+                int y = res[i].Position.Y;
+
+
+                for (int k = 0; k < 9; k++)
+                {
+                    g.FillRectangle(new SolidBrush(Color.GhostWhite), step * (x + Util.offsets[k, 0]) + dx, step * (y + Util.offsets[k, 1]) + dy, step, step);
+                }
+            }
+            */
         }
     }
 }

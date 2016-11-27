@@ -6,14 +6,13 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    
-    public static class OilfieldGenerator
+    public static class GasGenerator
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);
-        public static Oilfield Generate(Point pos)
+        public static Gasfield Generate(Point pos)
         {
             //20% хороших
-            Oilfield field;
+            Gasfield field;
 
             int chance = rand.Next() % 100 + 1;
 
@@ -24,7 +23,7 @@ namespace Oilfield
 
                 double amount = CalculateResourceAmount(CA, OA);
 
-                field = new Oilfield(pos, rand.Next(100, 1000), amount, CA, OA);
+                field = new Gasfield(pos, rand.Next(100, 1000), amount, CA, OA);
 
                 return field;
             }
@@ -35,7 +34,7 @@ namespace Oilfield
 
                 double amount = CalculateResourceAmount(CA, OA);
 
-                field = new Oilfield(pos, rand.Next(100, 1000), amount, CA, OA);
+                field = new Gasfield(pos, rand.Next(100, 1000), amount, CA, OA);
 
                 return field;
             }

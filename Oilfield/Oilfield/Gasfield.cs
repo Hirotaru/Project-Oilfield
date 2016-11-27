@@ -72,5 +72,18 @@ namespace Oilfield
             set { }
         }
 
+        public Gasfield(Point pos, double depth, double amount, int CA, int OA)
+        {
+            this.isOccupied = false;
+            this.resourceColor = Color.GhostWhite;
+
+            this.depth = depth;
+            this.amount = amount;
+            this.position = pos;
+
+            this.chemicalAnalysis = CA;
+            this.overallAnalysis = OA;
+        }
+
     }
 }

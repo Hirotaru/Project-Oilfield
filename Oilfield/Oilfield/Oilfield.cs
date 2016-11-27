@@ -76,7 +76,7 @@ namespace Oilfield
         public Oilfield(Point pos, double depth, double amount, int CA, int OA)
         {
             this.isOccupied = false;
-            this.resourceColor = Color.Black;
+            this.resourceColor = Color.White;
 
             this.depth = depth;
             this.amount = amount;

@@ -15,10 +15,6 @@ namespace Oilfield
 
         double Income { get; }
 
-        double Durability { get; }
-
-        double RepairCost { get; }
-
         bool WaterConnected { get; }
 
     }
