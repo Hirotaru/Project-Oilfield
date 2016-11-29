@@ -6,7 +6,7 @@ using System.Text;
 namespace Oilfield
 {
     //public class Extractor : IExtractor
-    {
+    //{
 
-    }
+    //}
 }
