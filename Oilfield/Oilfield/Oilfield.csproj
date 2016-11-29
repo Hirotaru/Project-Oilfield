@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Depot.cs" />
+    <Compile Include="Extractor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,7 +64,7 @@
     <Compile Include="IResouce.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="Oilfield.cs" />
-    <Compile Include="OilfieldGenerator.cs" />
+    <Compile Include="OilGenerator.cs" />
     <Compile Include="Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="UIConfig.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Waterfield.cs" />
+    <Compile Include="WaterGenerator.cs" />
     <Compile Include="World.cs" />
     <Compile Include="WorldCreationForm.cs">
       <SubType>Form</SubType>

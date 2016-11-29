@@ -64,18 +64,11 @@ namespace Oilfield
             set { }
         }
 
-        private Color resourceColor;
-
-        public Color ResourceColor
-        {
-            get { return resourceColor; }
-            set { }
-        }
-
         public Gasfield(Point pos, double depth, double amount, int CA, int OA)
         {
+            id = Util.NewID;
+
             this.isOccupied = false;
-            this.resourceColor = Color.GhostWhite;
 
             this.depth = depth;
             this.amount = amount;

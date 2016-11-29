@@ -15,16 +15,8 @@ namespace Oilfield
 
         bool IsOccupied { get; }
 
-        //Добавить "Красивость"
-
-            //Добавить хим. анализ
-
         int ChemicalAnalysis { get; }
 
         int OverallAnalysis { get; }
-
-        Color ResourceColor { get; }
-
-
     }
 }

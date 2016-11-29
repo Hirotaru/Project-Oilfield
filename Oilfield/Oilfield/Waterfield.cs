@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    class Waterfield : IResouce
+    public class Waterfield : IResouce
     {
         private int id;
 
@@ -63,12 +63,23 @@ namespace Oilfield
             set { }
         }
 
-        private Color resourceColor;
-
-        public Color ResourceColor
+        public Waterfield()
         {
-            get { return resourceColor; }
-            set { }
+
+        }
+
+        public Waterfield(Point pos, double depth, double amount)
+        {
+            id = Util.NewID;
+
+            this.isOccupied = false;
+
+            this.depth = depth;
+            this.amount = amount;
+            this.position = pos;
+
+            this.chemicalAnalysis = 0;
+            this.overallAnalysis = 0;
         }
 
     }

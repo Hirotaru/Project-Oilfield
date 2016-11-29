@@ -7,7 +7,7 @@ using System.Drawing;
 namespace Oilfield
 {
     
-    public static class OilfieldGenerator
+    public static class OilGenerator
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);
         public static Oilfield Generate(Point pos)

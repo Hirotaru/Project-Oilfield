@@ -63,20 +63,13 @@ namespace Oilfield
             set { }
         }
 
-        private Color resourceColor;
-
-        public Color ResourceColor
-        {
-            get { return resourceColor; }
-            set { }
-        }
-
         public Oilfield() { }
 
         public Oilfield(Point pos, double depth, double amount, int CA, int OA)
         {
+            id = Util.NewID;
+
             this.isOccupied = false;
-            this.resourceColor = Color.White;
 
             this.depth = depth;
             this.amount = amount;

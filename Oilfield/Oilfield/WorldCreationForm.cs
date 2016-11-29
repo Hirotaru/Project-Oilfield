@@ -23,20 +23,20 @@ namespace Oilfield
 
         private void WorldCreationForm_Load(object sender, EventArgs e)
         {
-            textBox1.Text = 150.ToString();
-            textBox2.Text = 150.ToString();
+            worldWidthTB.Text = 150.ToString();
+            worldHeightTB.Text = 150.ToString();
 
 
         }
 
         public int WorldWidth
         {
-            get { return Convert.ToInt32(textBox1.Text); }
+            get { return Convert.ToInt32(worldWidthTB.Text); }
         }
 
         public int WorldHeight
         {
-            get { return Convert.ToInt32(textBox2.Text); }
+            get { return Convert.ToInt32(worldHeightTB.Text); }
         }
     }
 }

@@ -43,6 +43,9 @@ namespace Oilfield
 
         public const int OilDefaultValue = 34;
         public const int GasDefaultValue = 35;
+        public const int WaterDefaultValue = 36;
+
+        public const int PipeValue = 100;
 
         private static int id = 0;
 

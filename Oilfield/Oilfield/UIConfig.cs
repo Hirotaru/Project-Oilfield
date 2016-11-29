@@ -13,6 +13,8 @@ namespace Oilfield
 
         public static Color OilColor = Color.FromArgb(12, 12, 12);
         public static Color GasColor = Color.CadetBlue;
+        public static Color WaterColor = Color.DodgerBlue;
+
         public static int WindowWidth;
         public static int WindowHeight;
 

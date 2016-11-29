@@ -66,27 +66,32 @@ namespace Oilfield
         {
             for (int k = 0; k < width / 15 + height / 15; k++)
             {
-                IResouce field = OilfieldGenerator.Generate(FindFreeSpace());
+                IResouce field = OilGenerator.Generate(FindFreeSpace());
 
                 objectManager.Add(field);
 
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 9; i++)
                 {
                     map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.OilDefaultValue;
                 }
-
-                map[field.Position.X, field.Position.Y] = Util.OilDefaultValue;
 
                 field = GasGenerator.Generate(FindFreeSpace());
 
                 objectManager.Add(field);
 
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 9; i++)
                 {
                     map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.GasDefaultValue;
                 }
 
-                map[field.Position.X, field.Position.Y] = Util.GasDefaultValue;
+                field = WaterGenerator.Generate(FindFreeSpace());
+
+                objectManager.Add(field);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.WaterDefaultValue;
+                }
             }
 
             //Debug
@@ -195,7 +200,6 @@ namespace Oilfield
                 {
                     if (step * x + dx <= WindowWidth && step * x + dx >= -step && step * y + dy <= WindowHeight && step * y + dy >= -step)
                     {
-                        
                         switch (map[x, y])
                         {
                             case LevelGen.Util.waterDefaultValue:
@@ -213,53 +217,30 @@ namespace Oilfield
                             case LevelGen.Util.shoreDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), step * x + dx, step * y + dy, step, step);
-
                                     break;
                                 }
+
                             case Util.OilDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(UIConfig.OilColor), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
+
                             case Util.GasDefaultValue:
                                 {
                                     g.FillRectangle(new SolidBrush(UIConfig.GasColor), step * x + dx, step * y + dy, step, step);
+                                    break;
+                                }
+
+                            case Util.WaterDefaultValue:
+                                {
+                                    g.FillRectangle(new SolidBrush(UIConfig.WaterColor), step * x + dx, step * y + dy, step, step);
                                     break;
                                 }
                         }
                     }
                 }
             }
-
-            /*var res = objectManager.GetResources(ResourceType.OIL);
-
-            for (int i = 0; i < res.Count; i++)
-            {
-                int x = res[i].Position.X;
-                int y = res[i].Position.Y;
-
-                for (int k = 0; k < 9; k++)
-                {
-                    g.FillRectangle(new SolidBrush(Color.Black), step * (x + Util.offsets[k, 0]) + dx, step * (y + Util.offsets[k, 1]) + dy, step, step);
-                }
-            }
-
-            //--------------------------------------------------------------------------------------------------------------------
-
-            res = objectManager.GetResources(ResourceType.GAS);
-
-            for (int i = 0; i < res.Count; i++)
-            {
-                int x = res[i].Position.X;
-                int y = res[i].Position.Y;
-
-
-                for (int k = 0; k < 9; k++)
-                {
-                    g.FillRectangle(new SolidBrush(Color.GhostWhite), step * (x + Util.offsets[k, 0]) + dx, step * (y + Util.offsets[k, 1]) + dy, step, step);
-                }
-            }
-            */
         }
     }
 }
