@@ -48,12 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStarNode.cs" />
+    <Compile Include="AStarSearch.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameMap.cs" />
     <Compile Include="IResouce.cs" />
     <Compile Include="Oilfield.cs" />
     <Compile Include="Program.cs" />
