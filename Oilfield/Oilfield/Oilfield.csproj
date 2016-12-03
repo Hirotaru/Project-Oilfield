@@ -48,18 +48,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Depot.cs" />
+    <Compile Include="Extractor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GasField.cs" />
+    <Compile Include="GasGenerator.cs" />
+    <Compile Include="IDepot.cs" />
+    <Compile Include="IExtractor.cs" />
+    <Compile Include="IObject.cs" />
     <Compile Include="IResouce.cs" />
+    <Compile Include="ObjectManager.cs" />
     <Compile Include="Oilfield.cs" />
+    <Compile Include="OilGenerator.cs" />
+    <Compile Include="Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceType.cs" />
     <Compile Include="UIConfig.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Waterfield.cs" />
+    <Compile Include="WaterGenerator.cs" />
     <Compile Include="World.cs" />
+    <Compile Include="WorldCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorldCreationForm.Designer.cs">
+      <DependentUpon>WorldCreationForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,6 +92,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WorldCreationForm.resx">
+      <DependentUpon>WorldCreationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
