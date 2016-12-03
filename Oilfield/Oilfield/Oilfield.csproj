@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="LevelGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\LevelGen.dll</HintPath>
+      <HintPath>.\LevelGen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
