@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -69,20 +70,20 @@ namespace Oilfield
         }
 
         // DLYA ANDRUXI!!1
-        public List<int[]> findPath(int[] start, int[] end)
+        public List<Point> FindPath(Point start, Point end)
         {
-            AStarNode startNode = gameMap.getNode(start[0], start[1]);
-            AStarNode endNode = gameMap.getNode(end[0], end[1]);
+            AStarNode startNode = gameMap.GetNode(start.X, start.Y);
+            AStarNode endNode = gameMap.GetNode(end.X, end.Y);
             List<AStarNode> path = findPath(startNode, endNode);
-            List<int[]> intPath = new List<int[]>();
+            List<Point> intPath = new List<Point>();
             for (int i = 0; i < path.Count; i++)
             {
-                intPath.Add(new int[] { path[i].X, path[i].Y });
+                intPath.Add(new Point(path[i].X, path[i].Y));
             }
             return intPath;
         }
 
-        public List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode)
+        private List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode)
         {
             openList.Clear();
             closedList.Clear();
@@ -128,7 +129,7 @@ namespace Oilfield
                     {
                         continue;
                     }
-                    AStarNode neighborNode = gameMap.getNode(x_cord, y_cord);
+                    AStarNode neighborNode = gameMap.GetNode(x_cord, y_cord);
 
                     //if (detailedPathPrint)
                     //    System.out.println("Neighbor: " + neighborNode.X + ", " + neighborNode.Y + ", " + neighborNode.Value);

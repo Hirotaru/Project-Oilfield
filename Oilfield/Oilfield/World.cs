@@ -13,6 +13,8 @@ namespace Oilfield
     public class World
     {
         ObjectManager objectManager;
+        private GameMap gameMap;
+        private AStarSearch search;
 
         private int[,] map;
 
@@ -123,6 +125,11 @@ namespace Oilfield
             LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
 
             GenerateResources();
+
+            gameMap = new GameMap(width, height);
+            gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
+            search = new AStarSearch(gameMap);
+            List<Point> path = search.FindPath(new Point(20, 30), new Point(30, 40));
         }
 
         public int[,] AStarMap

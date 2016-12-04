@@ -12,7 +12,7 @@ namespace Oilfield
         private AStarNode[,] nodes;
         private bool printMap = false;
 
-        public static double STANDART_COST = 100;
+        public static double STANDART_COST = 1;
 
         public GameMap(int width, int height)
         {
@@ -24,13 +24,13 @@ namespace Oilfield
             initEmptyNodes();
         }
 
-        public void resetNodes()
+        public void UpdateMap(int[,] map)
         {
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    nodes[i, j].Value = STANDART_COST;
+                    nodes[i, j].Value = map[i, j];
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace Oilfield
             }
         }
 
-        public AStarNode getNode(int x, int y)
+        public AStarNode GetNode(int x, int y)
         {
             return nodes[x, y];
         }
@@ -56,7 +56,7 @@ namespace Oilfield
             return Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
         }
 
-        public double get(int x, int y)
+        public double Get(int x, int y)
         {
             return nodes[x, y].Value;
         }
