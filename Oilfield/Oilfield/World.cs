@@ -9,6 +9,7 @@ namespace Oilfield
 {
     using System.Diagnostics;
     using System.IO;
+    using System.Threading;
     using static UIConfig;
     public class World
     {
@@ -112,6 +113,26 @@ namespace Oilfield
             }
         }
 
+        public void BuildPipe(IObject start, IObject end)
+        {
+            BuildPipe(start.Position, end.Position);
+        }
+
+        public void BuildPipe(Point start, Point end)
+        {
+            List<Point> path = search.FindPath(start, end);
+
+            if (path == null) return;
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                objectManager.Add(new Pipe(path[i]));
+                map[path[i].X, path[i].Y] = Util.PipeValue;
+            }
+
+            return;
+        }
+
         public World(int width, int height, string name = "")
         {
             objectManager = new ObjectManager();
@@ -128,8 +149,26 @@ namespace Oilfield
 
             gameMap = new GameMap(width, height);
             gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
+
             search = new AStarSearch(gameMap);
-            List<Point> path = search.FindPath(new Point(20, 30), new Point(30, 40));
+
+           //BuildPipe(objectManager.GetResources()[rand.Next(0, 5)], objectManager.GetResources()[rand.Next(0, 5)]);
+        }
+
+        public delegate void BP(Point a, Point b);
+
+        List<List<Point>> Path = new List<List<Point>>();
+
+        private List<Point> findPath(Point start, Point end)
+        {
+            gameMap.UpdateMap(AStarMap);
+            return search.FindPath(start, end);
+        }
+
+        private List<Point> findPath(IObject start, IObject end)
+        {
+            gameMap.UpdateMap(AStarMap);
+            return search.FindPath(start.Position, end.Position);
         }
 
         public int[,] AStarMap
@@ -197,8 +236,6 @@ namespace Oilfield
             return p;
         }
 
-
-
         public void Draw(Graphics g)
         {
             for (int x = 0; x < width; x++)
@@ -248,6 +285,15 @@ namespace Oilfield
                     }
                 }
             }
+
+            for (int i = 0; i < Path.Count; i++)
+            {
+                for (int k = 0; k < Path[i].Count; k++)
+                {
+                    g.FillRectangle(new SolidBrush(Color.Red), step * Path[i][k].X + dx, step * Path[i][k].Y + dy, step, step);
+                }
+            }
+
         }
     }
 }
