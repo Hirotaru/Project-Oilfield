@@ -23,5 +23,11 @@ namespace Oilfield
             get { return position; }
             set { }
         }
+
+        public Pipe(Point position)
+        {
+            id = Util.NewID;
+            this.position = position;
+        }
     }
 }
