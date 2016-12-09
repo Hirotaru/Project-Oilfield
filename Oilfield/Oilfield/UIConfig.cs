@@ -23,7 +23,7 @@ namespace Oilfield
         public static int WorldWidth;
         public static int WorldHeight;
 
-        public static int step = 8;
+        public static int Step = 8;
 
         public static int dx = 0, dy = 24;
 

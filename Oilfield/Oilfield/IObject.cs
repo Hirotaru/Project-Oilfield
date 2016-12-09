@@ -11,5 +11,6 @@ namespace Oilfield
         Point Position { get; }
 
         int ID { get; }
+
     }
 }

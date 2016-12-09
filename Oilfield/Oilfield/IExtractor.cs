@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Oilfield
 {
-    public interface IExtractor : IObject
+    public interface IExtractor : IConnectable
     {
-        int OwnerID { get; }
-
         double ResourceAmount { get; }
 
         ResourceType Type { get; }
@@ -16,6 +14,5 @@ namespace Oilfield
         double Income { get; }
 
         bool WaterConnected { get; }
-
     }
 }
