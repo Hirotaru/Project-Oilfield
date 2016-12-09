@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public class Gasfield : IResouce
+    public class Gasfield : IResource
     {
         private int id;
 

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public interface IResouce : IObject
+    public interface IResource : IObject
     {
 
         double Depth { get; }
@@ -18,5 +18,7 @@ namespace Oilfield
         int ChemicalAnalysis { get; }
 
         int OverallAnalysis { get; }
+
+
     }
 }

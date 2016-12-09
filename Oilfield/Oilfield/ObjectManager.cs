@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -49,7 +50,7 @@ namespace Oilfield
 
                 default:
                     {
-                        var res = from i in objects where i is IResouce select i;
+                        var res = from i in objects where i is IResource select i;
                         return res.ToList();
                     }
             }
@@ -95,6 +96,18 @@ namespace Oilfield
         public void RemoveAt(int index)
         {
             objects.RemoveAt(index);
+        }
+
+        public IObject GetResourceByPosition(Point position)
+        {
+            IObject res = (IObject)from i in objects where i.Position == position && i is IResource select i;
+            return res;
+        }
+
+        public IObject GetExctractorByPosition(Point position)
+        {
+            IObject res = (IObject)from i in objects where i.Position == position && i is IExtractor select i;
+            return res;
         }
 
         public IObject GetObjectByID(int id)

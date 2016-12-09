@@ -13,7 +13,6 @@ namespace Oilfield
         public static Waterfield Generate(Point pos)
         {
             Waterfield field = new Waterfield();
-            //20% хороших
 
             int amount = rand.Next(10000, 100000);
 

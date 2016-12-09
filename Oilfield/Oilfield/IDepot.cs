@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Oilfield
 {
-    public interface IDepot : IObject
+    public interface IDepot : IConnectable
     {
         double Capacity { get; }
 

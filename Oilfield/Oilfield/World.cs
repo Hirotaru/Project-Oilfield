@@ -11,13 +11,13 @@ namespace Oilfield
     using System.IO;
     using System.Threading;
     using static UIConfig;
-    public class World
+    public partial class World
     {
         ObjectManager objectManager;
         private GameMap gameMap;
         private AStarSearch search;
 
-        private int[,] map;
+        int[,] map;
 
         public int[,] Map
         {
@@ -60,16 +60,69 @@ namespace Oilfield
             get { return height; }
             private set { height = value; }
         }
+
+        public int[,] AStarMap
+        {
+            get
+            {
+                int[,] res = new int[width, height];
+
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        switch (map[x, y])
+                        {
+                            case LevelGen.Util.groundDefaultValue:
+                                {
+                                    res[x, y] = 1;
+                                    break;
+                                }
+                            default:
+                                {
+                                    res[x, y] = int.MaxValue;
+                                    break;
+                                }
+                        }
+                    }
+                }
+                
+                return res;
+            }
+        }
+
+        Random rand = new Random(DateTime.Now.Millisecond);
+
         public World()
         {
 
+        }
+
+        public World(int width, int height, string name = "")
+        {
+            objectManager = new ObjectManager();
+
+            Width = width;
+            Height = height;
+
+            Map = new int[width, height];
+
+            map = Landscape.MapGeneration(width, height);
+            LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
+
+            GenerateResources();
+
+            gameMap = new GameMap(width, height);
+            gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
+
+            search = new AStarSearch(gameMap);
         }
 
         private void GenerateResources()
         {
             for (int k = 0; k < width / 15 + height / 15; k++)
             {
-                IResouce field = OilGenerator.Generate(FindFreeSpace());
+                IResource field = OilGenerator.Generate(FindFreeSpace());
 
                 objectManager.Add(field);
 
@@ -113,52 +166,6 @@ namespace Oilfield
             }
         }
 
-        public void BuildPipe(IObject start, IObject end)
-        {
-            BuildPipe(start.Position, end.Position);
-        }
-
-        public void BuildPipe(Point start, Point end)
-        {
-            List<Point> path = search.FindPath(start, end);
-
-            if (path == null) return;
-
-            for (int i = 0; i < path.Count; i++)
-            {
-                objectManager.Add(new Pipe(path[i]));
-                map[path[i].X, path[i].Y] = Util.PipeValue;
-            }
-
-            return;
-        }
-
-        public World(int width, int height, string name = "")
-        {
-            objectManager = new ObjectManager();
-
-            Width = width;
-            Height = height;
-
-            Map = new int[width, height];
-
-            map = Landscape.MapGeneration(width, height);
-            LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
-
-            GenerateResources();
-
-            gameMap = new GameMap(width, height);
-            gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
-
-            search = new AStarSearch(gameMap);
-
-           //BuildPipe(objectManager.GetResources()[rand.Next(0, 5)], objectManager.GetResources()[rand.Next(0, 5)]);
-        }
-
-        public delegate void BP(Point a, Point b);
-
-        List<List<Point>> Path = new List<List<Point>>();
-
         private List<Point> findPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
@@ -170,40 +177,6 @@ namespace Oilfield
             gameMap.UpdateMap(AStarMap);
             return search.FindPath(start.Position, end.Position);
         }
-
-        public int[,] AStarMap
-        {
-            get
-            {
-                int[,] res = new int[width, height];
-
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        switch (map[x, y])
-                        {
-                            case LevelGen.Util.groundDefaultValue:
-                                {
-                                    res[x, y] = 1;
-                                    break;
-                                }
-                            default:
-                                {
-                                    res[x, y] = int.MaxValue;
-                                    break;
-                                }
-                        }
-                    }
-                }
-
-                return res;
-            }
-        }
-
-        
-
-        Random rand = new Random(DateTime.Now.Millisecond);
 
         private Point FindFreeSpace()
         {
@@ -242,55 +215,47 @@ namespace Oilfield
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (step * x + dx <= WindowWidth && step * x + dx >= -step && step * y + dy <= WindowHeight && step * y + dy >= -step)
+                    if (Step * x + dx <= WindowWidth && Step * x + dx >= -Step && Step * y + dy <= WindowHeight && Step * y + dy >= -Step)
                     {
                         switch (map[x, y])
                         {
                             case LevelGen.Util.waterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
 
                             case LevelGen.Util.groundDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
 
                             case LevelGen.Util.shoreDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
 
                             case Util.OilDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.OilColor), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(UIConfig.OilColor), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
 
                             case Util.GasDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.GasColor), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(UIConfig.GasColor), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
 
                             case Util.WaterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.WaterColor), step * x + dx, step * y + dy, step, step);
+                                    g.FillRectangle(new SolidBrush(UIConfig.WaterColor), Step * x + dx, Step * y + dy, Step, Step);
                                     break;
                                 }
                         }
                     }
-                }
-            }
-
-            for (int i = 0; i < Path.Count; i++)
-            {
-                for (int k = 0; k < Path[i].Count; k++)
-                {
-                    g.FillRectangle(new SolidBrush(Color.Red), step * Path[i][k].X + dx, step * Path[i][k].Y + dy, step, step);
                 }
             }
 

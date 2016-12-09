@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Oilfield
 {
@@ -72,6 +73,7 @@ namespace Oilfield
         // DLYA ANDRUXI!!1
         public List<Point> FindPath(Point start, Point end)
         {
+           
             AStarNode startNode = gameMap.GetNode(start.X, start.Y);
             AStarNode endNode = gameMap.GetNode(end.X, end.Y);
             List<AStarNode> path = findPath(startNode, endNode);

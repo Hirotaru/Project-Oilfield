@@ -31,6 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '1|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\1\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LevelGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -61,10 +70,11 @@
     <Compile Include="GameMap.cs" />
     <Compile Include="GasField.cs" />
     <Compile Include="GasGenerator.cs" />
+    <Compile Include="IConnectable.cs" />
     <Compile Include="IDepot.cs" />
     <Compile Include="IExtractor.cs" />
     <Compile Include="IObject.cs" />
-    <Compile Include="IResouce.cs" />
+    <Compile Include="IResource.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="Oilfield.cs" />
     <Compile Include="OilGenerator.cs" />
@@ -77,6 +87,7 @@
     <Compile Include="Waterfield.cs" />
     <Compile Include="WaterGenerator.cs" />
     <Compile Include="World.cs" />
+    <Compile Include="WorldBuildingMethods.cs" />
     <Compile Include="WorldCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
