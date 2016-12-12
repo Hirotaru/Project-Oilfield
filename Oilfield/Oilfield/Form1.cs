@@ -42,6 +42,7 @@ namespace Oilfield
             lastTime = DateTime.Now.Ticks;
 
             UIConfig.Move(MousePosition, Width, Height, dt);
+            world.Update(dt);
 
             Refresh();
         }
@@ -100,6 +101,11 @@ namespace Oilfield
             }
 
             
+        }
+
+        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            world.randomPath();
         }
     }
 }

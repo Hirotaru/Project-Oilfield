@@ -9,6 +9,9 @@ namespace Oilfield
 {
     public static class Util
     {
+        public const double GasCost = 4;
+        public const double OilCost = 54;
+
         public static int[,] offsets = new int[9, 2]
             { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 },
             { 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 }, { 0, 0 } };
@@ -101,8 +104,6 @@ namespace Oilfield
 
         public static void Log(string logMessage, TextWriter writer)
         {
-            
-            
             {
                 writer.Write("\r\nLog Entry : ");
                 writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),

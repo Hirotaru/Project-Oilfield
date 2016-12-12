@@ -42,7 +42,9 @@ namespace Oilfield
 
         public void BuildExtractor(IResource res)
         {
+            Extractor ext = new Extractor(res);
 
+            objectManager.Add(ext);
         }
     }
 }
