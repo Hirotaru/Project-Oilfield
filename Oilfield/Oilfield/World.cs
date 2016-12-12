@@ -61,6 +61,15 @@ namespace Oilfield
             private set { height = value; }
         }
 
+        private double money;
+
+        public double Money
+        {
+            get { return money; }
+            set { money = value; }
+        }
+
+
         public int[,] AStarMap
         {
             get
@@ -108,15 +117,36 @@ namespace Oilfield
             Map = new int[width, height];
 
             map = Landscape.MapGeneration(width, height);
+            //map = LevelGen.Map.Generate(1, width, height);
             LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
 
+
             GenerateResources();
+
+            BuildExtractor((IResource)objectManager.GetResources()[0]);
 
             gameMap = new GameMap(width, height);
             gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
 
             search = new AStarSearch(gameMap);
         }
+
+        private Color getWaterColor(int x, int y)
+        {
+            return LevelGen.Util.WaterColors[waterColors[x, y]];
+        }
+
+        private Color getTerrainColor(int x, int y)
+        {
+            return LevelGen.Util.TerrainColors[colorMap[x, y]];
+        }
+
+        public void randomPath()
+        {
+            path = findPath(FindFreeSpace(), FindFreeSpace());
+        }
+
+        List<Point> path;
 
         private void GenerateResources()
         {
@@ -209,6 +239,19 @@ namespace Oilfield
             return p;
         }
 
+        private void drawRectangle(Graphics g, Color color, int x, int y)
+        {
+            g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
+        }
+
+        public void Update(double dt)
+        {
+            foreach (var item in objectManager.GetExtractors())
+            {
+                (item as Extractor).Update(dt);
+            }
+        }
+
         public void Draw(Graphics g)
         {
             for (int x = 0; x < width; x++)
@@ -221,42 +264,55 @@ namespace Oilfield
                         {
                             case LevelGen.Util.waterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, getWaterColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.groundDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, getTerrainColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.shoreDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, UIConfig.ShoreColor, x, y);
                                     break;
                                 }
 
                             case Util.OilDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.OilColor), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, UIConfig.OilColor, x, y);
                                     break;
                                 }
 
                             case Util.GasDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.GasColor), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, UIConfig.GasColor, x, y);
                                     break;
                                 }
 
                             case Util.WaterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.WaterColor), Step * x + dx, Step * y + dy, Step, Step);
+                                    drawRectangle(g, UIConfig.WaterColor, x, y);
                                     break;
                                 }
                         }
                     }
                 }
+            }
+
+            var a = objectManager.GetExtractors();
+
+            for (int i = 0; i < a.Count; i++)
+            {
+                (a[i] as Extractor).Draw(g);
+            }
+
+            if (path != null)
+            for (int i = 0; i < path.Count; i++)
+            {
+                g.FillRectangle(new SolidBrush(UIConfig.PipeColor), Step * path[i].X + dx, Step * path[i].Y + dy, Step, Step);
             }
 
         }

@@ -116,6 +116,9 @@ namespace Oilfield
             return a as IObject;
         }
         
-
+        public List<IObject> GetExtractors()
+        {
+            return (from i in objects where i is IExtractor select i).ToList();
+        }
     }
 }

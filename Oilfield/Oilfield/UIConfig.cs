@@ -11,11 +11,16 @@ namespace Oilfield
     {
         //Изменение цвета из зеленого в красный
 
-        public static Color OilColor = Color.FromArgb(12, 12, 12);
-        public static Color GasColor = Color.CadetBlue;
-        public static Color WaterColor = Color.DodgerBlue;
+        public static Color OilColor = Color.FromArgb(18, 18, 18);
+        public static Color GasColor = Color.FromArgb(200, 200, 200);
+        public static Color WaterColor = Color.DeepSkyBlue;
+        public static Color ShoreColor = Color.FromArgb(145, 88, 49);
 
         public static Color PipeColor = Color.Gray;
+
+        public static Color WaterExtColor = Color.FromArgb(32, 32, 255);
+        public static Color OilExtColor = Color.FromArgb(38, 38, 38);
+        public static Color GasExtColor = Color.FromArgb(220, 220, 220);
 
         public static int WindowWidth;
         public static int WindowHeight;
@@ -35,8 +40,6 @@ namespace Oilfield
 
             if (MousePoint.X <= 10)
             {
-               
-                //if (dx < 50)
                 {
                     dx += (int)(ScrollSpeed * dt);
                 }
