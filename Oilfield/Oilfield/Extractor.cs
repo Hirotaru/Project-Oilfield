@@ -74,50 +74,72 @@ namespace Oilfield
             get { return percentage < 50 ? 255 : -255 / 50 * (int)percentage + 510; }
         }
 
-        private static Dictionary<ResourceType, double> price;
-        private static Dictionary<ResourceType, Color> colors;
+        private static readonly Dictionary<ResourceType, double> price = new Dictionary<ResourceType, double>()
+        {
+            {ResourceType.WATER, 0 },
+            {ResourceType.GAS, Util.GasCost },
+            {ResourceType.OIL, Util.OilCost }
+        };
+
+        private static readonly Dictionary<ResourceType, Color> colors = new Dictionary<ResourceType, Color>()
+        {
+            {ResourceType.WATER, UIConfig.WaterExtColor },
+            {ResourceType.GAS, UIConfig.GasExtColor },
+            {ResourceType.OIL,UIConfig.OilExtColor }
+        };
 
         public Color centerColor
         {
             get { return Color.FromArgb(red < 0 ? 0 : red > 255 ? 255 : red, green < 0 ? 0 : green > 255 ? 255 : green, 0); }
         }
 
-        private void extract(double dt)
+        private double extract(double dt)
         {
             if (type != ResourceType.WATER)
             {
-                if (!waterConnected)
-                    return;
+                /*if (!waterConnected)
+                    return 0;
 
                 if (resourceAmount == 0)
-                    return;
+                    return 0;
 
                 var d = (from i in connectedTo where i is IDepot select i);
 
                 if (d == null)
-                    return;
+                    return 0;
 
                 if (d.ToList().Count == 0)
-                    return;
+                    return 0;*/
 
-                //TODO
-                /*if (resourceAmount > income * dt)
+                if (resourceAmount > income * dt)
                 {
-                    double money = income * dt * ;
+                    double money = income * dt * Util.OilCost;
                     resourceAmount -= income * dt;
-                }*/
+                    return money;
+                }
+                else
+                {
+                    double money = resourceAmount * Util.OilCost;
+                    resourceAmount = 0;
+                    return money;
+                }
             }
+
+            return 0;
         }
 
         public void Update(double dt)
         {
-            
+            extract(dt / 20);
         }
 
         public Extractor(IResource res)
         {
+            connectedTo = new HashSet<IObject>();
+
             id = Util.NewID;
             position = res.Position;
+            income = 1;
 
             if (res is Oilfield) type = ResourceType.OIL;
             if (res is Gasfield) type = ResourceType.GAS;
@@ -139,7 +161,7 @@ namespace Oilfield
         public void Draw(Graphics g)
         {
             for (int i = 0; i < 8; i++)
-                drawRectangle(g, UIConfig.WaterExtColor, position.X + Util.offsets[i, 0], position.Y + Util.offsets[i, 1]);
+                drawRectangle(g, colors[type], position.X + Util.offsets[i, 0], position.Y + Util.offsets[i, 1]);
 
             drawRectangle(g, centerColor, position.X, position.Y);
         }

@@ -83,6 +83,44 @@ namespace Oilfield
             }
         }
 
+        public List<IObject> GetBetterAnalysis(ResourceType type)
+        {
+            var res = from i in objects where i is IResource select i;
+
+            switch (type)
+            {
+                case ResourceType.OIL:
+                    {
+                        var a = from i in res where i is Oilfield select i;
+
+                        return (from i in res where !(i as IResource).IsOccupied orderby (i as Oilfield).OverallAnalysis + (i as Oilfield).ChemicalAnalysis descending select i).ToList();
+                    }
+                case ResourceType.GAS:
+                    {
+                        var a = from i in res where i is Gasfield select i;
+
+                        return (from i in res where !(i as IResource).IsOccupied orderby (i as Gasfield).OverallAnalysis + (i as Gasfield).ChemicalAnalysis descending select i).ToList();
+                    }
+                case ResourceType.WATER:
+                    {
+                        return null;
+                    }
+                case ResourceType.ALL:
+                    {
+                        return (from i in res where !(i as IResource).IsOccupied orderby (i as IResource).OverallAnalysis + (i as IResource).ChemicalAnalysis descending select i).ToList();
+                    }
+                default:
+                    break;
+            }
+
+            return null;
+        }
+
+        public List<IObject> GetNearestWater(IObject obj)
+        {
+            return (from i in objects where i is Waterfield && !(i as IResource).IsOccupied orderby Util.GetDistance(obj, i) select i).ToList();
+        }
+
         public void Add(IObject obj)
         {
             objects.Add(obj);

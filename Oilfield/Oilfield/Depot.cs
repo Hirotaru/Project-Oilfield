@@ -63,6 +63,12 @@ namespace Oilfield
             get { return connectedTo; }
         }
 
+        public Depot(Point position)
+        {
+            this.position = position;
+            connectedTo = new HashSet<IObject>();
+        }
+
 
     }
 }
