@@ -38,6 +38,7 @@ namespace Oilfield
         public bool IsOccupied
         {
             get { return isOccupied; }
+            set { isOccupied = value; }
         }
 
         private Point position;

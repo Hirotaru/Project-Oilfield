@@ -13,7 +13,7 @@ namespace Oilfield
     using static UIConfig;
     public partial class World
     {
-        ObjectManager objectManager;
+        ObjectManager objManager;
         private GameMap gameMap;
         private AStarSearch search;
 
@@ -109,7 +109,7 @@ namespace Oilfield
 
         public World(int width, int height, string name = "")
         {
-            objectManager = new ObjectManager();
+            objManager = new ObjectManager();
 
             Width = width;
             Height = height;
@@ -123,12 +123,24 @@ namespace Oilfield
 
             GenerateResources();
 
-            BuildExtractor((IResource)objectManager.GetResources()[0]);
-
             gameMap = new GameMap(width, height);
             gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
 
             search = new AStarSearch(gameMap);
+
+            IResource start = (IResource)objManager.GetResources()[0];
+            IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
+
+            BuildExtractor(start);
+            BuildExtractor(startWater);
+
+            BuildPipe(start, startWater);
+
+            
+
+            BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
+
+            BuildPipe(start, objManager.Depots[0]);
         }
 
         private Color getWaterColor(int x, int y)
@@ -154,7 +166,7 @@ namespace Oilfield
             {
                 IResource field = OilGenerator.Generate(FindFreeSpace());
 
-                objectManager.Add(field);
+                objManager.Add(field);
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -163,7 +175,7 @@ namespace Oilfield
 
                 field = GasGenerator.Generate(FindFreeSpace());
 
-                objectManager.Add(field);
+                objManager.Add(field);
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -172,7 +184,7 @@ namespace Oilfield
 
                 field = WaterGenerator.Generate(FindFreeSpace());
 
-                objectManager.Add(field);
+                objManager.Add(field);
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -184,7 +196,7 @@ namespace Oilfield
 
             File.Delete("log.txt");
 
-            var res = objectManager.GetResources(ResourceType.OIL);
+            var res = objManager.GetResources(ResourceType.OIL);
 
             for (int i = 0; i < res.Count; i++)
             {
@@ -213,7 +225,6 @@ namespace Oilfield
 
             Point p;
             bool ok = true;
-
             do
             {
                 ok = true;
@@ -239,6 +250,16 @@ namespace Oilfield
             return p;
         }
 
+        public Point FindFreeSpaceWithDistance(Point point, int distance)
+        {
+            Point p;
+            do
+                p = FindFreeSpace();
+            while (Util.GetDistance(point, p) > distance);
+
+            return p;
+        }
+
         private void drawRectangle(Graphics g, Color color, int x, int y)
         {
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
@@ -246,7 +267,7 @@ namespace Oilfield
 
         public void Update(double dt)
         {
-            foreach (var item in objectManager.GetExtractors())
+            foreach (var item in objManager.GetExtractors())
             {
                 (item as Extractor).Update(dt);
             }
@@ -254,6 +275,11 @@ namespace Oilfield
 
         public void Draw(Graphics g)
         {
+            foreach (var item in objManager.Pipes)
+            {
+                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+            }
+
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -280,7 +306,7 @@ namespace Oilfield
                                     break;
                                 }
 
-                            case Util.OilDefaultValue:
+                            /*case Util.OilDefaultValue:
                                 {
                                     drawRectangle(g, UIConfig.OilColor, x, y);
                                     break;
@@ -297,22 +323,46 @@ namespace Oilfield
                                     drawRectangle(g, UIConfig.WaterColor, x, y);
                                     break;
                                 }
+                                */
                         }
                     }
                 }
             }
 
-            var a = objectManager.GetExtractors();
+            foreach (var item in objManager.GetResources(ResourceType.GAS))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.GasColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.GetResources(ResourceType.OIL))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.OilColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.GetResources(ResourceType.WATER))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.WaterColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.Pipes)
+            {
+                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+            }
+
+            var a = objManager.GetExtractors();
 
             for (int i = 0; i < a.Count; i++)
             {
                 (a[i] as Extractor).Draw(g);
             }
 
-            if (path != null)
-            for (int i = 0; i < path.Count; i++)
+            foreach (var item in objManager.Depots)
             {
-                g.FillRectangle(new SolidBrush(UIConfig.PipeColor), Step * path[i].X + dx, Step * path[i].Y + dy, Step, Step);
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.DepotColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
             }
 
         }

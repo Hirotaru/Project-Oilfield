@@ -25,26 +25,31 @@ namespace Oilfield
             }
         }
 
+        public void BuildDepot(Point pos)
+        {
+            IDepot d = new Depot(pos);
+            objManager.Add(d);
+
+        }
+
         public void BuildPipe(Point start, Point end)
         {
-            List<Point> path = search.FindPath(start, end);
+            List<Point> path = findPath(start, end);
 
             if (path == null) return;
 
             for (int i = 0; i < path.Count; i++)
             {
-                objectManager.Add(new Pipe(path[i]));
+                objManager.Add(new Pipe(path[i]));
                 map[path[i].X, path[i].Y] = Util.PipeValue;
             }
-
-            return;
         }
 
         public void BuildExtractor(IResource res)
         {
             Extractor ext = new Extractor(res);
-
-            objectManager.Add(ext);
+            res.IsOccupied = true;
+            objManager.Add(ext);
         }
     }
 }

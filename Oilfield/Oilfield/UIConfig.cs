@@ -13,14 +13,16 @@ namespace Oilfield
 
         public static Color OilColor = Color.FromArgb(18, 18, 18);
         public static Color GasColor = Color.FromArgb(200, 200, 200);
-        public static Color WaterColor = Color.DeepSkyBlue;
+        public static Color WaterColor = Color.CornflowerBlue;
         public static Color ShoreColor = Color.FromArgb(145, 88, 49);
 
         public static Color PipeColor = Color.Gray;
 
-        public static Color WaterExtColor = Color.FromArgb(32, 32, 255);
+        public static Color WaterExtColor = Color.MediumSlateBlue;
         public static Color OilExtColor = Color.FromArgb(38, 38, 38);
         public static Color GasExtColor = Color.FromArgb(220, 220, 220);
+
+        public static Color DepotColor = Color.Crimson;
 
         public static int WindowWidth;
         public static int WindowHeight;

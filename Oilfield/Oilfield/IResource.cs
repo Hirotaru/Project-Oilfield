@@ -13,7 +13,7 @@ namespace Oilfield
 
         double Amount { get; } //Закрыть
 
-        bool IsOccupied { get; }
+        bool IsOccupied { get; set; }
 
         int ChemicalAnalysis { get; }
 
