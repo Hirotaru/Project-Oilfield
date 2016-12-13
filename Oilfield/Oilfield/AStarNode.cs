@@ -45,7 +45,9 @@ namespace Oilfield
             // System.out.println("goal: " + goal.X + ", " + goal.Y);
 
             double dist = Math.Sqrt((X - goal.X) * (X - goal.X) + (Y - goal.Y) * (Y - goal.Y));
+
             // System.out.println("return dist: " + dist);
+
             return dist;
         }
 

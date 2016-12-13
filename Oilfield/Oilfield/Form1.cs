@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Oilfield
 {
@@ -34,16 +35,18 @@ namespace Oilfield
 
         long lastTime = 0;
 
-
-
         new public void Update()
         {
             int dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
             lastTime = DateTime.Now.Ticks;
 
-            UIConfig.Move(MousePosition, Width, Height, dt);
+            if (world != null)
+            {
+                UIConfig.Move(MousePosition, Width, Height, dt);
+                world.Update(dt);
 
-            Refresh();
+                Refresh();
+            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -65,6 +68,8 @@ namespace Oilfield
             }
         }
 
+        
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -78,7 +83,6 @@ namespace Oilfield
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (world != null)
             Update();
         }
 
@@ -100,6 +104,11 @@ namespace Oilfield
             }
 
             
+        }
+
+        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            world.randomPath();
         }
     }
 }

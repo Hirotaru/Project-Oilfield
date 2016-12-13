@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    class Depot : IDepot
+    public class Depot : IDepot
     {
         private int id;
 
@@ -56,6 +56,18 @@ namespace Oilfield
             set { }
         }
 
+        private HashSet<IObject> connectedTo;
+
+        public HashSet<IObject> ConnectedTo
+        {
+            get { return connectedTo; }
+        }
+
+        public Depot(Point position)
+        {
+            this.position = position;
+            connectedTo = new HashSet<IObject>();
+        }
 
 
     }

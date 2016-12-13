@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 
 namespace Oilfield
 {
-    public interface IObject
+    public interface IConnectable : IObject
     {
-        Point Position { get; }
-
-        int ID { get; }
-
+        HashSet<IObject> ConnectedTo { get; }
     }
 }

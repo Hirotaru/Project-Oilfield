@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public class Gasfield : IResouce
+    public class Gasfield : IResource
     {
         private int id;
 
@@ -38,6 +38,7 @@ namespace Oilfield
         public bool IsOccupied
         {
             get { return isOccupied; }
+            set { isOccupied = value; }
         }
 
         private Point position;

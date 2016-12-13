@@ -6,17 +6,19 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public interface IResouce : IObject
+    public interface IResource : IObject
     {
 
         double Depth { get; }
 
         double Amount { get; } //Закрыть
 
-        bool IsOccupied { get; }
+        bool IsOccupied { get; set; }
 
         int ChemicalAnalysis { get; }
 
         int OverallAnalysis { get; }
+
+
     }
 }

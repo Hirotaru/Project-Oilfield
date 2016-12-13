@@ -9,14 +9,15 @@ namespace Oilfield
 {
     using System.Diagnostics;
     using System.IO;
+    using System.Threading;
     using static UIConfig;
-    public class World
+    public partial class World
     {
-        ObjectManager objectManager;
+        ObjectManager objManager;
         private GameMap gameMap;
         private AStarSearch search;
 
-        private int[,] map;
+        int[,] map;
 
         public int[,] Map
         {
@@ -59,78 +60,15 @@ namespace Oilfield
             get { return height; }
             private set { height = value; }
         }
-        public World()
-        {
 
+        private double money;
+
+        public double Money
+        {
+            get { return money; }
+            set { money = value; }
         }
 
-        private void GenerateResources()
-        {
-            for (int k = 0; k < width / 15 + height / 15; k++)
-            {
-                IResouce field = OilGenerator.Generate(FindFreeSpace());
-
-                objectManager.Add(field);
-
-                for (int i = 0; i < 9; i++)
-                {
-                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.OilDefaultValue;
-                }
-
-                field = GasGenerator.Generate(FindFreeSpace());
-
-                objectManager.Add(field);
-
-                for (int i = 0; i < 9; i++)
-                {
-                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.GasDefaultValue;
-                }
-
-                field = WaterGenerator.Generate(FindFreeSpace());
-
-                objectManager.Add(field);
-
-                for (int i = 0; i < 9; i++)
-                {
-                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.WaterDefaultValue;
-                }
-            }
-
-            //Debug
-
-            File.Delete("log.txt");
-
-            var res = objectManager.GetResources(ResourceType.OIL);
-
-            for (int i = 0; i < res.Count; i++)
-            {
-                Oilfield f = res[i] as Oilfield;
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    Util.Log("CA: " + f.ChemicalAnalysis + " OA: " + f.OverallAnalysis + " Amount:" + f.Amount, w);
-                }
-            }
-        }
-
-        public World(int width, int height, string name = "")
-        {
-            objectManager = new ObjectManager();
-
-            Width = width;
-            Height = height;
-
-            Map = new int[width, height];
-
-            map = Landscape.MapGeneration(width, height);
-            LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
-
-            GenerateResources();
-
-            gameMap = new GameMap(width, height);
-            gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
-            search = new AStarSearch(gameMap);
-            List<Point> path = search.FindPath(new Point(20, 30), new Point(30, 40));
-        }
 
         public int[,] AStarMap
         {
@@ -157,21 +95,136 @@ namespace Oilfield
                         }
                     }
                 }
-
+                
                 return res;
             }
         }
 
-        
-
         Random rand = new Random(DateTime.Now.Millisecond);
+
+        public World()
+        {
+
+        }
+
+        public World(int width, int height, string name = "")
+        {
+            objManager = new ObjectManager();
+
+            Width = width;
+            Height = height;
+
+            Map = new int[width, height];
+
+            map = Landscape.MapGeneration(width, height);
+            //map = LevelGen.Map.Generate(1, width, height);
+            LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
+
+
+            GenerateResources();
+
+            gameMap = new GameMap(width, height);
+            gameMap.UpdateMap(AStarMap); // вызывать после каждого изменения мапы
+
+            search = new AStarSearch(gameMap);
+
+            IResource start = (IResource)objManager.GetResources()[0];
+            IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
+
+            BuildExtractor(start);
+            BuildExtractor(startWater);
+
+            BuildPipe(start, startWater);
+
+            
+
+            BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
+
+            BuildPipe(start, objManager.Depots[0]);
+        }
+
+        private Color getWaterColor(int x, int y)
+        {
+            return LevelGen.Util.WaterColors[waterColors[x, y]];
+        }
+
+        private Color getTerrainColor(int x, int y)
+        {
+            return LevelGen.Util.TerrainColors[colorMap[x, y]];
+        }
+
+        public void randomPath()
+        {
+            path = findPath(FindFreeSpace(), FindFreeSpace());
+        }
+
+        List<Point> path;
+
+        private void GenerateResources()
+        {
+            for (int k = 0; k < width / 15 + height / 15; k++)
+            {
+                IResource field = OilGenerator.Generate(FindFreeSpace());
+
+                objManager.Add(field);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.OilDefaultValue;
+                }
+
+                field = GasGenerator.Generate(FindFreeSpace());
+
+                objManager.Add(field);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.GasDefaultValue;
+                }
+
+                field = WaterGenerator.Generate(FindFreeSpace());
+
+                objManager.Add(field);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.WaterDefaultValue;
+                }
+            }
+
+            //Debug
+
+            File.Delete("log.txt");
+
+            var res = objManager.GetResources(ResourceType.OIL);
+
+            for (int i = 0; i < res.Count; i++)
+            {
+                Oilfield f = res[i] as Oilfield;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    Util.Log("CA: " + f.ChemicalAnalysis + " OA: " + f.OverallAnalysis + " Amount:" + f.Amount, w);
+                }
+            }
+        }
+
+        private List<Point> findPath(Point start, Point end)
+        {
+            gameMap.UpdateMap(AStarMap);
+            return search.FindPath(start, end);
+        }
+
+        private List<Point> findPath(IObject start, IObject end)
+        {
+            gameMap.UpdateMap(AStarMap);
+            return search.FindPath(start.Position, end.Position);
+        }
 
         private Point FindFreeSpace()
         {
 
             Point p;
             bool ok = true;
-
             do
             {
                 ok = true;
@@ -197,57 +250,121 @@ namespace Oilfield
             return p;
         }
 
+        public Point FindFreeSpaceWithDistance(Point point, int distance)
+        {
+            Point p;
+            do
+                p = FindFreeSpace();
+            while (Util.GetDistance(point, p) > distance);
 
+            return p;
+        }
+
+        private void drawRectangle(Graphics g, Color color, int x, int y)
+        {
+            g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
+        }
+
+        public void Update(double dt)
+        {
+            foreach (var item in objManager.GetExtractors())
+            {
+                (item as Extractor).Update(dt);
+            }
+        }
 
         public void Draw(Graphics g)
         {
+            foreach (var item in objManager.Pipes)
+            {
+                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+            }
+
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (step * x + dx <= WindowWidth && step * x + dx >= -step && step * y + dy <= WindowHeight && step * y + dy >= -step)
+                    if (Step * x + dx <= WindowWidth && Step * x + dx >= -Step && Step * y + dy <= WindowHeight && Step * y + dy >= -Step)
                     {
                         switch (map[x, y])
                         {
                             case LevelGen.Util.waterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.WaterColors[waterColors[x, y]]), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, getWaterColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.groundDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(LevelGen.Util.TerrainColors[colorMap[x, y]]), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, getTerrainColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.shoreDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(Color.FromArgb(145, 88, 49)), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, UIConfig.ShoreColor, x, y);
                                     break;
                                 }
 
-                            case Util.OilDefaultValue:
+                            /*case Util.OilDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.OilColor), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, UIConfig.OilColor, x, y);
                                     break;
                                 }
 
                             case Util.GasDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.GasColor), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, UIConfig.GasColor, x, y);
                                     break;
                                 }
 
                             case Util.WaterDefaultValue:
                                 {
-                                    g.FillRectangle(new SolidBrush(UIConfig.WaterColor), step * x + dx, step * y + dy, step, step);
+                                    drawRectangle(g, UIConfig.WaterColor, x, y);
                                     break;
                                 }
+                                */
                         }
                     }
                 }
             }
+
+            foreach (var item in objManager.GetResources(ResourceType.GAS))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.GasColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.GetResources(ResourceType.OIL))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.OilColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.GetResources(ResourceType.WATER))
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.WaterColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            foreach (var item in objManager.Pipes)
+            {
+                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+            }
+
+            var a = objManager.GetExtractors();
+
+            for (int i = 0; i < a.Count; i++)
+            {
+                (a[i] as Extractor).Draw(g);
+            }
+
+            foreach (var item in objManager.Depots)
+            {
+                for (int i = 0; i < 9; i++)
+                    drawRectangle(g, UIConfig.DepotColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
         }
     }
 }
