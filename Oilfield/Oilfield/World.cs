@@ -288,6 +288,8 @@ namespace Oilfield
             }
         }
 
+        
+
         public void Draw(Graphics g)
         {
             foreach (var item in objManager.Pipes)

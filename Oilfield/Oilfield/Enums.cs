@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Oilfield
 {
-    public enum Evaluation : int
+    public enum State : int
     {
         LOW = 0,
         MEDIUM = 1,
