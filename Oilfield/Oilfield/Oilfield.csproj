@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AStarNode.cs" />
     <Compile Include="AStarSearch.cs" />
+    <Compile Include="Bot.cs" />
     <Compile Include="Depot.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extractor.cs" />
