@@ -10,8 +10,8 @@ namespace Oilfield
     public class AStarSearch
     {
         bool detailedPathPrint = false;
-        bool pathPrint = true;
-        private int delta = 12;
+        //bool pathPrint = true;
+        //private int delta = 12;
         private List<long> times = new List<long>();
 
         List<AStarNode> openList = new List<AStarNode>();

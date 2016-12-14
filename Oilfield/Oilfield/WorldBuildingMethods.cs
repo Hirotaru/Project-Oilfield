@@ -29,7 +29,7 @@ namespace Oilfield
         {
             IDepot d = new Depot(pos);
             objManager.Add(d);
-
+            BuildPipe(d, objManager.GetNearestObjects(d, true)[0]);
         }
 
         public void BuildPipe(Point start, Point end)
@@ -50,6 +50,16 @@ namespace Oilfield
             Extractor ext = new Extractor(res);
             res.IsOccupied = true;
             objManager.Add(ext);
+
+            var a = objManager.GetNearestObjects(ext, true);
+
+            if (a != null)
+            {
+                if (a.Count > 0)
+                {
+                    BuildPipe(res, a[0]);
+                }
+            }
         }
     }
 }

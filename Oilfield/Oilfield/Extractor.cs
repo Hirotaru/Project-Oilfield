@@ -128,10 +128,19 @@ namespace Oilfield
             return 0;
         }
 
-        public void Update(double dt)
+        public double Update(double dt)
         {
-            extract(dt / 20);
+            return extract(dt / 20);
         }
+
+        private double estIncome;
+
+        public double EstIncome
+        {
+            get { return estIncome; }
+            set { estIncome = value; }
+        }
+
 
         public Extractor(IResource res)
         {
@@ -139,10 +148,18 @@ namespace Oilfield
 
             id = Util.NewID;
             position = res.Position;
-            income = 1;
+            income = 50;
 
-            if (res is Oilfield) type = ResourceType.OIL;
-            if (res is Gasfield) type = ResourceType.GAS;
+            if (res is Oilfield)
+            {
+                type = ResourceType.OIL;
+                estIncome = resourceAmount * Util.OilCost;
+            }
+            if (res is Gasfield)
+            {
+                type = ResourceType.GAS;
+                estIncome = resourceAmount * Util.GasCost;
+            }
             if (res is Waterfield) type = ResourceType.WATER;
 
             waterConnected = false;
@@ -150,7 +167,14 @@ namespace Oilfield
             resourceAmount = res.Amount;
             maxAmount = resourceAmount;
 
-
+            if (res is Oilfield)
+            {
+                estIncome = resourceAmount * Util.OilCost;
+            }
+            if (res is Gasfield)
+            {
+                estIncome = resourceAmount * Util.GasCost;
+            }
         }
 
         private void drawRectangle(Graphics g, Color color, int x, int y)

@@ -10,7 +10,7 @@ namespace Oilfield
         public int width;
         public int height;
         private AStarNode[,] nodes;
-        private bool printMap = false;
+        //private bool printMap = false;
 
         public static double STANDART_COST = 1;
 

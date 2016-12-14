@@ -37,16 +37,25 @@ namespace Oilfield
 
         new public void Update()
         {
-            int dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
+            Util.sw.Stop();
+            //int dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
+            int dt = (int)Util.sw.ElapsedTicks;
             lastTime = DateTime.Now.Ticks;
 
             if (world != null)
             {
-                UIConfig.Move(MousePosition, Width, Height, dt);
-                world.Update(dt);
+                if (world.Ready)
+                {
+                    UIConfig.Move(MousePosition, Width, Height, dt);
 
-                Refresh();
+                    world.Update(dt);
+                    toolStripMenuItem1.Text = ((int)world.Money).ToString();
+
+                    Refresh();
+                }
             }
+
+            Util.sw.Restart();
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -101,6 +110,7 @@ namespace Oilfield
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
                 world = new World(UIConfig.WorldWidth, UIConfig.WorldHeight);
+                Util.sw.Start();
             }
 
             
@@ -109,6 +119,11 @@ namespace Oilfield
         private void randomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             world.randomPath();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

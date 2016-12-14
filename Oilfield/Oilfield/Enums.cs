@@ -5,8 +5,12 @@ using System.Text;
 
 namespace Oilfield
 {
-    public interface IDepot : IConnectable
+    public enum Evaluation : int
     {
-
+        LOW = 0,
+        MEDIUM = 1,
+        HIGH = 2
     }
+
+    
 }

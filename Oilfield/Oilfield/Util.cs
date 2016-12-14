@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,12 @@ namespace Oilfield
 {
     public static class Util
     {
-        public const double GasCost = 4;
-        public const double OilCost = 54;
+        public const double GasCost = 0.01;
+        public const double OilCost = 0.1;
+
+        public static readonly Stopwatch sw = new Stopwatch();
+
+        public const int ExtCost = 100000;
 
         public static int[,] offsets = new int[9, 2]
             { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 },

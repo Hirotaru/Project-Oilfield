@@ -61,7 +61,7 @@ namespace Oilfield
             private set { height = value; }
         }
 
-        private double money;
+        private double money = 125000;
 
         public double Money
         {
@@ -100,6 +100,17 @@ namespace Oilfield
             }
         }
 
+
+
+        private bool ready = false;
+
+        public bool Ready
+        {
+            get { return ready; }
+            //set { ready = value; }
+        }
+
+
         Random rand = new Random(DateTime.Now.Millisecond);
 
         public World()
@@ -134,13 +145,13 @@ namespace Oilfield
             BuildExtractor(start);
             BuildExtractor(startWater);
 
-            BuildPipe(start, startWater);
-
-            
+            BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
 
             BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
 
-            BuildPipe(start, objManager.Depots[0]);
+            
+
+            ready = true;
         }
 
         private Color getWaterColor(int x, int y)
@@ -162,7 +173,7 @@ namespace Oilfield
 
         private void GenerateResources()
         {
-            for (int k = 0; k < width / 15 + height / 15; k++)
+            for (int k = 0; k < width / 12 + height / 12; k++)
             {
                 IResource field = OilGenerator.Generate(FindFreeSpace());
 
@@ -181,8 +192,11 @@ namespace Oilfield
                 {
                     map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.GasDefaultValue;
                 }
+            }
 
-                field = WaterGenerator.Generate(FindFreeSpace());
+            for (int k = 0; k < 3; k++)
+            {
+                IResource field = WaterGenerator.Generate(FindFreeSpace());
 
                 objManager.Add(field);
 
@@ -191,33 +205,24 @@ namespace Oilfield
                     map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.WaterDefaultValue;
                 }
             }
-
-            //Debug
-
-            File.Delete("log.txt");
-
-            var res = objManager.GetResources(ResourceType.OIL);
-
-            for (int i = 0; i < res.Count; i++)
-            {
-                Oilfield f = res[i] as Oilfield;
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    Util.Log("CA: " + f.ChemicalAnalysis + " OA: " + f.OverallAnalysis + " Amount:" + f.Amount, w);
-                }
-            }
         }
 
         private List<Point> findPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
-            return search.FindPath(start, end);
+            Util.sw.Stop();
+            var a = search.FindPath(start, end);
+            Util.sw.Start();
+            return a;
         }
 
         private List<Point> findPath(IObject start, IObject end)
         {
             gameMap.UpdateMap(AStarMap);
-            return search.FindPath(start.Position, end.Position);
+            Util.sw.Stop();
+            var a = search.FindPath(start.Position, end.Position);
+            Util.sw.Start();
+            return a;
         }
 
         private Point FindFreeSpace()
@@ -269,7 +274,17 @@ namespace Oilfield
         {
             foreach (var item in objManager.GetExtractors())
             {
-                (item as Extractor).Update(dt);
+                money += (item as Extractor).Update(dt);
+            }
+
+            if (money > Util.ExtCost)
+            {
+                if (rand.Next() % 2 == 0)
+                    BuildExtractor((IResource)objManager.GetBetterAnalysis(ResourceType.OIL)[0]);
+                else
+                    BuildExtractor((IResource)objManager.GetBetterAnalysis(ResourceType.GAS)[0]);
+
+                money -= Util.ExtCost;
             }
         }
 
@@ -305,25 +320,6 @@ namespace Oilfield
                                     drawRectangle(g, UIConfig.ShoreColor, x, y);
                                     break;
                                 }
-
-                            /*case Util.OilDefaultValue:
-                                {
-                                    drawRectangle(g, UIConfig.OilColor, x, y);
-                                    break;
-                                }
-
-                            case Util.GasDefaultValue:
-                                {
-                                    drawRectangle(g, UIConfig.GasColor, x, y);
-                                    break;
-                                }
-
-                            case Util.WaterDefaultValue:
-                                {
-                                    drawRectangle(g, UIConfig.WaterColor, x, y);
-                                    break;
-                                }
-                                */
                         }
                     }
                 }
@@ -352,11 +348,9 @@ namespace Oilfield
                 drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
             }
 
-            var a = objManager.GetExtractors();
-
-            for (int i = 0; i < a.Count; i++)
+            foreach (var item in objManager.GetExtractors())
             {
-                (a[i] as Extractor).Draw(g);
+                (item as Extractor).Draw(g);
             }
 
             foreach (var item in objManager.Depots)

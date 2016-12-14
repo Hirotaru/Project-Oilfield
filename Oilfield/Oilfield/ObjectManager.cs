@@ -93,13 +93,13 @@ namespace Oilfield
                     {
                         var a = from i in res where i is Oilfield select i;
 
-                        return (from i in res where !(i as IResource).IsOccupied orderby (i as Oilfield).OverallAnalysis + (i as Oilfield).ChemicalAnalysis descending select i).ToList();
+                        return (from i in a where !(i as IResource).IsOccupied orderby (i as Oilfield).OverallAnalysis + (i as Oilfield).ChemicalAnalysis descending select i).ToList();
                     }
                 case ResourceType.GAS:
                     {
                         var a = from i in res where i is Gasfield select i;
 
-                        return (from i in res where !(i as IResource).IsOccupied orderby (i as Gasfield).OverallAnalysis + (i as Gasfield).ChemicalAnalysis descending select i).ToList();
+                        return (from i in a where !(i as IResource).IsOccupied orderby (i as Gasfield).OverallAnalysis + (i as Gasfield).ChemicalAnalysis descending select i).ToList();
                     }
                 case ResourceType.WATER:
                     {
@@ -116,11 +116,33 @@ namespace Oilfield
             return null;
         }
 
-        public List<IObject> GetNearestWater(IObject obj)
+        public List<IObject> GetNearestObjects(IObject obj, bool connectable = false)
         {
-            return (from i in objects where i is Waterfield && !(i as IResource).IsOccupied orderby Util.GetDistance(obj, i) select i).ToList();
+            if (connectable)
+            {
+                return (from i in objects where i is IConnectable && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+            }
+            else
+            {
+                return (from i in objects where i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+            }
         }
 
+        public List<IObject> GetNearestWater(IObject obj)
+        {
+            return (from i in objects where i is Waterfield && !(i as IResource).IsOccupied && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+        }
+
+
+        public List<IObject> GetNearestGas(IObject obj)
+        {
+            return (from i in objects where i is Gasfield && !(i as IResource).IsOccupied && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+        }
+
+        public List<IObject> GetNearestOil(IObject obj)
+        {
+            return (from i in objects where i is Oilfield && !(i as IResource).IsOccupied && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+        }
         public void Add(IObject obj)
         {
             objects.Add(obj);

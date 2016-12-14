@@ -16,38 +16,6 @@ namespace Oilfield
             set { }
         }
 
-
-        private ResourceType resType;
-
-        public ResourceType ResType
-        {
-            get { return resType; }
-        }
-
-        private double capacity;
-
-        public double Capacity
-        {
-            get { return capacity; }
-            set { }
-        }
-
-        private int ownerID;
-
-        public int OwnerID
-        {
-            get { return ownerID; }
-            set { }
-        }
-
-        private double remainigCapacity;
-
-        public double RemainingCapacity
-        {
-            get { return remainigCapacity; }
-            set { }
-        }
-
         private Point position;
 
         public Point Position
@@ -65,6 +33,7 @@ namespace Oilfield
 
         public Depot(Point position)
         {
+            id = Util.NewID;
             this.position = position;
             connectedTo = new HashSet<IObject>();
         }

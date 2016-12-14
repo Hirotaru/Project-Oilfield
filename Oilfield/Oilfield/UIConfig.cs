@@ -11,18 +11,18 @@ namespace Oilfield
     {
         //Изменение цвета из зеленого в красный
 
-        public static Color OilColor = Color.FromArgb(18, 18, 18);
-        public static Color GasColor = Color.FromArgb(200, 200, 200);
-        public static Color WaterColor = Color.CornflowerBlue;
-        public static Color ShoreColor = Color.FromArgb(145, 88, 49);
+        public static readonly Color OilColor = Color.FromArgb(18, 18, 18);
+        public static readonly Color GasColor = Color.AntiqueWhite;
+        public static readonly Color WaterColor = Color.CornflowerBlue;
+        public static readonly Color ShoreColor = Color.FromArgb(145, 88, 49);
 
-        public static Color PipeColor = Color.Gray;
+        public static readonly Color PipeColor = Color.Gray;
 
-        public static Color WaterExtColor = Color.MediumSlateBlue;
-        public static Color OilExtColor = Color.FromArgb(38, 38, 38);
-        public static Color GasExtColor = Color.FromArgb(220, 220, 220);
+        public static readonly Color WaterExtColor = Color.MediumSlateBlue;
+        public static readonly Color OilExtColor = Color.DimGray;
+        public static readonly Color GasExtColor = Color.OldLace;
 
-        public static Color DepotColor = Color.Crimson;
+        public static Color DepotColor = Color.Coral;
 
         public static int WindowWidth;
         public static int WindowHeight;
