@@ -38,8 +38,8 @@ namespace Oilfield
         new public void Update()
         {
             Util.sw.Stop();
-            //int dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
-            int dt = (int)Util.sw.ElapsedTicks;
+            double dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
+            //double dt = (double)Util.sw.ElapsedMilliseconds;
             lastTime = DateTime.Now.Ticks;
 
             if (world != null)
@@ -50,6 +50,7 @@ namespace Oilfield
 
                     world.Update(dt);
                     toolStripMenuItem1.Text = ((int)world.Money).ToString();
+                    toolStripMenuItem2.Text = ((int)world.Income).ToString();
 
                     Refresh();
                 }

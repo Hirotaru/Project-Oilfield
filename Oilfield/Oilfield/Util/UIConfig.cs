@@ -9,10 +9,8 @@ namespace Oilfield
 {
     public static class UIConfig
     {
-        //Изменение цвета из зеленого в красный
-
         public static readonly Color OilColor = Color.FromArgb(18, 18, 18);
-        public static readonly Color GasColor = Color.AntiqueWhite;
+        public static readonly Color GasColor = Color.DarkGray;
         public static readonly Color WaterColor = Color.CornflowerBlue;
         public static readonly Color ShoreColor = Color.FromArgb(145, 88, 49);
 
@@ -20,7 +18,7 @@ namespace Oilfield
 
         public static readonly Color WaterExtColor = Color.MediumSlateBlue;
         public static readonly Color OilExtColor = Color.DimGray;
-        public static readonly Color GasExtColor = Color.OldLace;
+        public static readonly Color GasExtColor = Color.LightGray;
 
         public static Color DepotColor = Color.Coral;
 
@@ -30,13 +28,13 @@ namespace Oilfield
         public static int WorldWidth;
         public static int WorldHeight;
 
-        public static int Step = 8;
+        public static int Step = 10;
 
         public static int dx = 0, dy = 24;
 
         static readonly float ScrollSpeed = 0.9F;
 
-        public static bool Move(Point MousePoint, int Width, int Height, long dt)
+        public static bool Move(Point MousePoint, int Width, int Height, double dt)
         {
             bool changed = false;
 

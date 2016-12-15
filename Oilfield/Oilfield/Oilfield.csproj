@@ -57,10 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AStarNode.cs" />
-    <Compile Include="AStarSearch.cs" />
+    <Compile Include="AStar\AStarNode.cs" />
+    <Compile Include="AStar\AStarSearch.cs" />
+    <Compile Include="Bot.cs" />
     <Compile Include="Depot.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Util\Enums.cs" />
     <Compile Include="Extractor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -68,27 +69,28 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameMap.cs" />
-    <Compile Include="GasField.cs" />
-    <Compile Include="GasGenerator.cs" />
-    <Compile Include="IConnectable.cs" />
-    <Compile Include="IDepot.cs" />
-    <Compile Include="IExtractor.cs" />
-    <Compile Include="IObject.cs" />
-    <Compile Include="IResource.cs" />
-    <Compile Include="ObjectManager.cs" />
-    <Compile Include="Oilfield.cs" />
-    <Compile Include="OilGenerator.cs" />
+    <Compile Include="AStar\GameMap.cs" />
+    <Compile Include="Resources\GasField.cs" />
+    <Compile Include="Generators\GasGenerator.cs" />
+    <Compile Include="Interfaces\IConnectable.cs" />
+    <Compile Include="Interfaces\IDepot.cs" />
+    <Compile Include="Interfaces\IExtractor.cs" />
+    <Compile Include="Interfaces\IObject.cs" />
+    <Compile Include="Interfaces\IResource.cs" />
+    <Compile Include="World\WorldObjManagerMethods.cs" />
+    <Compile Include="World\ObjectManager.cs" />
+    <Compile Include="Resources\Oilfield.cs" />
+    <Compile Include="Generators\OilGenerator.cs" />
     <Compile Include="Pipe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceType.cs" />
-    <Compile Include="UIConfig.cs" />
-    <Compile Include="Util.cs" />
-    <Compile Include="Waterfield.cs" />
-    <Compile Include="WaterGenerator.cs" />
-    <Compile Include="World.cs" />
-    <Compile Include="WorldBuildingMethods.cs" />
+    <Compile Include="Resources\ResourceType.cs" />
+    <Compile Include="Util\UIConfig.cs" />
+    <Compile Include="Util\Util.cs" />
+    <Compile Include="Resources\Waterfield.cs" />
+    <Compile Include="Generators\WaterGenerator.cs" />
+    <Compile Include="World\World.cs" />
+    <Compile Include="World\WorldBuildingMethods.cs" />
     <Compile Include="WorldCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
