@@ -133,6 +133,10 @@ namespace Oilfield
             return (from i in objects where i is Waterfield && !(i as IResource).IsOccupied && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
         }
 
+        public List<IObject> GetWorkingExts()
+        {
+            return (from i in objects where i is IExtractor && (i as IExtractor).IsWorking select i).ToList();
+        }
 
         public List<IObject> GetNearestGas(IObject obj)
         {

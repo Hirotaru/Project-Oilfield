@@ -11,7 +11,7 @@ namespace Oilfield
 
         double Depth { get; }
 
-        double Amount { get; } //Закрыть
+        double Amount { get; set; } //Закрыть
 
         bool IsOccupied { get; set; }
 

@@ -8,6 +8,15 @@ namespace Oilfield
 {
     public class Extractor : IExtractor
     {
+
+        private bool isWorking;
+
+        public bool IsWorking
+        {
+            get { return isWorking; }
+            set { isWorking = value; }
+        }
+
         private HashSet<IObject> connectedTo;
 
         public HashSet<IObject> ConnectedTo
@@ -49,6 +58,15 @@ namespace Oilfield
         {
             get { return resourceAmount; }
         }
+
+        private IResource res;
+
+        public IResource Resource
+        {
+            get { return res; }
+            set { res = value; }
+        }
+
 
         private Point position;
 
@@ -111,16 +129,19 @@ namespace Oilfield
                 if (d.ToList().Count == 0)
                     return 0;*/
 
-                if (resourceAmount > income * dt)
+                if (resourceAmount > income)
                 {
-                    double money = income * dt * Util.OilCost;
-                    resourceAmount -= income * dt;
+                    double money = income * Util.OilCost;
+                    resourceAmount -= income;
+                    res.Amount -= income;
                     return money;
                 }
                 else
                 {
                     double money = resourceAmount * Util.OilCost;
                     resourceAmount = 0;
+                    res.Amount = 0;
+                    IsWorking = false;
                     return money;
                 }
             }
@@ -130,7 +151,7 @@ namespace Oilfield
 
         public double Update(double dt)
         {
-            return extract(dt / 20);
+            return extract(dt / 10);
         }
 
         private double estIncome;
@@ -144,11 +165,13 @@ namespace Oilfield
 
         public Extractor(IResource res)
         {
+            this.res = res;
+
             connectedTo = new HashSet<IObject>();
 
             id = Util.NewID;
             position = res.Position;
-            income = 50;
+            income = 150;
 
             if (res is Oilfield)
             {
@@ -170,11 +193,15 @@ namespace Oilfield
             if (res is Oilfield)
             {
                 estIncome = resourceAmount * Util.OilCost;
+                IsWorking = true;
             }
             if (res is Gasfield)
             {
                 estIncome = resourceAmount * Util.GasCost;
+                IsWorking = true;
             }
+
+            
         }
 
         private void drawRectangle(Graphics g, Color color, int x, int y)

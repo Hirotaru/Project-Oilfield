@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
-    public class Oilfield : IResource
+    public class Gasfield : IResource
     {
         private int id;
 
@@ -32,6 +32,7 @@ namespace Oilfield
             private set { overallAnalysis = value; }
         }
 
+
         private bool isOccupied;
 
         public bool IsOccupied
@@ -53,7 +54,7 @@ namespace Oilfield
         public double Amount
         {
             get { return amount; }
-            set { }
+            set { amount = value; }
         }
 
         private double depth;
@@ -64,9 +65,7 @@ namespace Oilfield
             set { }
         }
 
-        public Oilfield() { }
-
-        public Oilfield(Point pos, double depth, double amount, int CA, int OA)
+        public Gasfield(Point pos, double depth, double amount, int CA, int OA)
         {
             id = Util.NewID;
 

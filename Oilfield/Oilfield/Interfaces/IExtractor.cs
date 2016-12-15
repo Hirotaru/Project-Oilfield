@@ -7,6 +7,7 @@ namespace Oilfield
 {
     public interface IExtractor : IConnectable
     {
+        bool IsWorking { get; }
         double ResourceAmount { get; }
 
         ResourceType Type { get; }

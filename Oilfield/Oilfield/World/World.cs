@@ -83,6 +83,7 @@ namespace Oilfield
                         switch (map[x, y])
                         {
                             case LevelGen.Util.groundDefaultValue:
+                            case Util.PipeValue:
                                 {
                                     res[x, y] = 1;
                                     break;
@@ -207,6 +208,26 @@ namespace Oilfield
             }
         }
 
+        public WorldState GetState()
+        {
+            WorldState res = new WorldState();
+
+            if (money < Util.ExtCost) res.Money = (int)State.LOW;
+            else if (money < Util.ExtCost * 2) res.Money = (int)State.MEDIUM;
+            else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
+
+            if (income < 150) res.Income = (int)State.LOW;
+            else if (income < 250) res.Income = (int)State.MEDIUM;
+            else if (income >= 250) res.Income = (int)State.HIGH;
+
+            var a = objManager.GetWorkingExts();
+
+            if (a.Count < 2) res.ExtCount = (int)State.LOW;
+            else if (a.Count < 4) res.ExtCount = (int)State.MEDIUM;
+            else if (a.Count >= 4) res.ExtCount = (int)State.HIGH;
+
+            return res;
+        }
         private List<Point> findPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
@@ -227,7 +248,6 @@ namespace Oilfield
 
         private Point FindFreeSpace()
         {
-
             Point p;
             bool ok = true;
             do
@@ -270,11 +290,26 @@ namespace Oilfield
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
         }
 
+        private double income;
+
+        public double Income
+        {
+            get { return income; }
+        }
+
+
         public void Update(double dt)
         {
+            if (!ready)
+                return;
+
+            income = 0;
+
             foreach (var item in objManager.GetExtractors())
             {
-                money += (item as Extractor).Update(dt);
+                double i = (item as Extractor).Update(dt);
+                money += i;
+                income += i;
             }
 
             if (money > Util.ExtCost)
@@ -357,6 +392,13 @@ namespace Oilfield
             {
                 for (int i = 0; i < 9; i++)
                     drawRectangle(g, UIConfig.DepotColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+            }
+
+            //debug
+
+            foreach (var item in objManager.GetResources(ResourceType.ALL))
+            {
+                g.DrawString((item as IResource).Amount.ToString(), new Font("Courier New", 8), Brushes.LimeGreen, item.Position.X * Step + dx, item.Position.Y * Step + dy);
             }
 
         }
