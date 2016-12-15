@@ -217,8 +217,8 @@ namespace Oilfield
             else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
 
             if (income < 150) res.Income = (int)State.LOW;
-            else if (income < 250) res.Income = (int)State.MEDIUM;
-            else if (income >= 250) res.Income = (int)State.HIGH;
+            else if (income < 400) res.Income = (int)State.MEDIUM;
+            else if (income >= 400) res.Income = (int)State.HIGH;
 
             var a = objManager.GetWorkingExts();
 
