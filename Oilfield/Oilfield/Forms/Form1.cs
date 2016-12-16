@@ -37,9 +37,7 @@ namespace Oilfield
 
         new public void Update()
         {
-            Util.sw.Stop();
             double dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
-            //double dt = (double)Util.sw.ElapsedMilliseconds;
             lastTime = DateTime.Now.Ticks;
 
             if (world != null)
@@ -49,14 +47,18 @@ namespace Oilfield
                     UIConfig.Move(MousePosition, Width, Height, dt);
 
                     world.Update(dt);
-                    toolStripMenuItem1.Text = ((int)world.Money).ToString();
-                    toolStripMenuItem2.Text = ((int)world.Income).ToString();
+                    toolStripMenuItem1.Text = "Money: " + ((int)world.Money).ToString();
+                    toolStripMenuItem2.Text = "Income: " + ((int)world.Income).ToString();
+
+                    toolStripMenuItem3.Text = "MoneyState: " + world.GetState().Money.ToString() +
+                        " IncomeState: " + world.GetState().Income.ToString() +
+                        " ExtState: " + world.GetState().ExtCount.ToString();
+
+                    toolStripMenuItem3.Text = ("asd" == "asd").ToString();
 
                     Refresh();
                 }
             }
-
-            Util.sw.Restart();
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -111,15 +113,9 @@ namespace Oilfield
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
                 world = new World(UIConfig.WorldWidth, UIConfig.WorldHeight);
-                Util.sw.Start();
             }
 
             
-        }
-
-        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            world.randomPath();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

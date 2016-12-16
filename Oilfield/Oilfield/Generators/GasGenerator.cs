@@ -45,7 +45,7 @@ namespace Oilfield
             double x = CA * 1.1 + OA * 0.9;
             double amount = Math.Pow(x, 1.5);
 
-            amount = amount * (1000 + rand.Next(-250, 250));
+            amount = amount * (2000 + rand.Next(-250, 250));
 
             return amount;
         }

@@ -171,7 +171,7 @@ namespace Oilfield
 
             id = Util.NewID;
             position = res.Position;
-            income = 150;
+            income = 200;
 
             if (res is Oilfield)
             {

@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace Oilfield
 {
+    using System.Collections;
     using System.Diagnostics;
     using System.IO;
     using System.Threading;
@@ -216,7 +217,7 @@ namespace Oilfield
             else if (money < Util.ExtCost * 2) res.Money = (int)State.MEDIUM;
             else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
 
-            if (income < 150) res.Income = (int)State.LOW;
+            if (income < 200) res.Income = (int)State.LOW;
             else if (income < 400) res.Income = (int)State.MEDIUM;
             else if (income >= 400) res.Income = (int)State.HIGH;
 
@@ -231,18 +232,14 @@ namespace Oilfield
         private List<Point> findPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
-            Util.sw.Stop();
             var a = search.FindPath(start, end);
-            Util.sw.Start();
             return a;
         }
 
         private List<Point> findPath(IObject start, IObject end)
         {
             gameMap.UpdateMap(AStarMap);
-            Util.sw.Stop();
             var a = search.FindPath(start.Position, end.Position);
-            Util.sw.Start();
             return a;
         }
 
@@ -314,16 +311,11 @@ namespace Oilfield
 
             if (money > Util.ExtCost)
             {
-                if (rand.Next() % 2 == 0)
-                    BuildExtractor((IResource)objManager.GetBetterAnalysis(ResourceType.OIL)[0]);
-                else
-                    BuildExtractor((IResource)objManager.GetBetterAnalysis(ResourceType.GAS)[0]);
+                BuildExtractor((IResource)objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
 
                 money -= Util.ExtCost;
             }
         }
-
-        
 
         public void Draw(Graphics g)
         {
@@ -404,5 +396,149 @@ namespace Oilfield
             }
 
         }
+
+        public int GetPunishment(WorldState state)
+        {
+            switch (state.ToString())
+            {
+                case "000":
+                    {
+                        return (int)Reward.VERYBAD;
+                    }
+
+                case "001":
+                    {
+                        return (int)Reward.VERYBAD;
+                    }
+
+                case "002":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "010":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "011":
+                    {
+                        return (int)Reward.NORMAL;
+                    }
+
+                case "012":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "020":
+                    {
+                        return (int)Reward.NORMAL;
+                    }
+
+                case "021":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "022":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+
+                case "100":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "101":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "102":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "110":
+                    {
+                        return (int)Reward.NORMAL;
+                    }
+
+                case "111":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "112":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "120":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "121":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+
+                case "122":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+
+                case "200":
+                    {
+                        return (int)Reward.VERYBAD;
+                    }
+
+                case "201":
+                    {
+                        return (int)Reward.BAD;
+                    }
+
+                case "202":
+                    {
+                        return (int)Reward.NORMAL;
+                    }
+
+                case "210":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "211":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "212":
+                    {
+                        return (int)Reward.GOOD;
+                    }
+
+                case "220":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+
+                case "221":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+
+                case "222":
+                    {
+                        return (int)Reward.VERYGOOD;
+                    }
+            }
+
+            return 0;
+        }
+
     }
 }

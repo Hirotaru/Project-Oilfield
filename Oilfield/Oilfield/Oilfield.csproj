@@ -61,12 +61,18 @@
     <Compile Include="AStar\AStarSearch.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Depot.cs" />
-    <Compile Include="Util\Enums.cs" />
-    <Compile Include="Extractor.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\Enums.cs" />
+    <Compile Include="Extractor.cs" />
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="AStar\GameMap.cs" />
@@ -91,14 +97,17 @@
     <Compile Include="Generators\WaterGenerator.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="World\WorldBuildingMethods.cs" />
-    <Compile Include="WorldCreationForm.cs">
+    <Compile Include="Forms\WorldCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorldCreationForm.Designer.cs">
+    <Compile Include="Forms\WorldCreationForm.Designer.cs">
       <DependentUpon>WorldCreationForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,7 +118,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="WorldCreationForm.resx">
+    <EmbeddedResource Include="Forms\WorldCreationForm.resx">
       <DependentUpon>WorldCreationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
@@ -124,7 +133,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LevelGen.dll" />
+    <Content Include="Util\LevelGen.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
