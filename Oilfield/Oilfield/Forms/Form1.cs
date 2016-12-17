@@ -39,13 +39,13 @@ namespace Oilfield
             double dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
             lastTime = DateTime.Now.Ticks;
 
-            if (trainer.World != null)
+            if (trainer != null)
             {
                 if (trainer.World.Ready)
                 {
                     UIConfig.Move(MousePosition, Width, Height, dt);
 
-                    trainer.World.Update(dt);
+                    trainer.Update(dt);
                     toolStripMenuItem1.Text = "Money: " + ((int)trainer.World.Money).ToString();
                     toolStripMenuItem2.Text = "Income: " + ((int)trainer.World.Income).ToString();
 
@@ -86,7 +86,7 @@ namespace Oilfield
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            if (trainer.World != null)
+            if (trainer != null)
                 trainer.World.Draw(e.Graphics);
         }
 
