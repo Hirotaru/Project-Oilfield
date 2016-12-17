@@ -23,7 +23,7 @@ namespace Oilfield
             DoubleBuffered = true;
 
             WindowState = FormWindowState.Normal;
-            FormBorderStyle = FormBorderStyle.None;
+            // FormBorderStyle = FormBorderStyle.None;
             Bounds = Screen.PrimaryScreen.Bounds;
 
             UIConfig.WindowHeight = Height;

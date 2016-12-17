@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -10,21 +11,35 @@ namespace Oilfield
         public World World;
         private Bot bot;
         int index = 0;
+        int iterationCount = 1;
+        int curIteration = 1;
 
-        public Trainer(int width, int height, string name = "")
+        public Trainer(int width, int height, int iteration = 10, string name = "")
         {
             World = new World(width, height, name);
             bot = new Bot(World);
+            iterationCount = iteration;
         }
 
         public void Update(double dt)
         {
-            World.Update(dt);
-            index++;
-            if (index > 100)
+            if (World.IsEnd())
             {
-                index = 0;
-                bot.Step();
+                Debug.WriteLine(String.Format("Iteration {0} end. Reward: {1}", curIteration,
+                    bot.Reward));
+                curIteration++;
+                if (curIteration >= iterationCount) return;
+                Reset();
+            }
+            else
+            {
+                World.Update(dt);
+                index++;
+                if (index > 100)
+                {
+                    index = 0;
+                    bot.Step();
+                }
             }
         }
 

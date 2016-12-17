@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +8,9 @@ namespace Oilfield
 {
     class Bot
     {
+        public bool IsDebug = true;
+        public double Reward;
+
         World world;
         double discount;
         double explore;
@@ -14,7 +18,6 @@ namespace Oilfield
         double learningRate;
         WorldState state;
         WorldState prevState;
-        double reward;
         Random rand = new Random(DateTime.Now.Millisecond);
         Dictionary<string, List<double>> qTable;
         static List<string> actions;
@@ -55,12 +58,12 @@ namespace Oilfield
             this.exploreDiscount = exploreDiscount;
             this.learningRate = learningRate;
 
-            reward = 0;
+            Reward = 0;
         }
 
         public void Reset()
         {
-            reward = 0;
+            Reward = 0;
         }
 
         private WorldState takeAction(string act)
@@ -125,26 +128,39 @@ namespace Oilfield
         public void Step()
         {
             // main update method
+            if (IsDebug)
+                Debug.WriteLine("Step. ");
             string act = "";
             if (rand.Next(100) / 100.0D < explore)
             {
                 act = actions[rand.Next(0, actions.Count - 1)];
+                if (IsDebug)
+                    Debug.Write("Random action: " + act);
             }
             else
             {
                 act = bestAction();
+                if (IsDebug)
+                    Debug.Write("Best action: " + act);
             }
 
             explore *= exploreDiscount;
+            if (IsDebug)
+                Debug.Write(". Explore rate: " + explore.ToString());
+
             prevState = state;
 
             state = takeAction(act);
+            if (IsDebug)
+                Debug.Write(". New state: " + state.ToString() + "\n");
+
+            learn(act);
         }
 
         private void learn(string act)
         {
             int rew = world.GetReward(state);
-            reward += rew;
+            Reward += rew;
             // most important part
             qTable[prevState.ToString()][actions.IndexOf(act)] = 
                 qTable[prevState.ToString()][actions.IndexOf(act)] +
