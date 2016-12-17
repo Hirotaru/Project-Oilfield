@@ -147,14 +147,15 @@ namespace Oilfield
             IResource start = (IResource)objManager.GetResources()[0];
             IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
 
+
+            money = Util.StartMoney + Util.ExtCost * 3;
+
             BuildExtractor(start);
             BuildExtractor(startWater);
 
             BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
 
             BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
-
-            money = Util.StartMoney;
 
             ready = true;
 
@@ -316,7 +317,7 @@ namespace Oilfield
 
             foreach (var item in objManager.GetExtractors())
             {
-                double i = (item as Extractor).Update(dt);
+                double i = (item as Extractor).Update();
                 money += i;
                 income += i;
             }
@@ -324,8 +325,6 @@ namespace Oilfield
             if (money > Util.ExtCost)
             {
                 BuildExtractor((IResource)objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
-
-                money -= Util.ExtCost;
             }
         }
 
