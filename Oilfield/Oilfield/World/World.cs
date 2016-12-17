@@ -62,7 +62,7 @@ namespace Oilfield
             private set { height = value; }
         }
 
-        private double money = 125000;
+        private double money;
 
         public double Money
         {
@@ -120,19 +120,22 @@ namespace Oilfield
 
         }
 
-        public World(int width, int height, string name = "")
+        public void Reset()
+        {
+            ready = false;
+            objManager.Reset();
+
+            Init();
+        }
+
+        private void Init()
         {
             objManager = new ObjectManager();
-
-            Width = width;
-            Height = height;
 
             Map = new int[width, height];
 
             map = Landscape.MapGeneration(width, height);
-            //map = LevelGen.Map.Generate(1, width, height);
             LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
-
 
             GenerateResources();
 
@@ -151,9 +154,18 @@ namespace Oilfield
 
             BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
 
-            
+            money = Util.StartMoney;
 
             ready = true;
+
+        }
+
+        public World(int width, int height, string name = "")
+        {
+            Width = width;
+            Height = height;
+
+            Init();
         }
 
         private Color getWaterColor(int x, int y)
@@ -217,9 +229,9 @@ namespace Oilfield
             else if (money < Util.ExtCost * 2) res.Money = (int)State.MEDIUM;
             else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
 
-            if (income < 200) res.Income = (int)State.LOW;
-            else if (income < 400) res.Income = (int)State.MEDIUM;
-            else if (income >= 400) res.Income = (int)State.HIGH;
+            if (income < 300) res.Income = (int)State.LOW;
+            else if (income < 600) res.Income = (int)State.MEDIUM;
+            else if (income >= 600) res.Income = (int)State.HIGH;
 
             var a = objManager.GetWorkingExts();
 

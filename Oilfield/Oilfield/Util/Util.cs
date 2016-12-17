@@ -66,6 +66,7 @@ namespace Oilfield
             get { return id - 1; }
         }
 
+        public static readonly double StartMoney = 125000;
         public static double GetDistance(IObject obj1, IObject obj2)
         {
             return GetDistance(obj1.Position, obj2.Position);

@@ -54,8 +54,6 @@ namespace Oilfield
                         " IncomeState: " + world.GetState().Income.ToString() +
                         " ExtState: " + world.GetState().ExtCount.ToString();
 
-                    toolStripMenuItem3.Text = ("asd" == "asd").ToString();
-
                     Refresh();
                 }
             }
@@ -121,6 +119,11 @@ namespace Oilfield
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            world.Reset();
         }
     }
 }

@@ -40,5 +40,14 @@ namespace Oilfield
 
             return convertObjectToResource(a);
         }
+
+        public IResource GetRandomResource(ResourceType type = ResourceType.ALL)
+        {
+            var a = objManager.GetResources(type);
+
+            var b = convertObjectToResource(a);
+
+            return b[rand.Next(0, b.Count)];
+        }
     }
 }
