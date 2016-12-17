@@ -67,6 +67,7 @@
     <Compile Include="Forms\HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Trainer.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Extractor.cs" />
     <Compile Include="Forms\Form1.cs">

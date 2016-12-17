@@ -12,11 +12,10 @@ namespace Oilfield
 {
     public partial class MainForm : Form
     {
-        World world;
+        Trainer trainer;
         public MainForm()
         {
             InitializeComponent();
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -24,7 +23,7 @@ namespace Oilfield
             DoubleBuffered = true;
 
             WindowState = FormWindowState.Normal;
-            FormBorderStyle = FormBorderStyle.None;
+            // FormBorderStyle = FormBorderStyle.None;
             Bounds = Screen.PrimaryScreen.Bounds;
 
             UIConfig.WindowHeight = Height;
@@ -40,19 +39,19 @@ namespace Oilfield
             double dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
             lastTime = DateTime.Now.Ticks;
 
-            if (world != null)
+            if (trainer != null)
             {
-                if (world.Ready)
+                if (trainer.World.Ready)
                 {
                     UIConfig.Move(MousePosition, Width, Height, dt);
 
-                    world.Update(dt);
-                    toolStripMenuItem1.Text = "Money: " + ((int)world.Money).ToString();
-                    toolStripMenuItem2.Text = "Income: " + ((int)world.Income).ToString();
+                    trainer.Update(dt);
+                    toolStripMenuItem1.Text = "Money: " + ((int)trainer.World.Money).ToString();
+                    toolStripMenuItem2.Text = "Income: " + ((int)trainer.World.Income).ToString();
 
-                    toolStripMenuItem3.Text = "MoneyState: " + world.GetState().Money.ToString() +
-                        " IncomeState: " + world.GetState().Income.ToString() +
-                        " ExtState: " + world.GetState().ExtCount.ToString();
+                    toolStripMenuItem3.Text = "MoneyState: " + trainer.World.GetState().Money.ToString() +
+                        " IncomeState: " + trainer.World.GetState().Income.ToString() +
+                        " ExtState: " + trainer.World.GetState().ExtCount.ToString();
 
                     Refresh();
                 }
@@ -87,8 +86,8 @@ namespace Oilfield
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            if (world != null)
-            world.Draw(e.Graphics);
+            if (trainer != null)
+                trainer.World.Draw(e.Graphics);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -110,7 +109,8 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-                world = new World(UIConfig.WorldWidth, UIConfig.WorldHeight);
+
+                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight);
             }
 
             
@@ -123,7 +123,7 @@ namespace Oilfield
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            world.Reset();
+            trainer.Reset();
         }
     }
 }
