@@ -14,7 +14,7 @@ namespace Oilfield
         int iterationCount = 1;
         int curIteration = 1;
 
-        public Trainer(int width, int height, int iteration = 10, string name = "")
+        public Trainer(int width, int height, int iteration = 100000, string name = "")
         {
             World = new World(width, height, name);
             bot = new Bot(World);
@@ -35,7 +35,7 @@ namespace Oilfield
             {
                 World.Update(dt);
                 index++;
-                if (index > 100)
+                if (index > 50)
                 {
                     index = 0;
                     bot.Step();

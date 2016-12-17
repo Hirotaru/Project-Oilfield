@@ -109,8 +109,9 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-
                 trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight);
+
+                drawingONToolStripMenuItem.Text = "Drawing: ON";
             }
 
             
@@ -124,6 +125,25 @@ namespace Oilfield
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.Reset();
+        }
+
+        private void drawingONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (trainer == null) return;
+            if (trainer.World == null) return;
+                
+            bool d = trainer.World.Drawing;
+
+            trainer.World.Drawing = !d;
+
+            if (d)
+            {
+                drawingONToolStripMenuItem.Text = "Drawing: OFF";
+            }
+            else
+            {
+                drawingONToolStripMenuItem.Text = "Drawing: ON";
+            }
         }
     }
 }

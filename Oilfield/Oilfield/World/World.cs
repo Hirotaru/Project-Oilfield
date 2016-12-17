@@ -144,7 +144,7 @@ namespace Oilfield
 
             search = new AStarSearch(gameMap);
 
-            IResource start = (IResource)objManager.GetResources()[0];
+            IResource start = GetBetterAnalysis(ResourceType.OIL)[0];
             IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
 
 
@@ -230,9 +230,9 @@ namespace Oilfield
             else if (money < Util.ExtCost * 2) res.Money = (int)State.MEDIUM;
             else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
 
-            if (income < 300) res.Income = (int)State.LOW;
-            else if (income < 600) res.Income = (int)State.MEDIUM;
-            else if (income >= 600) res.Income = (int)State.HIGH;
+            if (income < 600) res.Income = (int)State.LOW;
+            else if (income < 1200) res.Income = (int)State.MEDIUM;
+            else if (income >= 1200) res.Income = (int)State.HIGH;
 
             var a = objManager.GetWorkingExts();
 
@@ -300,7 +300,7 @@ namespace Oilfield
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
         }
 
-        private double income;
+        private double income = 1;
 
         public double Income
         {
@@ -321,17 +321,20 @@ namespace Oilfield
                 money += i;
                 income += i;
             }
-
-            /*
-            if (money > Util.ExtCost)
-            {
-                BuildExtractor((IResource)objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
-            }
-            */
         }
+
+        public bool Drawing
+        {
+            get { return drawing; }
+            set { drawing = value; }
+        }
+
+        private bool drawing = true;
 
         public void Draw(Graphics g)
         {
+            if (!drawing) return;
+
             foreach (var item in objManager.Pipes)
             {
                 drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);

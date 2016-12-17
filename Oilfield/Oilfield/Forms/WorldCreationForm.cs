@@ -23,8 +23,8 @@ namespace Oilfield
 
         private void WorldCreationForm_Load(object sender, EventArgs e)
         {
-            worldWidthTB.Text = 150.ToString();
-            worldHeightTB.Text = 150.ToString();
+            worldWidthTB.Text = 100.ToString();
+            worldHeightTB.Text = 100.ToString();
 
 
         }
@@ -37,6 +37,16 @@ namespace Oilfield
         public int WorldHeight
         {
             get { return Convert.ToInt32(worldHeightTB.Text); }
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

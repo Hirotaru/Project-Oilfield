@@ -65,7 +65,7 @@ namespace Oilfield
                     BuildPipe(res, a[0]);
                 }
             }
-
+            income = 1;
             return true;
         }
     }
