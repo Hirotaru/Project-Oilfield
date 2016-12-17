@@ -154,42 +154,91 @@ namespace Oilfield
 
         private void buildBestOilChemic()
         {
-            world.BuildExtractor((IResource)world.objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
+            try
+            {
+                world.BuildExtractor(world.GetBetterChemicalAnalysis(ResourceType.OIL)[0]);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void buildBestOilBeauti()
         {
+            try
+            {
+                world.BuildExtractor(world.GetBetterAnalysis(ResourceType.OIL)[0]);
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void buildBestOilBoth()
         {
+            try
+            {
+                world.BuildExtractor(world.GetBetterOverallAnalysis(ResourceType.OIL)[0]);
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void buildBestGasChemic()
         {
+            try
+            {
+                world.BuildExtractor(world.GetBetterChemicalAnalysis(ResourceType.GAS)[0]);
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void buildBestGasBeauti()
         {
+            try
+            {
+                world.BuildExtractor(world.GetBetterAnalysis(ResourceType.GAS)[0]);
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void buildBestGasBoth()
         {
+            try
+            {
+                world.BuildExtractor(world.GetBetterOverallAnalysis(ResourceType.GAS)[0]);
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void buildRandom()
         {
+            try
+            {
+                world.BuildExtractor(world.GetRandomResource());
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
 
         private void idle()
         {
-
+            // do nothing
         }
 
         public int StateValue()
