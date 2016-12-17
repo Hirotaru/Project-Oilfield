@@ -17,23 +17,28 @@ namespace Oilfield
         double reward;
         Random rand = new Random(DateTime.Now.Millisecond);
         Dictionary<string, List<double>> qTable;
-        static List<string> actions = new List<string>() { "BuildBestOilChemic", "BuildBestOilBeauti", "BuildBestOilBoth",
-                                           "BuildBestGasChemic", "BuildBestGasBeauti", "BuildBestGasBoth",
-                                           "BuildRandom", "Idle" };
+        static List<string> actions;
         List<string> states;
 
         public Bot(World w, double discount=0.5, double explore=0.9,
-                   double exploreDiscount=0.99, double learningRate=0.5)
+                   double exploreDiscount=0.99, double learningRate=0.3)
         {
             // discount: how much the agent values future rewards over immediate rewards
             // explore: with what probability the agent "explores", i.e.chooses a random action
             // exploreDiscount: how mush decrease explore in each step
             // learning_rate: how quickly the agent learns
+
             world = w;
             state = world.GetState();
             prevState = world.GetState();
 
-            states = new List<string>() ,{ };
+            states = new List<string>() { "000", "001", "002", "010", "011", "012", "020", "021", "022",
+                                          "100", "101", "102", "110", "111", "112", "120", "121", "122",
+                                          "200", "201", "202", "210", "211", "212", "220", "221", "222"};
+
+            actions = new List<string>() { "BuildBestOilChemic", "BuildBestOilBeauti", "BuildBestOilBoth",
+                                           "BuildBestGasChemic", "BuildBestGasBeauti", "BuildBestGasBoth",
+                                           "BuildRandom", "Idle" };
 
             qTable = new Dictionary<string, List<double>>();
             for (int i = 0; i < states.Count; i++)
@@ -58,7 +63,7 @@ namespace Oilfield
             reward = 0;
         }
 
-        private void takeAction(string act)
+        private WorldState takeAction(string act)
         {
             if (act == actions[0])
             {
@@ -96,6 +101,8 @@ namespace Oilfield
             {
                 throw new Exception("Wrong action!");
             }
+
+            return world.GetState();
         }
 
         private string bestAction()
@@ -129,11 +136,25 @@ namespace Oilfield
             }
 
             explore *= exploreDiscount;
+            prevState = state;
+
+            state = takeAction(act);
+        }
+
+        private void learn(string act)
+        {
+            int rew = world.GetReward(state);
+            reward += rew;
+            // most important part
+            qTable[prevState.ToString()][actions.IndexOf(act)] = 
+                qTable[prevState.ToString()][actions.IndexOf(act)] +
+                learningRate * (rew + discount * qTable[state.ToString()].Max() -
+                qTable[prevState.ToString()][actions.IndexOf(act)]);
         }
 
         private void buildBestOilChemic()
         {
-
+            world.BuildExtractor((IResource)world.objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
         }
 
         private void buildBestOilBeauti()

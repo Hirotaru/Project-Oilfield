@@ -409,7 +409,7 @@ namespace Oilfield
 
         }
 
-        public int GetPunishment(WorldState state)
+        public int GetReward(WorldState state)
         {
             switch (state.ToString())
             {
