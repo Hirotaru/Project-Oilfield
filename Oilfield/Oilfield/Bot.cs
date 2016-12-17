@@ -10,64 +10,163 @@ namespace Oilfield
         World world;
         double discount;
         double explore;
+        double exploreDiscount;
         double learningRate;
-        // State state;
+        WorldState state;
+        WorldState prevState;
         double reward;
-        // Q[,]
+        Random rand = new Random(DateTime.Now.Millisecond);
+        Dictionary<string, List<double>> qTable;
+        static List<string> actions = new List<string>() { "BuildBestOilChemic", "BuildBestOilBeauti", "BuildBestOilBoth",
+                                           "BuildBestGasChemic", "BuildBestGasBeauti", "BuildBestGasBoth",
+                                           "BuildRandom", "Idle" };
+        List<string> states;
 
-        public Bot(World w, double discount=0.5, double explore=0.5, double learningRate=0.5)
+        public Bot(World w, double discount=0.5, double explore=0.9,
+                   double exploreDiscount=0.99, double learningRate=0.5)
         {
-            // give here starting state
+            // discount: how much the agent values future rewards over immediate rewards
+            // explore: with what probability the agent "explores", i.e.chooses a random action
+            // exploreDiscount: how mush decrease explore in each step
+            // learning_rate: how quickly the agent learns
             world = w;
+            state = world.GetState();
+            prevState = world.GetState();
+
+            states = new List<string>() ,{ };
+
+            qTable = new Dictionary<string, List<double>>();
+            for (int i = 0; i < states.Count; i++)
+            {
+                qTable[states[i]] = new List<double>();
+                for (int j = 0; j < actions.Count; j++)
+                {
+                    qTable[states[i]].Add(0);
+                }
+            }
 
             this.discount = discount;
             this.explore = explore;
+            this.exploreDiscount = exploreDiscount;
             this.learningRate = learningRate;
 
             reward = 0;
         }
 
-        public void SetState()
+        public void Reset()
         {
-            // сюда каждый апддейт передавать текущий стейт
+            reward = 0;
         }
 
-        public void BuildBestOilChemic()
+        private void takeAction(string act)
+        {
+            if (act == actions[0])
+            {
+                buildBestOilChemic();
+            }
+            else if (act == actions[1])
+            {
+                buildBestOilBeauti();
+            }
+            else if (act == actions[2])
+            {
+                buildBestOilBoth();
+            }
+            else if (act == actions[3])
+            {
+                buildBestGasChemic();
+            }
+            else if (act == actions[4])
+            {
+                buildBestGasBeauti();
+            }
+            else if (act == actions[5])
+            {
+                buildBestGasBoth();
+            }
+            else if (act == actions[6])
+            {
+                buildRandom();
+            }
+            else if (act == actions[7])
+            {
+                idle();
+            }
+            else
+            {
+                throw new Exception("Wrong action!");
+            }
+        }
+
+        private string bestAction()
+        {
+            List<double> actionsRewards = qTable[state.ToString()];
+            double maxVal = actionsRewards[0];
+            string maxAct = actions[0];
+
+            for (int i = 1; i < actionsRewards.Count; i++)
+            {
+                if (actionsRewards[i] > maxVal)
+                {
+                    maxVal = actionsRewards[i];
+                    maxAct = actions[i];
+                }
+            }
+            return maxAct;
+        }
+
+        public void Step()
+        {
+            // main update method
+            string act = "";
+            if (rand.Next(100) / 100.0D < explore)
+            {
+                act = actions[rand.Next(0, actions.Count - 1)];
+            }
+            else
+            {
+                act = bestAction();
+            }
+
+            explore *= exploreDiscount;
+        }
+
+        private void buildBestOilChemic()
         {
 
         }
 
-        public void BuildBestOilBeauti()
+        private void buildBestOilBeauti()
         {
 
         }
 
-        public void BuildBestOilBoth()
+        private void buildBestOilBoth()
         {
 
         }
 
-        public void BuildBestGasChemic()
+        private void buildBestGasChemic()
         {
 
         }
 
-        public void BuildBestGasBeauti()
+        private void buildBestGasBeauti()
         {
 
         }
 
-        public void BuildBestGasBoth()
+        private void buildBestGasBoth()
         {
 
         }
 
-        public void BuildRandom()
+        private void buildRandom()
         {
 
         }
 
-        public void Idle()
+        private void idle()
         {
 
         }
@@ -83,6 +182,7 @@ namespace Oilfield
             // возвращает тру, когда симуляция завершена. Перетащить в World?
             return false;
         }
+
 
 
     }
