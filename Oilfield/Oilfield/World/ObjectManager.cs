@@ -50,11 +50,13 @@ namespace Oilfield
 
                 default:
                     {
-                        var res = from i in objects where i is IResource select i;
+                        var res = from i in objects where i is IResource && !(i is Waterfield) select i;
                         return res.ToList();
                     }
             }
         }
+
+        
 
         public List<IObject> Extractors
         {
@@ -63,6 +65,11 @@ namespace Oilfield
                 var ext = from i in objects where i is IExtractor select i;
                 return ext.ToList();
             }
+        }
+
+        public void Reset()
+        {
+            objects.Clear();
         }
 
         public List<IObject> Depots
@@ -107,7 +114,7 @@ namespace Oilfield
                     }
                 case ResourceType.ALL:
                     {
-                        return (from i in res where !(i as IResource).IsOccupied orderby (i as IResource).OverallAnalysis + (i as IResource).ChemicalAnalysis descending select i).ToList();
+                        return (from i in res where !(i as IResource).IsOccupied && !(i is Waterfield) orderby (i as IResource).OverallAnalysis + (i as IResource).ChemicalAnalysis descending select i).ToList();
                     }
                 default:
                     break;
@@ -245,7 +252,7 @@ namespace Oilfield
             var a = from i in objects where i.ID == id select i;
             return a as IObject;
         }
-        
+
         public List<IObject> GetExtractors()
         {
             return (from i in objects where i is IExtractor select i).ToList();

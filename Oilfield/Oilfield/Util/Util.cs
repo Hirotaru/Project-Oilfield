@@ -10,10 +10,8 @@ namespace Oilfield
 {
     public static class Util
     {
-        public const double GasCost = 0.18;
-        public const double OilCost = 1.25;
-
-        public static readonly Stopwatch sw = new Stopwatch();
+        public const double GasCost = 0.25;
+        public const double OilCost = 1.4;
 
         public const int ExtCost = 90000;
 
@@ -68,6 +66,7 @@ namespace Oilfield
             get { return id - 1; }
         }
 
+        public static readonly double StartMoney = 125000;
         public static double GetDistance(IObject obj1, IObject obj2)
         {
             return GetDistance(obj1.Position, obj2.Position);

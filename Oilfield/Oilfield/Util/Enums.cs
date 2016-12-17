@@ -12,6 +12,15 @@ namespace Oilfield
         HIGH = 2
     }
 
+    public enum Reward
+    {
+        VERYBAD = -2,
+        BAD = -1,
+        NORMAL = 0,
+        GOOD = 1,
+        VERYGOOD = 2
+    }
+
     public struct WorldState
     {
         private int money;
@@ -43,6 +52,21 @@ namespace Oilfield
             this.money = money;
             this.income = income;
             this.extCount = extCount;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.ToString() == obj.ToString();
+        }
+
+        public override string ToString()
+        {
+            return money.ToString() + income.ToString() + extCount.ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return money * 100 + income * 10 + extCount;
         }
 
     }
