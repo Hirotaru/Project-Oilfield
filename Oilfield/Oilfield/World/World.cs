@@ -322,10 +322,12 @@ namespace Oilfield
                 income += i;
             }
 
+            /*
             if (money > Util.ExtCost)
             {
                 BuildExtractor((IResource)objManager.GetBetterChemicalAnalysis(ResourceType.ALL)[0]);
             }
+            */
         }
 
         public void Draw(Graphics g)
@@ -408,7 +410,7 @@ namespace Oilfield
 
         }
 
-        public int GetPunishment(WorldState state)
+        public int GetReward(WorldState state)
         {
             switch (state.ToString())
             {
