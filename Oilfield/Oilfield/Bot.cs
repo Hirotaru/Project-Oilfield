@@ -23,8 +23,8 @@ namespace Oilfield
         static List<string> actions;
         List<string> states;
 
-        public Bot(World w, double discount=0.5, double explore=0.9,
-                   double exploreDiscount=0.99, double learningRate=0.3)
+        public Bot(World w, double discount=0.5, double explore=0.999,
+                   double exploreDiscount=0.999, double learningRate=0.5)
         {
             // discount: how much the agent values future rewards over immediate rewards
             // explore: with what probability the agent "explores", i.e.chooses a random action
@@ -131,7 +131,8 @@ namespace Oilfield
             if (IsDebug)
                 Debug.WriteLine("Step. ");
             string act = "";
-            if (rand.Next(100) / 100.0D < explore)
+            double randVal = rand.Next(100) / 100.0D;
+            if (randVal < explore)
             {
                 act = actions[rand.Next(0, actions.Count - 1)];
                 if (IsDebug)
@@ -145,6 +146,11 @@ namespace Oilfield
             }
 
             explore *= exploreDiscount;
+            if (explore < 0.1)
+            {
+                explore = 0.1;
+            }
+
             if (IsDebug)
                 Debug.Write(". Explore rate: " + explore.ToString());
 
