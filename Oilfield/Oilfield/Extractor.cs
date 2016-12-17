@@ -111,7 +111,7 @@ namespace Oilfield
             get { return Color.FromArgb(red < 0 ? 0 : red > 255 ? 255 : red, green < 0 ? 0 : green > 255 ? 255 : green, 0); }
         }
 
-        private double extract(double dt)
+        private double extract()
         {
             if (type != ResourceType.WATER)
             {
@@ -149,9 +149,9 @@ namespace Oilfield
             return 0;
         }
 
-        public double Update(double dt)
+        public double Update()
         {
-            return extract(dt / 10);
+            return extract();
         }
 
         private double estIncome;
