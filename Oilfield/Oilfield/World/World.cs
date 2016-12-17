@@ -553,5 +553,11 @@ namespace Oilfield
             return 0;
         }
 
+        public bool IsEnd()
+        {
+            if (GetState().ToString() == "000" && income == 0)
+                return true;
+            else return false;
+        }
     }
 }
