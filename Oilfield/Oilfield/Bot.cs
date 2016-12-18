@@ -15,6 +15,7 @@ namespace Oilfield
         double discount;
         double explore;
         double exploreDiscount;
+        bool pretrained = false;
         double learningRate;
         WorldState state;
         WorldState prevState;
@@ -23,7 +24,7 @@ namespace Oilfield
         static List<string> actions;
         List<string> states;
 
-        public Bot(World w, double discount=0.5, double explore=0.999,
+        public Bot(World w, bool pretrained, double discount=0.5, double explore=0.999,
                    double exploreDiscount=0.999, double learningRate=0.5)
         {
             // discount: how much the agent values future rewards over immediate rewards
@@ -44,17 +45,27 @@ namespace Oilfield
                                            "BuildRandom", "Idle" };
 
             qTable = new Dictionary<string, List<double>>();
-            for (int i = 0; i < states.Count; i++)
+            this.explore = explore;
+            this.pretrained = pretrained;
+            if (pretrained)
             {
-                qTable[states[i]] = new List<double>();
-                for (int j = 0; j < actions.Count; j++)
+                LoadTable();
+                this.explore = 0.01;
+            }
+            else
+            {
+                for (int i = 0; i < states.Count; i++)
                 {
-                    qTable[states[i]].Add(0);
+                    qTable[states[i]] = new List<double>();
+                    for (int j = 0; j < actions.Count; j++)
+                    {
+                        qTable[states[i]].Add(0);
+                    }
                 }
             }
 
+
             this.discount = discount;
-            this.explore = explore;
             this.exploreDiscount = exploreDiscount;
             this.learningRate = learningRate;
 
@@ -146,7 +157,7 @@ namespace Oilfield
             }
 
             explore *= exploreDiscount;
-            if (explore < 0.1)
+            if (explore < 0.1 && !pretrained)
             {
                 explore = 0.1;
             }
@@ -263,19 +274,47 @@ namespace Oilfield
             // do nothing
         }
 
-        public int StateValue()
+        public void LoadTable()
         {
-            // возврашает награду или штраф за текущее положение. Перетащить в World?
-            return 0;
+            string[] lines = System.IO.File.ReadAllLines("qTable.txt");
+            for (int i = 0; i < states.Count; i++)
+            {
+                qTable[states[i]] = new List<double>();
+                string[] line = lines[i].Split(' ');
+                for (int j = 0; j < actions.Count; j++)
+                {
+                    qTable[states[i]].Add(double.Parse(line[j]));
+                }
+            }
         }
 
-        public bool IsTerminalState()
+        public void SaveTable()
         {
-            // возвращает тру, когда симуляция завершена. Перетащить в World?
-            return false;
+            List<string> table = new List<string>();
+            List<string> bestAction = new List<string>();
+            for (int i = 0; i < states.Count; i++)
+            {
+                string bA = "";
+                string tab = "";
+                bA += states[i] + ": ";
+                double maxVal = double.MinValue;
+                int maxJ = 0;
+                for (int j = 0; j < qTable[states[i]].Count; j++)
+                {
+                    tab += qTable[states[i]][j].ToString() + " ";
+                    if (qTable[states[i]][j] > maxVal)
+                    {
+                        maxVal = qTable[states[i]][j];
+                        maxJ = j;
+                    }
+                }
+                bA += actions[maxJ];
+                bestAction.Add(bA);
+                table.Add(tab);
+            }
+            System.IO.File.WriteAllLines("qTable.txt", table);
+            System.IO.File.WriteAllLines("bestAction.txt", bestAction);
         }
-
-
 
     }
 }
