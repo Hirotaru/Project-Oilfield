@@ -158,7 +158,7 @@ namespace Oilfield
 
             BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
 
-            BuildDepot(FindFreeSpaceWithDistance(start.Position, 15));
+            BuildDepot(FindFreeSpaceWithDistance(start.Position, 25));
 
             ready = true;
 
