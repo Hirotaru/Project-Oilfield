@@ -25,7 +25,7 @@ namespace Oilfield
         List<string> states;
 
         public Bot(World w, bool pretrained, double discount=0.5, double explore=0.999,
-                   double exploreDiscount=0.999, double learningRate=0.5)
+                   double exploreDiscount=0.9999, double learningRate=0.1)
         {
             // discount: how much the agent values future rewards over immediate rewards
             // explore: with what probability the agent "explores", i.e.chooses a random action
@@ -157,9 +157,9 @@ namespace Oilfield
             }
 
             explore *= exploreDiscount;
-            if (explore < 0.1 && !pretrained)
+            if (explore < 0.2 && !pretrained)
             {
-                explore = 0.1;
+                explore = 0.2;
             }
 
             if (IsDebug)
