@@ -44,9 +44,9 @@ namespace Oilfield
         private static double CalculateResourceAmount(int CA, int OA)
         {
             double x = CA * 1.1 + OA * 0.9;
-            double amount = Math.Pow(x, 1.5);
+            double amount = Math.Pow(x, 1.51);
 
-            amount = amount * (1000 + rand.Next(-200, 200));
+            amount = amount * (1200 + rand.Next(-400, 400));
 
             return amount;
         }

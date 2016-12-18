@@ -22,8 +22,8 @@ namespace Oilfield
         {
             DoubleBuffered = true;
 
-            WindowState = FormWindowState.Normal;
-            // FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            //FormBorderStyle = FormBorderStyle.None;
             Bounds = Screen.PrimaryScreen.Bounds;
 
             UIConfig.WindowHeight = Height;
@@ -46,13 +46,14 @@ namespace Oilfield
                     UIConfig.Move(MousePosition, Width, Height, dt);
 
                     trainer.Update(dt);
-                    toolStripMenuItem1.Text = "Money: " + ((int)trainer.World.Money).ToString();
+                    toolStripMenuItem1.Text = "Money: " + ((int)trainer.World.Money).ToString() + " TotalMoney: " + ((int)trainer.World.TotalMoney).ToString();
                     toolStripMenuItem2.Text = "Income: " + ((int)trainer.World.Income).ToString();
 
                     toolStripMenuItem3.Text = "MoneyState: " + trainer.World.GetState().Money.ToString() +
                         " IncomeState: " + trainer.World.GetState().Income.ToString() +
                         " ExtState: " + trainer.World.GetState().ExtCount.ToString();
 
+                    //if (trainer.World.Drawing)
                     Refresh();
                 }
             }
@@ -144,6 +145,11 @@ namespace Oilfield
             {
                 drawingONToolStripMenuItem.Text = "Drawing: ON";
             }
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

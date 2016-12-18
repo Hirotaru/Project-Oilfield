@@ -124,6 +124,7 @@ namespace Oilfield
         {
             ready = false;
             objManager.Reset();
+            totalMoney = 0;
 
             Init();
         }
@@ -149,6 +150,8 @@ namespace Oilfield
 
 
             money = Util.StartMoney + Util.ExtCost * 3;
+
+            totalMoney += money;
 
             BuildExtractor(start);
             BuildExtractor(startWater);
@@ -179,16 +182,16 @@ namespace Oilfield
             return LevelGen.Util.TerrainColors[colorMap[x, y]];
         }
 
-        public void randomPath()
-        {
-            path = findPath(FindFreeSpace(), FindFreeSpace());
-        }
 
-        List<Point> path;
+        public double TotalMoney
+        {
+            get { return totalMoney; }
+        }
+        private double totalMoney = 0;
 
         private void GenerateResources()
         {
-            for (int k = 0; k < width / 12 + height / 12; k++)
+            for (int k = 0; k < (width + height) / 11; k++)
             {
                 IResource field = OilGenerator.Generate(FindFreeSpace());
 
@@ -230,9 +233,13 @@ namespace Oilfield
             else if (money < Util.ExtCost * 2) res.Money = (int)State.MEDIUM;
             else if (money >= Util.ExtCost * 2) res.Money = (int)State.HIGH;
 
-            if (income < 600) res.Income = (int)State.LOW;
-            else if (income < 1200) res.Income = (int)State.MEDIUM;
-            else if (income >= 1200) res.Income = (int)State.HIGH;
+            /*if (income < 400) res.Income = (int)State.LOW;
+            else if (income < 800) res.Income = (int)State.MEDIUM;
+            else if (income >= 800) res.Income = (int)State.HIGH;*/
+
+            if (income < Util.ExtractorIncome * (Util.OilCost + Util.GasCost)) res.Income = (int)State.LOW;
+            else if (income < Util.ExtractorIncome * (2 * Util.OilCost + Util.GasCost)) res.Income = (int)State.MEDIUM;
+            else if (income >= Util.ExtractorIncome * (2 * Util.OilCost + Util.GasCost)) res.Income = (int)State.HIGH;
 
             var a = objManager.GetWorkingExts();
 
@@ -318,9 +325,12 @@ namespace Oilfield
             foreach (var item in objManager.GetExtractors())
             {
                 double i = (item as Extractor).Update();
-                money += i;
                 income += i;
             }
+
+            money += income;
+
+            totalMoney += income;
         }
 
         public bool Drawing
@@ -408,7 +418,11 @@ namespace Oilfield
 
             foreach (var item in objManager.GetResources(ResourceType.ALL))
             {
-                g.DrawString((item as IResource).Amount.ToString(), new Font("Courier New", 8), Brushes.LimeGreen, item.Position.X * Step + dx, item.Position.Y * Step + dy);
+                if (item is Gasfield)
+                    g.DrawString(((item as IResource).Amount * Util.GasCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
+
+                if (item is Oilfield)
+                    g.DrawString(((item as IResource).Amount * Util.OilCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
             }
 
         }

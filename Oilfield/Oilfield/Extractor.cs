@@ -131,14 +131,28 @@ namespace Oilfield
 
                 if (resourceAmount > income)
                 {
-                    double money = income * Util.OilCost;
+                    double cost = 0;
+                    if (type == ResourceType.GAS)
+                        cost = Util.GasCost;
+
+                    if (type == ResourceType.OIL)
+                        cost = Util.OilCost;
+
+                    double money = income * cost;
                     resourceAmount -= income;
                     res.Amount -= income;
                     return money;
                 }
                 else
                 {
-                    double money = resourceAmount * Util.OilCost;
+                    double cost = 0;
+                    if (type == ResourceType.GAS)
+                        cost = Util.GasCost;
+
+                    if (type == ResourceType.OIL)
+                        cost = Util.OilCost;
+
+                    double money = resourceAmount * cost;
                     resourceAmount = 0;
                     res.Amount = 0;
                     IsWorking = false;
@@ -154,14 +168,6 @@ namespace Oilfield
             return extract();
         }
 
-        private double estIncome;
-
-        public double EstIncome
-        {
-            get { return estIncome; }
-            set { estIncome = value; }
-        }
-
 
         public Extractor(IResource res)
         {
@@ -171,17 +177,15 @@ namespace Oilfield
 
             id = Util.NewID;
             position = res.Position;
-            income = 400;
+            income = Util.ExtractorIncome;
 
             if (res is Oilfield)
             {
                 type = ResourceType.OIL;
-                estIncome = resourceAmount * Util.OilCost;
             }
             if (res is Gasfield)
             {
                 type = ResourceType.GAS;
-                estIncome = resourceAmount * Util.GasCost;
             }
             if (res is Waterfield) type = ResourceType.WATER;
 
@@ -192,12 +196,10 @@ namespace Oilfield
 
             if (res is Oilfield)
             {
-                estIncome = resourceAmount * Util.OilCost;
                 IsWorking = true;
             }
             if (res is Gasfield)
             {
-                estIncome = resourceAmount * Util.GasCost;
                 IsWorking = true;
             }
 

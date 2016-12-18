@@ -10,10 +10,13 @@ namespace Oilfield
 {
     public static class Util
     {
-        public const double GasCost = 0.25;
-        public const double OilCost = 1.4;
+        public const double ExtractorIncome = 400;
+        public const double GasCost = 0.4;
+        public const double OilCost = 1.7;
 
-        public const int ExtCost = 90000;
+        public static readonly double StartMoney = 125000;
+
+        public const int ExtCost = 75000;
 
         public static int[,] offsets = new int[9, 2]
             { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 },
@@ -66,7 +69,6 @@ namespace Oilfield
             get { return id - 1; }
         }
 
-        public static readonly double StartMoney = 125000;
         public static double GetDistance(IObject obj1, IObject obj2)
         {
             return GetDistance(obj1.Position, obj2.Position);
