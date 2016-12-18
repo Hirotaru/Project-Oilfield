@@ -84,6 +84,10 @@ namespace Oilfield
                         switch (map[x, y])
                         {
                             case LevelGen.Util.groundDefaultValue:
+                                {
+                                    res[x, y] = 2;
+                                    break;
+                                }
                             case Util.PipeValue:
                                 {
                                     res[x, y] = 1;
@@ -158,7 +162,7 @@ namespace Oilfield
 
             BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
 
-            BuildDepot(FindFreeSpaceWithDistance(start.Position, 25));
+            BuildDepot(FindFreeSpace());
 
             ready = true;
 
