@@ -110,7 +110,7 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false);
+                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 300);
 
                 drawingONToolStripMenuItem.Text = "Drawing: ON";
             }
