@@ -177,15 +177,16 @@ namespace Oilfield
 
             id = Util.NewID;
             position = res.Position;
-            income = Util.ExtractorIncome;
 
             if (res is Oilfield)
             {
                 type = ResourceType.OIL;
+                income = Util.OilExtractorIncome;
             }
             if (res is Gasfield)
             {
                 type = ResourceType.GAS;
+                income = Util.GasExtractorIncome;
             }
             if (res is Waterfield) type = ResourceType.WATER;
 

@@ -12,6 +12,7 @@ namespace Oilfield
 {
     public partial class MainForm : Form
     {
+        User user = new User();
         Trainer trainer;
         public MainForm()
         {
@@ -150,6 +151,20 @@ namespace Oilfield
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (user.Auth(textBox1.Text, textBox2.Text))
+            {
+                loginPanel.Visible = false;
+                newWorldToolStripMenuItem.Enabled = true;
+                drawingONToolStripMenuItem.Enabled = true;
+                if (user.Admin)
+                {
+
+                }
+            }
         }
     }
 }

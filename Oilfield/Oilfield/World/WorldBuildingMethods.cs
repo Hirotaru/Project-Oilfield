@@ -30,7 +30,16 @@ namespace Oilfield
             IDepot d = new Depot(pos);
             objManager.Add(d);
             var a = objManager.GetNearestObjects(d, true);
-            BuildPipe(d, a[0]);
+
+            if (a != null)
+            {
+                if (a.Count > 0)
+                {
+                    BuildPipe(d, a[0]);
+                }
+            }
+
+            //BuildPipe(d, a[0]);
         }
 
         public void BuildPipe(Point start, Point end)

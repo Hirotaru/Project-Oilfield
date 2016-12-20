@@ -153,14 +153,14 @@ namespace Oilfield
             IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
 
 
-            money = Util.StartMoney + Util.ExtCost * 3;
+            money = Util.ExtCost * 2;
 
             totalMoney += money;
 
-            BuildExtractor(start);
-            BuildExtractor(startWater);
+            //BuildExtractor(start);
+            //BuildExtractor(startWater);
 
-            BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
+            //BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
 
             BuildDepot(FindFreeSpace());
 
@@ -241,9 +241,9 @@ namespace Oilfield
             else if (income < 800) res.Income = (int)State.MEDIUM;
             else if (income >= 800) res.Income = (int)State.HIGH;*/
 
-            if (income < Util.ExtractorIncome * (Util.OilCost + Util.GasCost)) res.Income = (int)State.LOW;
-            else if (income < Util.ExtractorIncome * (2 * Util.OilCost + Util.GasCost)) res.Income = (int)State.MEDIUM;
-            else if (income >= Util.ExtractorIncome * (2 * Util.OilCost + Util.GasCost)) res.Income = (int)State.HIGH;
+            if (income < Util.GasExtractorIncome * 2 * Util.GasCost) res.Income = (int)State.LOW;
+            else if (income < Util.OilExtractorIncome * (Util.OilCost * 4)) res.Income = (int)State.MEDIUM;
+            else if (income >= Util.OilExtractorIncome * (4 * Util.OilCost)) res.Income = (int)State.HIGH;
 
             var a = objManager.GetWorkingExts();
 
@@ -447,7 +447,7 @@ namespace Oilfield
 
                 case "002":
                     {
-                        return (int)Reward.BAD;
+                        return (int)Reward.NORMAL;
                     }
 
                 case "010":
@@ -462,12 +462,12 @@ namespace Oilfield
 
                 case "012":
                     {
-                        return (int)Reward.BAD;
+                        return (int)Reward.NORMAL;
                     }
 
                 case "020":
                     {
-                        return (int)Reward.NORMAL;
+                        return (int)Reward.GOOD;
                     }
 
                 case "021":
@@ -492,7 +492,7 @@ namespace Oilfield
 
                 case "102":
                     {
-                        return (int)Reward.BAD;
+                        return (int)Reward.NORMAL;
                     }
 
                 case "110":
@@ -517,7 +517,7 @@ namespace Oilfield
 
                 case "121":
                     {
-                        return (int)Reward.VERYGOOD;
+                        return (int)Reward.GOOD;
                     }
 
                 case "122":
@@ -557,7 +557,7 @@ namespace Oilfield
 
                 case "220":
                     {
-                        return (int)Reward.VERYGOOD;
+                        return (int)Reward.GOOD;
                     }
 
                 case "221":
@@ -576,7 +576,7 @@ namespace Oilfield
 
         public bool IsEnd()
         {
-            if (GetState().ToString() == "000" && income == 0)
+            if (GetState().ToString() == "000" && income == 0 && objManager.GetWorkingExts().Count == 0)
                 return true;
             else return false;
         }

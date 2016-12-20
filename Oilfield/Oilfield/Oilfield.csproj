@@ -84,6 +84,7 @@
     <Compile Include="Interfaces\IExtractor.cs" />
     <Compile Include="Interfaces\IObject.cs" />
     <Compile Include="Interfaces\IResource.cs" />
+    <Compile Include="Util\User.cs" />
     <Compile Include="World\WorldObjManagerMethods.cs" />
     <Compile Include="World\ObjectManager.cs" />
     <Compile Include="Resources\Oilfield.cs" />

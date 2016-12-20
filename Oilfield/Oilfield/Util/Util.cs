@@ -10,13 +10,16 @@ namespace Oilfield
 {
     public static class Util
     {
-        public const double ExtractorIncome = 400;
+        public const double OilExtractorIncome = 400;
+        public const double GasExtractorIncome = 1600;
+
+
         public const double GasCost = 0.4;
-        public const double OilCost = 1.7;
+        public const double OilCost = 1.6;
 
         public static readonly double StartMoney = 125000;
 
-        public const int ExtCost = 75000;
+        public const int ExtCost = 100000;
 
         public static int[,] offsets = new int[9, 2]
             { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 },
