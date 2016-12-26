@@ -13,6 +13,12 @@ namespace Oilfield
         public const double OilExtractorIncome = 400;
         public const double GasExtractorIncome = 1600;
 
+        public static readonly Dictionary<int, string> StateString = new Dictionary<int, string>()
+        {
+            {0, "Low" },
+            {1, "Medium" },
+            {2, "High" }
+        };
 
         public const double GasCost = 0.4;
         public const double OilCost = 1.6;

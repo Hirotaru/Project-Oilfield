@@ -23,8 +23,8 @@ namespace Oilfield
         {
             DoubleBuffered = true;
 
-            WindowState = FormWindowState.Maximized;
-            //FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Normal;
+            FormBorderStyle = FormBorderStyle.None;
             Bounds = Screen.PrimaryScreen.Bounds;
 
             UIConfig.WindowHeight = Height;
@@ -47,14 +47,15 @@ namespace Oilfield
                     UIConfig.Move(MousePosition, Width, Height, dt);
 
                     trainer.Update(dt);
-                    toolStripMenuItem1.Text = "Money: " + ((int)trainer.World.Money).ToString() + " TotalMoney: " + ((int)trainer.World.TotalMoney).ToString();
-                    toolStripMenuItem2.Text = "Income: " + ((int)trainer.World.Income).ToString();
 
-                    toolStripMenuItem3.Text = "MoneyState: " + trainer.World.GetState().Money.ToString() +
-                        " IncomeState: " + trainer.World.GetState().Income.ToString() +
-                        " ExtState: " + trainer.World.GetState().ExtCount.ToString();
+                    toolStripStatusLabel1.Text = "Money: " + ((int)trainer.World.Money).ToString();
+                    toolStripStatusLabel2.Text = "TotalMoney: " + ((int)trainer.World.TotalMoney).ToString();
+                    toolStripStatusLabel3.Text = "Income: " + ((int)trainer.World.Income).ToString();
 
-                    //if (trainer.World.Drawing)
+                    toolStripStatusLabel4.Text = "MoneyState: " + Util.StateString[trainer.World.GetState().Money];
+                    toolStripStatusLabel5.Text = "IncomeState: " + Util.StateString[trainer.World.GetState().Income];
+                    toolStripStatusLabel6.Text = "ExtState: " + Util.StateString[trainer.World.GetState().ExtCount];
+
                     Refresh();
                 }
             }
@@ -111,9 +112,16 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 3000);
+                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 1);
+
+                if (wcf.Training)
+                {
+                    
+                }
 
                 drawingONToolStripMenuItem.Text = "Drawing: ON";
+
+
             }
 
             
@@ -160,11 +168,37 @@ namespace Oilfield
                 loginPanel.Visible = false;
                 newWorldToolStripMenuItem.Enabled = true;
                 drawingONToolStripMenuItem.Enabled = true;
+                loginPanel.Enabled = false;
                 if (user.Admin)
                 {
 
                 }
             }
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked_2(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            panel1.Location = new Point(loginPanel.Width / 2 - panel1.Width, loginPanel.Height / 2 - panel1.Height);
         }
     }
 }

@@ -35,7 +35,9 @@ namespace Oilfield
 
         private Dictionary<string, string> auth = new Dictionary<string, string>()
         {
-            {"admin", "admin" }
+            {"admin", "admin"},
+            {"", "" }
+
         };
 
         public User()

@@ -25,6 +25,11 @@ namespace Oilfield
 
         public void Update(double dt)
         {
+            if (curIteration > iterationCount)
+            {
+                return;
+            }
+
             if (World.IsEnd())
             {
                 Debug.WriteLine(String.Format("Iteration {0} end. Reward: {1}", curIteration,
@@ -36,7 +41,7 @@ namespace Oilfield
                 {
                     System.IO.File.WriteAllLines("trainingInfo.txt", trainingInfo);
                     bot.SaveTable();
-                    Application.Exit();
+                    //Application.Exit();
                 }
                 Reset();
             }
@@ -44,7 +49,7 @@ namespace Oilfield
             {
                 World.Update(dt);
                 index++;
-                if (index > 50)
+                if (index > 25)
                 {
                     index = 0;
                     bot.Step();

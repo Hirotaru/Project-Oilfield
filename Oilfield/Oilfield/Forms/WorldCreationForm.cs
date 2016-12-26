@@ -21,6 +21,11 @@ namespace Oilfield
 
         }
 
+        public bool Training
+        {
+            get { return checkBox1.Checked; }
+        }
+
         private void WorldCreationForm_Load(object sender, EventArgs e)
         {
             worldWidthTB.Text = 100.ToString();

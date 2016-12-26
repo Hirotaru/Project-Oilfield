@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using LevelGen;
 using System.Drawing;
+using LibNoise.Builder;
 
 namespace Oilfield
 {
@@ -60,6 +61,13 @@ namespace Oilfield
         {
             get { return height; }
             private set { height = value; }
+        }
+
+        private double income = 1;
+
+        public double Income
+        {
+            get { return income; }
         }
 
         private double money;
@@ -131,6 +139,10 @@ namespace Oilfield
             totalMoney = 0;
 
             Init();
+
+            LibNoise.Builder.NoiseMapBuilderPlane a = new NoiseMapBuilderPlane();
+
+
         }
 
         private void Init()
@@ -140,6 +152,7 @@ namespace Oilfield
             Map = new int[width, height];
 
             map = Landscape.MapGeneration(width, height);
+            //map = LevelGen.Map.Generate(5, width, height);
             LevelGen.Util.MapSmoothing(map, width, height, colorMap = new int[width, height], waterColors = new int[width, height]);
 
             GenerateResources();
@@ -149,20 +162,20 @@ namespace Oilfield
 
             search = new AStarSearch(gameMap);
 
-            IResource start = GetBetterAnalysis(ResourceType.OIL)[0];
-            IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
+            //IResource start = GetBetterAnalysis(ResourceType.OIL)[0];
+            //IResource startWater = (IResource)objManager.GetNearestWater(start)[0];
 
 
             money = Util.ExtCost * 2;
 
             totalMoney += money;
 
+            BuildDepot(FindFreeSpace());
+
             //BuildExtractor(start);
             //BuildExtractor(startWater);
 
             //BuildExtractor((IResource)objManager.GetNearestGas(start)[0]);
-
-            BuildDepot(FindFreeSpace());
 
             ready = true;
 
@@ -253,6 +266,7 @@ namespace Oilfield
 
             return res;
         }
+
         private List<Point> findPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
@@ -262,14 +276,16 @@ namespace Oilfield
 
         private List<Point> findPath(IObject start, IObject end)
         {
-            gameMap.UpdateMap(AStarMap);
+            return findPath(start.Position, end.Position);
+            /*gameMap.UpdateMap(AStarMap);
             var a = search.FindPath(start.Position, end.Position);
-            return a;
+            return a;*/
         }
 
         private Point FindFreeSpace()
         {
             Point p;
+
             bool ok = true;
             do
             {
@@ -296,28 +312,10 @@ namespace Oilfield
             return p;
         }
 
-        public Point FindFreeSpaceWithDistance(Point point, int distance)
-        {
-            Point p;
-            do
-                p = FindFreeSpace();
-            while (Util.GetDistance(point, p) > distance);
-
-            return p;
-        }
-
         private void drawRectangle(Graphics g, Color color, int x, int y)
         {
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
         }
-
-        private double income = 1;
-
-        public double Income
-        {
-            get { return income; }
-        }
-
 
         public void Update(double dt)
         {
@@ -420,14 +418,14 @@ namespace Oilfield
 
             //debug
 
-            foreach (var item in objManager.GetResources(ResourceType.ALL))
+            /*foreach (var item in objManager.GetResources(ResourceType.ALL))
             {
                 if (item is Gasfield)
                     g.DrawString(((item as IResource).Amount * Util.GasCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
 
                 if (item is Oilfield)
                     g.DrawString(((item as IResource).Amount * Util.OilCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
-            }
+            }*/
 
         }
 
@@ -447,7 +445,7 @@ namespace Oilfield
 
                 case "002":
                     {
-                        return (int)Reward.NORMAL;
+                        return (int)Reward.BAD;
                     }
 
                 case "010":

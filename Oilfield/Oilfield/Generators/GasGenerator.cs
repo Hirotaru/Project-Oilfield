@@ -47,7 +47,7 @@ namespace Oilfield
 
             //amount = amount * (5000 + rand.Next(-500, 500));
 
-            amount = amount * (12000);
+            amount = amount * (13000);
 
             return amount;
         }
