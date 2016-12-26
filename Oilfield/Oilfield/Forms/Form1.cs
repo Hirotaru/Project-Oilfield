@@ -40,6 +40,7 @@ namespace Oilfield
             double dt = (int)((DateTime.Now.Ticks - lastTime) / 10000);
             lastTime = DateTime.Now.Ticks;
 
+
             if (trainer != null)
             {
                 if (trainer.World.Ready)
