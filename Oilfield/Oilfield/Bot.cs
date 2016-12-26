@@ -11,6 +11,7 @@ namespace Oilfield
         public bool IsDebug = true;
         public double Reward;
 
+
         World world;
         double discount;
         double explore;
