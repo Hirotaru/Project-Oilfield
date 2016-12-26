@@ -17,6 +17,7 @@ namespace Oilfield
         List<string> trainingInfo = new List<string>();
 
         int a;
+        int b;
 
         public Trainer(int width, int height, bool pretrained, int iteration = 2,  string name = "")
         {
