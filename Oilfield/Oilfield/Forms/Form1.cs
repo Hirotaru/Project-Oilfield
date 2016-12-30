@@ -57,6 +57,8 @@ namespace Oilfield
                     toolStripStatusLabel5.Text = "IncomeState: " + Util.StateString[trainer.World.GetState().Income];
                     toolStripStatusLabel6.Text = "ExtState: " + Util.StateString[trainer.World.GetState().ExtCount];
 
+                    toolStripStatusLabel7.Text = "Iteration: " + trainer.curIteration;
+
                     Refresh();
                 }
             }
@@ -113,7 +115,7 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 1);
+                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 1000);
 
                 if (wcf.Training)
                 {

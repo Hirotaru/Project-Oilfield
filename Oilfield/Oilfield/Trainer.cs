@@ -13,7 +13,7 @@ namespace Oilfield
         private Bot bot;
         int index = 0;
         int iterationCount = 1;
-        int curIteration = 1;
+        public int curIteration = 1;
         List<string> trainingInfo = new List<string>();
 
         int a;
