@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using LevelGen;
 using System.Drawing;
-using LibNoise.Builder;
 
 namespace Oilfield
 {
@@ -15,6 +14,12 @@ namespace Oilfield
     using static UIConfig;
     public partial class World
     {
+        public bool debug = true;
+
+        public double totalResourceAmount = 0;
+        public double totalResourceCost = 0;
+        public double avgResourceCost = 0;
+
         ObjectManager objManager;
         private GameMap gameMap;
         private AStarSearch search;
@@ -139,10 +144,6 @@ namespace Oilfield
             totalMoney = 0;
 
             Init();
-
-            LibNoise.Builder.NoiseMapBuilderPlane a = new NoiseMapBuilderPlane();
-
-
         }
 
         private void Init()
@@ -229,17 +230,23 @@ namespace Oilfield
                 }
             }
 
-            for (int k = 0; k < 3; k++)
+            int count = 0;
+
+            foreach (var item in objManager.GetResources())
             {
-                IResource field = WaterGenerator.Generate(FindFreeSpace());
+                count++;
 
-                objManager.Add(field);
+                IResource i = item as IResource;
 
-                for (int i = 0; i < 9; i++)
-                {
-                    map[field.Position.X + Util.offsets[i, 0], field.Position.Y + Util.offsets[i, 1]] = Util.WaterDefaultValue;
-                }
+                totalResourceAmount += i.Amount;
+
+                if (i is Gasfield) totalResourceCost += i.Amount * Util.GasCost;
+
+                if (i is Oilfield) totalResourceCost += i.Amount * Util.OilCost;
+
             }
+
+            avgResourceCost = totalResourceCost / count;
         }
 
         public WorldState GetState()
@@ -418,14 +425,16 @@ namespace Oilfield
 
             //debug
 
-            /*foreach (var item in objManager.GetResources(ResourceType.ALL))
+            if (!debug) return;
+
+            foreach (var item in objManager.GetResources(ResourceType.ALL))
             {
                 if (item is Gasfield)
                     g.DrawString(((item as IResource).Amount * Util.GasCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
 
                 if (item is Oilfield)
                     g.DrawString(((item as IResource).Amount * Util.OilCost).ToString("f3"), new Font("Courier New", 9), Brushes.LimeGreen, item.Position.X * Step + dx - Step * 3, item.Position.Y * Step + dy + Step + 2);
-            }*/
+            }
 
         }
 

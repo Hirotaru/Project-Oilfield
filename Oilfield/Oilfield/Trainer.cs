@@ -16,9 +16,6 @@ namespace Oilfield
         public int curIteration = 1;
         List<string> trainingInfo = new List<string>();
 
-        int a;
-        int b;
-
         public Trainer(int width, int height, bool pretrained, int iteration = 2,  string name = "")
         {
             World = new World(width, height, name);

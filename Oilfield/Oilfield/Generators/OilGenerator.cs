@@ -17,7 +17,7 @@ namespace Oilfield
 
             int chance = rand.Next() % 100 + 1;
 
-            if (chance > 80)
+            if (chance > 75)
             {
                 int CA = rand.Next() % 3 + rand.Next() % 4 + 5;
                 int OA = rand.Next() % 3 + rand.Next() % 4 + 5;
@@ -48,7 +48,7 @@ namespace Oilfield
 
             //amount = amount * (1200 + rand.Next(-200, 200));
 
-            amount = amount * (3500);
+            amount = amount * (4000 + rand.Next(-100, 100));
 
             return amount;
         }

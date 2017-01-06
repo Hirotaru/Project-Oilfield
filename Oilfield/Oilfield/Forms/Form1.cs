@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Data.SqlClient;
 
 namespace Oilfield
 {
@@ -58,6 +59,10 @@ namespace Oilfield
                     toolStripStatusLabel6.Text = "ExtState: " + Util.StateString[trainer.World.GetState().ExtCount];
 
                     toolStripStatusLabel7.Text = "Iteration: " + trainer.curIteration;
+
+                    toolStripStatusLabel8.Text = "TotalResourceAmount: " + (int)trainer.World.totalResourceAmount +
+                        " totalRecourceCost: " + (int)trainer.World.totalResourceCost +
+                        " avgRecourceCost: " + (int)trainer.World.avgResourceCost;
 
                     Refresh();
                 }
@@ -115,7 +120,9 @@ namespace Oilfield
                 UIConfig.WorldWidth = wcf.WorldWidth;
                 UIConfig.WorldHeight = wcf.WorldHeight;
 
-                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 1000);
+
+
+                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, wcf.Iterations);
 
                 if (wcf.Training)
                 {
@@ -166,42 +173,33 @@ namespace Oilfield
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (user.Auth(textBox1.Text, textBox2.Text))
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|UserData.mdf;Integrated Security=True;Connect Timeout=30;");
+            string s = "select count(*) from Login where Username='" + textBox1.Text + "' and Password='" + textBox2.Text + "'";
+            SqlDataAdapter ad = new SqlDataAdapter(s, con);
+
+            DataTable dt = new DataTable();
+
+            ad.Fill(dt);
+
+            if (dt.Rows[0][0].ToString() == "1")
             {
                 loginPanel.Visible = false;
                 newWorldToolStripMenuItem.Enabled = true;
                 drawingONToolStripMenuItem.Enabled = true;
                 loginPanel.Enabled = false;
-                if (user.Admin)
-                {
-
-                }
             }
-        }
 
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked_2(object sender, ToolStripItemClickedEventArgs e)
-        {
-
+            con.Close();
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             panel1.Location = new Point(loginPanel.Width / 2 - panel1.Width, loginPanel.Height / 2 - panel1.Height);
+        }
+
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trainer.World.debug = !trainer.World.debug;
         }
     }
 }

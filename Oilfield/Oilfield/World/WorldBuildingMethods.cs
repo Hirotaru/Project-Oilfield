@@ -31,6 +31,8 @@ namespace Oilfield
             objManager.Add(d);
             var a = objManager.GetNearestObjects(d, true);
 
+            
+
             if (a != null)
             {
                 if (a.Count > 0)

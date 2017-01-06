@@ -12,8 +12,6 @@ namespace Oilfield
         HIGH = 2
     }
 
-    
-
     public enum Reward
     {
         VERYBAD = -2,

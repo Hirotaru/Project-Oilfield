@@ -193,7 +193,7 @@ namespace Oilfield
         {
             if (connectable)
             {
-                return (from i in objects where i is IConnectable && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
+                return (from i in objects where (i is IConnectable || i is Pipe) && i != obj orderby Util.GetDistance(obj, i) select i).ToList();
             }
             else
             {
