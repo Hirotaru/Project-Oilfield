@@ -179,6 +179,7 @@ namespace Oilfield
             s = s.Remove(s.LastIndexOf("\\"), s.Length - s.LastIndexOf("\\"));
             s = s.Remove(s.LastIndexOf("\\"), s.Length - s.LastIndexOf("\\"));
 
+
             AppDomain.CurrentDomain.SetData("DataDirectory", s);
 
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UserData.mdf;Integrated Security=True;Connect Timeout=30;");
