@@ -182,7 +182,7 @@ namespace Oilfield
 
             AppDomain.CurrentDomain.SetData("DataDirectory", s);
 
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UserData.mdf;Integrated Security=True;Connect Timeout=30;");
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UD.mdf;Integrated Security=True;Connect Timeout=30;");
 
             string s1 = "select count(*) from Login where Username='" + textBox1.Text + "' and Password='" + textBox2.Text + "'";
             SqlDataAdapter ad = new SqlDataAdapter(s1, con);
