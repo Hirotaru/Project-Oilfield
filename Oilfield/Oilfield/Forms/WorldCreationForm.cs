@@ -28,7 +28,7 @@ namespace Oilfield
 
         public int Iterations
         {
-            get { return Convert.ToInt32(textBox1.Text); }
+            get { return Convert.ToInt32(IterationsTextBox.Text); }
         }
 
         private void WorldCreationForm_Load(object sender, EventArgs e)
@@ -51,10 +51,22 @@ namespace Oilfield
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (errorProvider1.GetError(textBox1) != "")
+            if (IterationsErrorProvider.GetError(IterationsTextBox) != "")
             {
                 DialogResult = DialogResult.None;
             }
+
+            if (WidthErrorProvider.GetError(worldWidthTB) != "")
+            {
+                DialogResult = DialogResult.None;
+            }
+
+            if (HeightErrorProvider.GetError(worldHeightTB) != "")
+            {
+                DialogResult = DialogResult.None;
+            }
+
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -64,53 +76,36 @@ namespace Oilfield
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-            textBox1.Enabled = !textBox1.Enabled;
+            IterationsTextBox.Enabled = !IterationsTextBox.Enabled;
         }
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            int res;
-            if (checkBox1.Checked)
-            {
-                if (!int.TryParse(textBox1.Text, out res))
-                {
-                    errorProvider1.SetError(textBox1, "Error");
-                }
-                else
-                {
-                    errorProvider1.Clear();
-                }
-            }
+            CheckStringWithInt(IterationsTextBox, IterationsErrorProvider);
         }
 
-        private void CheckStringWithInt(TextBox t)
+        private void CheckStringWithInt(TextBox t, ErrorProvider err)
         {
             int res;
 
             if (!int.TryParse(t.Text, out res))
             {
-                errorProvider1.SetError(t, "Error");
+                err.SetError(t, "Error: Integer Required");
             }
             else
             {
-                errorProvider1.Clear();
+                err.Clear();
             }
         }
 
         private void worldWidthTB_Leave(object sender, EventArgs e)
         {
-            int res;
-            if (checkBox1.Checked)
-            {
-                if (!int.TryParse(textBox1.Text, out res))
-                {
-                    errorProvider1.SetError(textBox1, "Error");
-                }
-                else
-                {
-                    errorProvider1.Clear();
-                }
-            }
+             CheckStringWithInt(worldWidthTB, WidthErrorProvider);
+        }
+
+        private void worldHeightTB_Leave(object sender, EventArgs e)
+        {
+            CheckStringWithInt(worldHeightTB, HeightErrorProvider);
         }
     }
 }

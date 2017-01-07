@@ -36,10 +36,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.IterationsTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.IterationsErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.WidthErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.HeightErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.IterationsErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // worldWidthTB
@@ -57,6 +61,7 @@
             this.worldHeightTB.Name = "worldHeightTB";
             this.worldHeightTB.Size = new System.Drawing.Size(100, 20);
             this.worldHeightTB.TabIndex = 1;
+            this.worldHeightTB.Leave += new System.EventHandler(this.worldHeightTB_Leave);
             // 
             // okButton
             // 
@@ -108,14 +113,14 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
-            // textBox1
+            // IterationsTextBox
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(13, 87);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.IterationsTextBox.Enabled = false;
+            this.IterationsTextBox.Location = new System.Drawing.Point(13, 87);
+            this.IterationsTextBox.Name = "IterationsTextBox";
+            this.IterationsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.IterationsTextBox.TabIndex = 7;
+            this.IterationsTextBox.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // label3
             // 
@@ -126,10 +131,20 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Iterations";
             // 
-            // errorProvider1
+            // IterationsErrorProvider
             // 
-            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider1.ContainerControl = this;
+            this.IterationsErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.IterationsErrorProvider.ContainerControl = this;
+            // 
+            // WidthErrorProvider
+            // 
+            this.WidthErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.WidthErrorProvider.ContainerControl = this;
+            // 
+            // HeightErrorProvider
+            // 
+            this.HeightErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.HeightErrorProvider.ContainerControl = this;
             // 
             // WorldCreationForm
             // 
@@ -137,7 +152,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(221, 148);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.IterationsTextBox);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -148,7 +163,9 @@
             this.Name = "WorldCreationForm";
             this.Text = "WorldCreationForm";
             this.Load += new System.EventHandler(this.WorldCreationForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IterationsErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightErrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,8 +180,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox IterationsTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider IterationsErrorProvider;
+        private System.Windows.Forms.ErrorProvider WidthErrorProvider;
+        private System.Windows.Forms.ErrorProvider HeightErrorProvider;
     }
 }

@@ -13,8 +13,9 @@ namespace Oilfield
 {
     public partial class MainForm : Form
     {
-        User user = new User();
         Trainer trainer;
+
+        private bool admin = false;
         public MainForm()
         {
             InitializeComponent();
@@ -30,7 +31,6 @@ namespace Oilfield
 
             UIConfig.WindowHeight = Height;
             UIConfig.WindowWidth = Width;
-
             //world = new World(150, 150); //---------------------------------------------------------
         }
 
@@ -187,16 +187,31 @@ namespace Oilfield
             string s1 = "select count(*) from Login where Username='" + textBox1.Text + "' and Password='" + textBox2.Text + "'";
             SqlDataAdapter ad = new SqlDataAdapter(s1, con);
 
+            SqlDataAdapter ad1 = new SqlDataAdapter(s1 + " and (admin is not null and admin=1)", con);
+
             DataTable dt = new DataTable();
+            DataTable dt1 = new DataTable();
 
             ad.Fill(dt);
+            ad1.Fill(dt1);
 
             if (dt.Rows[0][0].ToString() == "1")
             {
+                
                 loginPanel.Visible = false;
                 newWorldToolStripMenuItem.Enabled = true;
                 drawingONToolStripMenuItem.Enabled = true;
                 loginPanel.Enabled = false;
+
+                if (dt1.Rows[0][0].ToString() == "1")
+                {
+                    admin = true;
+                    newUserToolStripMenuItem.Visible = true;
+                }
+            }
+            else
+            {
+                LoginErrorProvider.SetError(textBox1, "Unable to log in. Please check that you have entered your login and password correctly.");
             }
 
             con.Close();
@@ -210,6 +225,16 @@ namespace Oilfield
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.World.debug = !trainer.World.debug;
+        }
+
+        private void newUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserAddForm uaf = new UserAddForm();
+
+            if (uaf.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }
