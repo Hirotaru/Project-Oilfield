@@ -252,5 +252,41 @@ namespace Oilfield
 
             }
         }
+
+        long updlastTime = 0;
+        long crtlastTime = 0;
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            if (trainer == null) return;
+            if (trainer.World == null) return;
+
+            double dt = (int)((DateTime.Now.Ticks - crtlastTime) / 10000);
+            crtlastTime = DateTime.Now.Ticks;
+
+            trainer.World.CreateNewTexts();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            backgroundWorker2.RunWorkerAsync();
+        }
+
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (trainer == null) return;
+            if (trainer.World == null) return;
+
+            double dt = (int)((DateTime.Now.Ticks - updlastTime) / 10000);
+            updlastTime = DateTime.Now.Ticks;
+
+            trainer.World.UpdateExts();
+        }
     }
 }

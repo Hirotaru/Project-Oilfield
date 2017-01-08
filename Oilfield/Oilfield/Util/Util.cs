@@ -88,9 +88,9 @@ namespace Oilfield
             return Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
         }
 
-        public static PointF ConvertIndexToInt(PointF index)
+        public static Point ConvertIndexToInt(Point index)
         {
-            return new PointF(index.X * UIConfig.Step + UIConfig.Step / 2,
+            return new Point(index.X * UIConfig.Step + UIConfig.Step / 2,
                 index.Y * UIConfig.Step + UIConfig.Step / 2);
         }
 

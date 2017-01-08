@@ -17,6 +17,8 @@ namespace Oilfield
             set { isWorking = value; }
         }
 
+        private List<FloatingText> texts = new List<FloatingText>();
+
         private HashSet<IObject> connectedTo;
 
         public HashSet<IObject> ConnectedTo
@@ -108,10 +110,19 @@ namespace Oilfield
 
         public Color CenterColor
         {
-            get { return Color.FromArgb(Red < 0 ? 0 : Red > 255 ? 255 : Red, Green < 0 ? 0 : Green > 255 ? 255 : Green, 0); }
+            get
+            {
+                int red = Red;
+                int green = Green;
+                if (red < 0) red = 0;
+                if (green < 0) green = 0;
+                return Color.FromArgb(red <= 0 ? 0 : red >= 255 ? 255 : red, green < 0 ? 0 : green >= 255 ? 255 : green, 0);
+            }
         }
 
-        private double Extract()
+        private double lastIncome = 0;
+
+        private double Extract(double dt)
         {
             if (type != ResourceType.WATER)
             {
@@ -141,6 +152,10 @@ namespace Oilfield
                     double money = income * cost;
                     resourceAmount -= income;
                     res.Amount -= income;
+
+                    lastIncome += money;
+
+
                     return money;
                 }
                 else
@@ -156,6 +171,10 @@ namespace Oilfield
                     resourceAmount = 0;
                     res.Amount = 0;
                     IsWorking = false;
+
+
+                    lastIncome += money;
+
                     return money;
                 }
             }
@@ -163,9 +182,33 @@ namespace Oilfield
             return 0;
         }
 
-        public double Update()
+        public void UpdateText()
         {
-            return Extract();
+            foreach (var item in texts)
+            {
+                item.Update();
+            }
+        }
+
+        public void CreateText()
+        {
+            if (!IsWorking) return;
+            FloatingText f = new FloatingText(Util.ConvertIndexToInt(position), lastIncome.ToString());
+            lastIncome = 0;
+            texts.Add(f);
+        }
+
+        public double Update(double dt)
+        {
+            for (int i = 0; i < texts.Count; i++)
+            {
+                if (texts[i].IsDone)
+                {
+                    texts.RemoveAt(i--);
+                }
+            }
+
+            return Extract(dt);
         }
 
 
@@ -210,6 +253,12 @@ namespace Oilfield
         private void DrawRectangle(Graphics g, Color color, int x, int y)
         {
             g.FillRectangle(new SolidBrush(color), UIConfig.Step * x + UIConfig.dx, UIConfig.Step * y + UIConfig.dy, UIConfig.Step, UIConfig.Step);
+
+
+            foreach (var item in texts)
+            {
+                item.Draw(g);
+            }
         }
 
         public void Draw(Graphics g)

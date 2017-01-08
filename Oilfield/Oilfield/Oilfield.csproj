@@ -58,7 +58,7 @@
   <ItemGroup>
     <Reference Include="LevelGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\LevelGen.dll</HintPath>
+      <HintPath>Util\LevelGen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,6 +105,7 @@
     <Compile Include="Interfaces\IExtractor.cs" />
     <Compile Include="Interfaces\IObject.cs" />
     <Compile Include="Interfaces\IResource.cs" />
+    <Compile Include="Util\FloatingText.cs" />
     <Compile Include="World\WorldObjManagerMethods.cs" />
     <Compile Include="World\ObjectManager.cs" />
     <Compile Include="Resources\Oilfield.cs" />

@@ -46,7 +46,7 @@ namespace Oilfield
                 return;
             }
 
-                //SqlDataAdapter ad = new SqlDataAdapter("insert into Login (Username, Password, Admin) values (" + textBox1.Text + ", " + textBox2.Text + ", "+ (checkBox1.Checked ? 1.ToString() : 0.ToString()) + ")", con);
+            //SqlDataAdapter ad = new SqlDataAdapter("insert into Login (Username, Password, Admin) values (" + textBox1.Text + ", " + textBox2.Text + ", "+ (checkBox1.Checked ? 1.ToString() : 0.ToString()) + ")", con);
 
             SqlCommand command = new SqlCommand("insert into Login (Username, Password, Admin) values ('" + textBox1.Text + "', '" + textBox2.Text + "', " + (checkBox1.Checked ? 1.ToString() : 0.ToString()) + ")", con);
             con.Open();

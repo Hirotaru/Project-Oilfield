@@ -325,6 +325,22 @@ namespace Oilfield
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
         }
 
+        public void UpdateExts()
+        {
+            foreach (var item in objManager.GetExtractors())
+            {
+                (item as Extractor).UpdateText();
+            }
+        }
+
+        public void CreateNewTexts()
+        {
+            foreach (var item in objManager.GetExtractors())
+            {
+                (item as Extractor).CreateText();
+            }
+        }
+
         public void Update(double dt)
         {
             if (!ready)
@@ -334,7 +350,7 @@ namespace Oilfield
 
             foreach (var item in objManager.GetExtractors())
             {
-                double i = (item as Extractor).Update();
+                double i = (item as Extractor).Update(dt);
                 income += i;
             }
 
