@@ -77,19 +77,19 @@ namespace Oilfield
 
         private readonly double maxAmount;
 
-        private double percentage
+        private double Percentage
         {
             get { return resourceAmount / maxAmount * 100; }
         }
 
-        private int green
+        private int Green
         {
-            get { return percentage > 50 ? 255 : 255 / 50 * (int)percentage; }
+            get { return Percentage > 50 ? 255 : 255 / 50 * (int)Percentage; }
         }
 
-        private int red
+        private int Red
         {
-            get { return percentage < 50 ? 255 : -255 / 50 * (int)percentage + 510; }
+            get { return Percentage < 50 ? 255 : -255 / 50 * (int)Percentage + 510; }
         }
 
         private static readonly Dictionary<ResourceType, double> price = new Dictionary<ResourceType, double>()
@@ -106,12 +106,12 @@ namespace Oilfield
             {ResourceType.OIL,UIConfig.OilExtColor }
         };
 
-        public Color centerColor
+        public Color CenterColor
         {
-            get { return Color.FromArgb(red < 0 ? 0 : red > 255 ? 255 : red, green < 0 ? 0 : green > 255 ? 255 : green, 0); }
+            get { return Color.FromArgb(Red < 0 ? 0 : Red > 255 ? 255 : Red, Green < 0 ? 0 : Green > 255 ? 255 : Green, 0); }
         }
 
-        private double extract()
+        private double Extract()
         {
             if (type != ResourceType.WATER)
             {
@@ -165,7 +165,7 @@ namespace Oilfield
 
         public double Update()
         {
-            return extract();
+            return Extract();
         }
 
 
@@ -207,7 +207,7 @@ namespace Oilfield
             
         }
 
-        private void drawRectangle(Graphics g, Color color, int x, int y)
+        private void DrawRectangle(Graphics g, Color color, int x, int y)
         {
             g.FillRectangle(new SolidBrush(color), UIConfig.Step * x + UIConfig.dx, UIConfig.Step * y + UIConfig.dy, UIConfig.Step, UIConfig.Step);
         }
@@ -215,9 +215,9 @@ namespace Oilfield
         public void Draw(Graphics g)
         {
             for (int i = 0; i < 8; i++)
-                drawRectangle(g, colors[type], position.X + Util.offsets[i, 0], position.Y + Util.offsets[i, 1]);
+                DrawRectangle(g, colors[type], position.X + Util.offsets[i, 0], position.Y + Util.offsets[i, 1]);
 
-            drawRectangle(g, centerColor, position.X, position.Y);
+            DrawRectangle(g, CenterColor, position.X, position.Y);
         }
 
     }

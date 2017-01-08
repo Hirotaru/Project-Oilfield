@@ -90,7 +90,7 @@ namespace Oilfield
 
         
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -101,7 +101,7 @@ namespace Oilfield
                 trainer.World.Draw(e.Graphics);
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             Update();
         }
@@ -111,7 +111,7 @@ namespace Oilfield
             
         }
 
-        private void newWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewWorldToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WorldCreationForm wcf = new WorldCreationForm();
 
@@ -122,11 +122,15 @@ namespace Oilfield
 
 
 
-                trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, wcf.Iterations);
+               
 
                 if (wcf.Training)
                 {
-                    
+                    trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, wcf.Iterations);
+                }
+                else
+                {
+                    trainer = new Trainer(UIConfig.WorldWidth, UIConfig.WorldHeight, false, 1);
                 }
 
                 drawingONToolStripMenuItem.Text = "Drawing: ON";
@@ -137,17 +141,17 @@ namespace Oilfield
             
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ResetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.Reset();
         }
 
-        private void drawingONToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DrawingONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (trainer == null) return;
             if (trainer.World == null) return;
@@ -166,12 +170,13 @@ namespace Oilfield
             }
         }
 
-        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            HelpForm hf = new HelpForm();
+            hf.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             string s = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -206,7 +211,7 @@ namespace Oilfield
                 if (dt1.Rows[0][0].ToString() == "1")
                 {
                     admin = true;
-                    newUserToolStripMenuItem.Visible = true;
+                    newUserToolStripMenuItem1.Visible = true;
                 }
             }
             else
@@ -222,12 +227,22 @@ namespace Oilfield
             panel1.Location = new Point(loginPanel.Width / 2 - panel1.Width, loginPanel.Height / 2 - panel1.Height);
         }
 
-        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DebugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.World.debug = !trainer.World.debug;
         }
 
-        private void newUserToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void newUserToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             UserAddForm uaf = new UserAddForm();
 

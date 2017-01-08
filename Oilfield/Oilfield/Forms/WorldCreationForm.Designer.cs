@@ -52,8 +52,8 @@
             this.worldWidthTB.Name = "worldWidthTB";
             this.worldWidthTB.Size = new System.Drawing.Size(100, 20);
             this.worldWidthTB.TabIndex = 0;
-            this.worldWidthTB.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.worldWidthTB.Leave += new System.EventHandler(this.worldWidthTB_Leave);
+            this.worldWidthTB.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            this.worldWidthTB.Leave += new System.EventHandler(this.WorldWidthTB_Leave);
             // 
             // worldHeightTB
             // 
@@ -61,7 +61,7 @@
             this.worldHeightTB.Name = "worldHeightTB";
             this.worldHeightTB.Size = new System.Drawing.Size(100, 20);
             this.worldHeightTB.TabIndex = 1;
-            this.worldHeightTB.Leave += new System.EventHandler(this.worldHeightTB_Leave);
+            this.worldHeightTB.Leave += new System.EventHandler(this.WorldHeightTB_Leave);
             // 
             // okButton
             // 
@@ -72,7 +72,7 @@
             this.okButton.TabIndex = 2;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            this.okButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // cancelButton
             // 
@@ -111,7 +111,7 @@
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Training";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged_1);
             // 
             // IterationsTextBox
             // 
@@ -120,7 +120,8 @@
             this.IterationsTextBox.Name = "IterationsTextBox";
             this.IterationsTextBox.Size = new System.Drawing.Size(100, 20);
             this.IterationsTextBox.TabIndex = 7;
-            this.IterationsTextBox.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.IterationsTextBox.Text = "5000";
+            this.IterationsTextBox.Leave += new System.EventHandler(this.TextBox1_Leave);
             // 
             // label3
             // 

@@ -16,7 +16,7 @@ namespace Oilfield
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -49,7 +49,7 @@ namespace Oilfield
             get { return Convert.ToInt32(worldHeightTB.Text); }
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        private void OkButton_Click(object sender, EventArgs e)
         {
             if (IterationsErrorProvider.GetError(IterationsTextBox) != "")
             {
@@ -69,26 +69,24 @@ namespace Oilfield
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        private void CheckBox1_CheckedChanged_1(object sender, EventArgs e)
         {
             IterationsTextBox.Enabled = !IterationsTextBox.Enabled;
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
+        private void TextBox1_Leave(object sender, EventArgs e)
         {
             CheckStringWithInt(IterationsTextBox, IterationsErrorProvider);
         }
 
         private void CheckStringWithInt(TextBox t, ErrorProvider err)
         {
-            int res;
-
-            if (!int.TryParse(t.Text, out res))
+            if (!int.TryParse(t.Text, out int res))
             {
                 err.SetError(t, "Error: Integer Required");
             }
@@ -98,12 +96,12 @@ namespace Oilfield
             }
         }
 
-        private void worldWidthTB_Leave(object sender, EventArgs e)
+        private void WorldWidthTB_Leave(object sender, EventArgs e)
         {
              CheckStringWithInt(worldWidthTB, WidthErrorProvider);
         }
 
-        private void worldHeightTB_Leave(object sender, EventArgs e)
+        private void WorldHeightTB_Leave(object sender, EventArgs e)
         {
             CheckStringWithInt(worldHeightTB, HeightErrorProvider);
         }

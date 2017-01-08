@@ -78,39 +78,39 @@ namespace Oilfield
             Reward = 0;
         }
 
-        private WorldState takeAction(string act)
+        private WorldState TakeAction(string act)
         {
             if (act == actions[0])
             {
-                buildBestOilChemic();
+                BuildBestOilChemic();
             }
             else if (act == actions[1])
             {
-                buildBestOilBeauti();
+                BuildBestOilBeauti();
             }
             else if (act == actions[2])
             {
-                buildBestOilBoth();
+                BuildBestOilBoth();
             }
             else if (act == actions[3])
             {
-                buildBestGasChemic();
+                BuildBestGasChemic();
             }
             else if (act == actions[4])
             {
-                buildBestGasBeauti();
+                BuildBestGasBeauti();
             }
             else if (act == actions[5])
             {
-                buildBestGasBoth();
+                BuildBestGasBoth();
             }
             else if (act == actions[6])
             {
-                buildRandom();
+                BuildRandom();
             }
             else if (act == actions[7])
             {
-                idle();
+                Idle();
             }
             else
             {
@@ -120,7 +120,7 @@ namespace Oilfield
             return world.GetState();
         }
 
-        private string bestAction()
+        private string BestAction()
         {
             List<double> actionsRewards = qTable[state.ToString()];
             double maxVal = actionsRewards[0];
@@ -152,7 +152,7 @@ namespace Oilfield
             }
             else
             {
-                act = bestAction();
+                act = BestAction();
                 if (IsDebug)
                     Debug.Write("Best action: " + act);
             }
@@ -168,14 +168,14 @@ namespace Oilfield
 
             prevState = state;
 
-            state = takeAction(act);
+            state = TakeAction(act);
             if (IsDebug)
                 Debug.Write(". New state: " + state.ToString() + "\n");
 
-            learn(act);
+            Learn(act);
         }
 
-        private void learn(string act)
+        private void Learn(string act)
         {
             int rew = world.GetReward(state);
             Reward += rew;
@@ -186,7 +186,7 @@ namespace Oilfield
                 qTable[prevState.ToString()][actions.IndexOf(act)]);
         }
 
-        private void buildBestOilChemic()
+        private void BuildBestOilChemic()
         {
             try
             {
@@ -194,11 +194,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildBestOilBeauti()
+        private void BuildBestOilBeauti()
         {
             try
             {
@@ -206,11 +206,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildBestOilBoth()
+        private void BuildBestOilBoth()
         {
             try
             {
@@ -218,11 +218,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildBestGasChemic()
+        private void BuildBestGasChemic()
         {
             try
             {
@@ -230,11 +230,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildBestGasBeauti()
+        private void BuildBestGasBeauti()
         {
             try
             {
@@ -242,11 +242,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildBestGasBoth()
+        private void BuildBestGasBoth()
         {
             try
             {
@@ -254,11 +254,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void buildRandom()
+        private void BuildRandom()
         {
             try
             {
@@ -266,11 +266,11 @@ namespace Oilfield
             }
             catch (Exception ex)
             {
-
+                ex.ToString();
             }
         }
 
-        private void idle()
+        private void Idle()
         {
             // do nothing
         }

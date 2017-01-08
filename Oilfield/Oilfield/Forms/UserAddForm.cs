@@ -17,7 +17,7 @@ namespace Oilfield
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UD.mdf;Integrated Security=True;Connect Timeout=30;");
 
@@ -28,6 +28,11 @@ namespace Oilfield
             command.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

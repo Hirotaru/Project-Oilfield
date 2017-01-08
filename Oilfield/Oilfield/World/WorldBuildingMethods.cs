@@ -46,7 +46,7 @@ namespace Oilfield
 
         public void BuildPipe(Point start, Point end)
         {
-            List<Point> path = findPath(start, end);
+            List<Point> path = FindPath(start, end);
 
             if (path == null) return;
 

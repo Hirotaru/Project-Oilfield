@@ -190,12 +190,13 @@ namespace Oilfield
             Init();
         }
 
-        private Color getWaterColor(int x, int y)
+        private Color GetWaterColor(int x, int y)
         {
             return LevelGen.Util.WaterColors[waterColors[x, y]];
         }
 
-        private Color getTerrainColor(int x, int y)
+
+        private Color GetTerrainColor(int x, int y)
         {
             return LevelGen.Util.TerrainColors[colorMap[x, y]];
         }
@@ -274,16 +275,16 @@ namespace Oilfield
             return res;
         }
 
-        private List<Point> findPath(Point start, Point end)
+        private List<Point> FindPath(Point start, Point end)
         {
             gameMap.UpdateMap(AStarMap);
             var a = search.FindPath(start, end);
             return a;
         }
 
-        private List<Point> findPath(IObject start, IObject end)
+        private List<Point> FindPath(IObject start, IObject end)
         {
-            return findPath(start.Position, end.Position);
+            return FindPath(start.Position, end.Position);
             /*gameMap.UpdateMap(AStarMap);
             var a = search.FindPath(start.Position, end.Position);
             return a;*/
@@ -319,7 +320,7 @@ namespace Oilfield
             return p;
         }
 
-        private void drawRectangle(Graphics g, Color color, int x, int y)
+        private void DrawRectangle(Graphics g, Color color, int x, int y)
         {
             g.FillRectangle(new SolidBrush(color), Step * x + dx, Step * y + dy, Step, Step);
         }
@@ -356,7 +357,7 @@ namespace Oilfield
 
             foreach (var item in objManager.Pipes)
             {
-                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+                DrawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
             }
 
             for (int x = 0; x < width; x++)
@@ -369,19 +370,19 @@ namespace Oilfield
                         {
                             case LevelGen.Util.waterDefaultValue:
                                 {
-                                    drawRectangle(g, getWaterColor(x, y), x, y);
+                                    DrawRectangle(g, GetWaterColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.groundDefaultValue:
                                 {
-                                    drawRectangle(g, getTerrainColor(x, y), x, y);
+                                    DrawRectangle(g, GetTerrainColor(x, y), x, y);
                                     break;
                                 }
 
                             case LevelGen.Util.shoreDefaultValue:
                                 {
-                                    drawRectangle(g, UIConfig.ShoreColor, x, y);
+                                    DrawRectangle(g, UIConfig.ShoreColor, x, y);
                                     break;
                                 }
                         }
@@ -392,24 +393,24 @@ namespace Oilfield
             foreach (var item in objManager.GetResources(ResourceType.GAS))
             {
                 for (int i = 0; i < 9; i++)
-                    drawRectangle(g, UIConfig.GasColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+                    DrawRectangle(g, UIConfig.GasColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
             }
 
             foreach (var item in objManager.GetResources(ResourceType.OIL))
             {
                 for (int i = 0; i < 9; i++)
-                    drawRectangle(g, UIConfig.OilColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+                    DrawRectangle(g, UIConfig.OilColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
             }
 
             foreach (var item in objManager.GetResources(ResourceType.WATER))
             {
                 for (int i = 0; i < 9; i++)
-                    drawRectangle(g, UIConfig.WaterColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+                    DrawRectangle(g, UIConfig.WaterColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
             }
 
             foreach (var item in objManager.Pipes)
             {
-                drawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
+                DrawRectangle(g, UIConfig.PipeColor, item.Position.X, item.Position.Y);
             }
 
             foreach (var item in objManager.GetExtractors())
@@ -420,7 +421,7 @@ namespace Oilfield
             foreach (var item in objManager.Depots)
             {
                 for (int i = 0; i < 9; i++)
-                    drawRectangle(g, UIConfig.DepotColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
+                    DrawRectangle(g, UIConfig.DepotColor, item.Position.X + Util.offsets[i, 0], item.Position.Y + Util.offsets[i, 1]);
             }
 
             //debug

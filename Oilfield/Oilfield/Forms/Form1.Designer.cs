@@ -37,6 +37,7 @@
             this.drawingONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.loginPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -55,7 +56,8 @@
             this.toolStripStatusLabel7 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel8 = new System.Windows.Forms.ToolStripStatusLabel();
             this.LoginErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.newUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button2 = new System.Windows.Forms.Button();
+            this.newUserToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.loginPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -82,6 +84,7 @@
             // 
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newWorldToolStripMenuItem,
+            this.newUserToolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
@@ -93,14 +96,14 @@
             this.newWorldToolStripMenuItem.Name = "newWorldToolStripMenuItem";
             this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.newWorldToolStripMenuItem.Text = "New world";
-            this.newWorldToolStripMenuItem.Click += new System.EventHandler(this.newWorldToolStripMenuItem_Click);
+            this.newWorldToolStripMenuItem.Click += new System.EventHandler(this.NewWorldToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // resetToolStripMenuItem
             // 
@@ -108,7 +111,7 @@
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
             this.resetToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.ResetToolStripMenuItem_Click);
             // 
             // drawingONToolStripMenuItem
             // 
@@ -116,27 +119,35 @@
             this.drawingONToolStripMenuItem.Name = "drawingONToolStripMenuItem";
             this.drawingONToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.drawingONToolStripMenuItem.Text = "Drawing: ON";
-            this.drawingONToolStripMenuItem.Click += new System.EventHandler(this.drawingONToolStripMenuItem_Click);
+            this.drawingONToolStripMenuItem.Click += new System.EventHandler(this.DrawingONToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.HelpToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(this.DebugToolStripMenuItem_Click);
+            // 
+            // newUserToolStripMenuItem
+            // 
+            this.newUserToolStripMenuItem.Name = "newUserToolStripMenuItem";
+            this.newUserToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.newUserToolStripMenuItem.Text = "New User";
+            this.newUserToolStripMenuItem.Visible = false;
+            this.newUserToolStripMenuItem.Click += new System.EventHandler(this.NewUserToolStripMenuItem_Click);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 1;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // loginPanel
             // 
@@ -150,6 +161,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.textBox1);
@@ -157,7 +169,7 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(221, 65);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.Size = new System.Drawing.Size(200, 124);
             this.panel1.TabIndex = 5;
             // 
             // label1
@@ -201,7 +213,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Log In";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // statusStrip1
             // 
@@ -273,13 +285,23 @@
             this.LoginErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.LoginErrorProvider.ContainerControl = this;
             // 
-            // newUserToolStripMenuItem
+            // button2
             // 
-            this.newUserToolStripMenuItem.Name = "newUserToolStripMenuItem";
-            this.newUserToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.newUserToolStripMenuItem.Text = "New User";
-            this.newUserToolStripMenuItem.Visible = false;
-            this.newUserToolStripMenuItem.Click += new System.EventHandler(this.newUserToolStripMenuItem_Click);
+            this.button2.Location = new System.Drawing.Point(73, 93);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(100, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Exit";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // newUserToolStripMenuItem1
+            // 
+            this.newUserToolStripMenuItem1.Name = "newUserToolStripMenuItem1";
+            this.newUserToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.newUserToolStripMenuItem1.Text = "New User";
+            this.newUserToolStripMenuItem1.Visible = false;
+            this.newUserToolStripMenuItem1.Click += new System.EventHandler(this.newUserToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -341,6 +363,8 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel8;
         private System.Windows.Forms.ErrorProvider LoginErrorProvider;
         private System.Windows.Forms.ToolStripMenuItem newUserToolStripMenuItem;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripMenuItem newUserToolStripMenuItem1;
     }
 }
 
