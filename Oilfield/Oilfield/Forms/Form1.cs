@@ -134,7 +134,7 @@ namespace Oilfield
                 }
 
                 drawingONToolStripMenuItem.Text = "Drawing: ON";
-
+                debugToolStripMenuItem.Enabled = true;
 
             }
 
@@ -230,6 +230,7 @@ namespace Oilfield
         private void DebugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.World.debug = !trainer.World.debug;
+            
         }
 
         private void NewUserToolStripMenuItem_Click(object sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace Oilfield
     using static UIConfig;
     public partial class World
     {
-        public bool debug = true;
+        public bool debug = false;
 
         public double totalResourceAmount = 0;
         public double totalResourceCost = 0;
