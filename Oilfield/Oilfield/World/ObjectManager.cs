@@ -50,13 +50,41 @@ namespace Oilfield
 
                 default:
                     {
-                        var res = from i in objects where i is IResource && !(i is Waterfield) select i;
+                        var res = from i in objects where i is IResource select i;
                         return res.ToList();
                     }
             }
         }
 
-        
+        public List<IObject> GetFreeResources(ResourceType type = ResourceType.ALL)
+        {
+            switch (type)
+            {
+                case ResourceType.OIL:
+                    {
+                        var res = from i in objects where i is Oilfield && !(i as IResource).IsOccupied select i;
+                        return res.ToList();
+                    }
+
+                case ResourceType.GAS:
+                    {
+                        var res = from i in objects where i is Gasfield && !(i as IResource).IsOccupied select i;
+                        return res.ToList();
+                    }
+
+                case ResourceType.WATER:
+                    {
+                        var res = from i in objects where i is Waterfield && !(i as IResource).IsOccupied select i;
+                        return res.ToList();
+                    }
+
+                default:
+                    {
+                        var res = from i in objects where i is IResource && !(i is Waterfield) && !(i as IResource).IsOccupied select i;
+                        return res.ToList();
+                    }
+            }
+        }
 
         public List<IObject> Extractors
         {

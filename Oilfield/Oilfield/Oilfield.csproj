@@ -74,7 +74,13 @@
   <ItemGroup>
     <Compile Include="AStar\AStarNode.cs" />
     <Compile Include="AStar\AStarSearch.cs" />
-    <Compile Include="Bot.cs" />
+    <Compile Include="Forms\ExitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExitForm.Designer.cs">
+      <DependentUpon>ExitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="World\Bot.cs" />
     <Compile Include="Depot.cs" />
     <Compile Include="Forms\UserAddForm.cs">
       <SubType>Form</SubType>
@@ -126,6 +132,9 @@
     <Compile Include="Forms\WorldCreationForm.Designer.cs">
       <DependentUpon>WorldCreationForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\ExitForm.resx">
+      <DependentUpon>ExitForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,7 +156,6 @@
     <EmbeddedResource Include="Forms\WorldCreationForm.resx">
       <DependentUpon>WorldCreationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

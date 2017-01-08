@@ -23,10 +23,13 @@ namespace Oilfield
             iterationCount = iteration;
         }
 
+        Stopwatch sw = new Stopwatch();
+
         public void Update(double dt)
         {
             if (curIteration > iterationCount)
             {
+                
                 return;
             }
 
@@ -43,7 +46,12 @@ namespace Oilfield
                     bot.SaveTable();
                     //Application.Exit();
                 }
-                Reset();
+                if (!sw.IsRunning) sw.Start();
+                if (sw.ElapsedMilliseconds / 1000 >= 5)
+                {
+                    Reset();
+                    sw.Reset();
+                }
             }
             else
             {

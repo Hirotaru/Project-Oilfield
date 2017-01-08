@@ -51,6 +51,7 @@ namespace Oilfield
         public void Update()
         {
             Alpha -= AlphaStep;
+            if (Alpha < 0) Alpha = 0;
             currentHeight--;
             color = Color.FromArgb(Alpha, color);
             CurrentPosition.Y = startPosition.Y + currentHeight;

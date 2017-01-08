@@ -236,7 +236,14 @@ namespace Oilfield
             waterConnected = false;
 
             resourceAmount = res.Amount;
+
+            if (resourceAmount == 0)
+            {
+                int a = 10;
+            }
             maxAmount = resourceAmount;
+
+            res.IsOccupied = true;
 
             if (res is Oilfield)
             {

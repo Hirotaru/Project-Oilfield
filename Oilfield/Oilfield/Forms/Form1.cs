@@ -92,7 +92,14 @@ namespace Oilfield
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            ExitForm ef = new ExitForm();
+           
+            ef.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - ef.Width / 2, Screen.PrimaryScreen.Bounds.Height / 2 - ef.Height / 2);
+
+            if (ef.ShowDialog() == DialogResult.OK)
+            {
+                Close();
+            }
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -258,8 +265,10 @@ namespace Oilfield
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            if (trainer == null) return;
+            if (trainer.World == null) return;
 
-            backgroundWorker1.RunWorkerAsync();
+            trainer.World.UpdateExts();
         }
 
         private void timer3_Tick(object sender, EventArgs e)
@@ -267,24 +276,21 @@ namespace Oilfield
             if (trainer == null) return;
             if (trainer.World == null) return;
 
-            double dt = (int)((DateTime.Now.Ticks - crtlastTime) / 10000);
-            crtlastTime = DateTime.Now.Ticks;
-
             trainer.World.CreateNewTexts();
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            backgroundWorker2.RunWorkerAsync();
+            if (trainer == null) return;
+            if (trainer.World == null) return;
+
+            trainer.World.CreateNewTexts();
         }
 
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
             if (trainer == null) return;
             if (trainer.World == null) return;
-
-            double dt = (int)((DateTime.Now.Ticks - updlastTime) / 10000);
-            updlastTime = DateTime.Now.Ticks;
 
             trainer.World.UpdateExts();
         }

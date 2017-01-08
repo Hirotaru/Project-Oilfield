@@ -43,7 +43,7 @@ namespace Oilfield
 
         public IResource GetRandomResource(ResourceType type = ResourceType.ALL)
         {
-            var a = objManager.GetResources(type);
+            var a = objManager.GetFreeResources(type);
 
             var b = convertObjectToResource(a);
 
