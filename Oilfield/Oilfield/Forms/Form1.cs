@@ -260,9 +260,6 @@ namespace Oilfield
             }
         }
 
-        long updlastTime = 0;
-        long crtlastTime = 0;
-
         private void timer2_Tick(object sender, EventArgs e)
         {
             if (trainer == null) return;
@@ -293,6 +290,11 @@ namespace Oilfield
             if (trainer.World == null) return;
 
             trainer.World.UpdateExts();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trainer.pause = !trainer.pause;
         }
     }
 }

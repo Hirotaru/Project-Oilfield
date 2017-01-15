@@ -16,6 +16,8 @@ namespace Oilfield
         public int curIteration = 1;
         List<string> trainingInfo = new List<string>();
 
+        public bool pause = true;
+
         public Trainer(int width, int height, bool pretrained, int iteration = 2,  string name = "")
         {
             World = new World(width, height, name);
@@ -23,13 +25,11 @@ namespace Oilfield
             iterationCount = iteration;
         }
 
-        Stopwatch sw = new Stopwatch();
 
         public void Update(double dt)
         {
             if (curIteration > iterationCount)
             {
-                
                 return;
             }
 
@@ -46,12 +46,10 @@ namespace Oilfield
                     bot.SaveTable();
                     //Application.Exit();
                 }
-                if (!sw.IsRunning) sw.Start();
-                if (sw.ElapsedMilliseconds / 1000 >= 5)
-                {
-                    Reset();
-                    sw.Reset();
-                }
+
+
+                Reset();
+
             }
             else
             {
