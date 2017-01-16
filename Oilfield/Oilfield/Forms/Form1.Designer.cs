@@ -58,6 +58,7 @@
             this.LoginErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.loginPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -92,14 +93,14 @@
             // 
             this.newWorldToolStripMenuItem.Enabled = false;
             this.newWorldToolStripMenuItem.Name = "newWorldToolStripMenuItem";
-            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.newWorldToolStripMenuItem.Text = "New world";
             this.newWorldToolStripMenuItem.Click += new System.EventHandler(this.NewWorldToolStripMenuItem_Click);
             // 
             // newUserToolStripMenuItem1
             // 
             this.newUserToolStripMenuItem1.Name = "newUserToolStripMenuItem1";
-            this.newUserToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.newUserToolStripMenuItem1.Size = new System.Drawing.Size(131, 22);
             this.newUserToolStripMenuItem1.Text = "New User";
             this.newUserToolStripMenuItem1.Visible = false;
             this.newUserToolStripMenuItem1.Click += new System.EventHandler(this.newUserToolStripMenuItem1_Click);
@@ -107,7 +108,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -147,11 +148,12 @@
             this.loginPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.loginPanel.Location = new System.Drawing.Point(0, 24);
             this.loginPanel.Name = "loginPanel";
-            this.loginPanel.Size = new System.Drawing.Size(651, 237);
+            this.loginPanel.Size = new System.Drawing.Size(651, 288);
             this.loginPanel.TabIndex = 1;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
@@ -160,12 +162,12 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(221, 65);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 124);
+            this.panel1.Size = new System.Drawing.Size(200, 160);
             this.panel1.TabIndex = 5;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(73, 93);
+            this.button2.Location = new System.Drawing.Point(73, 125);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 23);
             this.button2.TabIndex = 5;
@@ -227,7 +229,7 @@
             this.toolStripStatusLabel6,
             this.toolStripStatusLabel7,
             this.toolStripStatusLabel8});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 239);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 290);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(651, 22);
             this.statusStrip1.TabIndex = 4;
@@ -298,12 +300,22 @@
             this.timer3.Interval = 1000;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(73, 96);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(100, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "Skip";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(651, 261);
+            this.ClientSize = new System.Drawing.Size(651, 312);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.loginPanel);
             this.Controls.Add(this.menuStrip1);
@@ -360,6 +372,7 @@
         private System.Windows.Forms.ToolStripMenuItem newUserToolStripMenuItem1;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Button button3;
     }
 }
 

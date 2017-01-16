@@ -194,7 +194,7 @@ namespace Oilfield
 
             AppDomain.CurrentDomain.SetData("DataDirectory", s);
 
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UD.mdf;Integrated Security=True;Connect Timeout=30;");
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UD.mdf;Integrated Security=True;Connect Timeout=10;");
 
             string s1 = "select count(*) from Login where Username='" + textBox1.Text + "' and Password='" + textBox2.Text + "'";
             SqlDataAdapter ad = new SqlDataAdapter(s1, con);
@@ -227,6 +227,17 @@ namespace Oilfield
             }
 
             con.Close();
+        }
+
+        private void UnlockMenu()
+        {
+            loginPanel.Visible = false;
+            newWorldToolStripMenuItem.Enabled = true;
+            drawingONToolStripMenuItem.Enabled = true;
+            loginPanel.Enabled = false;
+
+            admin = true;
+            newUserToolStripMenuItem1.Visible = true;
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
@@ -295,6 +306,11 @@ namespace Oilfield
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trainer.pause = !trainer.pause;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UnlockMenu();
         }
     }
 }
