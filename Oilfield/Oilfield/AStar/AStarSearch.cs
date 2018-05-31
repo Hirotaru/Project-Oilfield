@@ -18,6 +18,7 @@ namespace Oilfield
         List<AStarNode> closedList = new List<AStarNode>();
 
         private GameMap gameMap;
+
         int[,] neighborsMove = new int[,] {
             {0, 1},
             {1, 0},
